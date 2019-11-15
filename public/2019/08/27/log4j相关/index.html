@@ -1,0 +1,1534 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext">
+  
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+<link rel="stylesheet" href="/css/main.css?v=7.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.2.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.2.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.2.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="DEBUG&amp;#x6A21;&amp;#x5F0F;&amp;#x8FD0;&amp;#x884C; log4j&amp;#x7684;&amp;#x914D;&amp;#x7F6E;&amp;#x6587;&amp;#x4EF6;&amp;#x4E2D;&amp;#x914D;&amp;#x7F6E;log4j.debug=true&amp;#x5373;&amp;#x53EF;&amp;#x5F00;&amp;#x542F; &amp;#x6982;&amp;#x8FF0; log4j&amp;#x7684;looger&amp;#x662F;">
+<meta name="keywords" content="log4j">
+<meta property="og:type" content="article">
+<meta property="og:title" content="log4j相关">
+<meta property="og:url" content="https://leaderli.github.io/2019/08/27/log4j相关/index.html">
+<meta property="og:site_name" content="大狗哥传奇">
+<meta property="og:description" content="DEBUG&amp;#x6A21;&amp;#x5F0F;&amp;#x8FD0;&amp;#x884C; log4j&amp;#x7684;&amp;#x914D;&amp;#x7F6E;&amp;#x6587;&amp;#x4EF6;&amp;#x4E2D;&amp;#x914D;&amp;#x7F6E;log4j.debug=true&amp;#x5373;&amp;#x53EF;&amp;#x5F00;&amp;#x542F; &amp;#x6982;&amp;#x8FF0; log4j&amp;#x7684;looger&amp;#x662F;">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-11-04T12:08:44.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="log4j相关">
+<meta name="twitter:description" content="DEBUG&amp;#x6A21;&amp;#x5F0F;&amp;#x8FD0;&amp;#x884C; log4j&amp;#x7684;&amp;#x914D;&amp;#x7F6E;&amp;#x6587;&amp;#x4EF6;&amp;#x4E2D;&amp;#x914D;&amp;#x7F6E;log4j.debug=true&amp;#x5373;&amp;#x53EF;&amp;#x5F00;&amp;#x542F; &amp;#x6982;&amp;#x8FF0; log4j&amp;#x7684;looger&amp;#x662F;">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="https://leaderli.github.io/2019/08/27/log4j相关/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>log4j相关 | 大狗哥传奇</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">大狗哥传奇</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+  <script type="text/javascript">
+     var search_path = "<%= config.search.path %>";
+     if (search_path.length == 0) {
+     	search_path = "search.json";
+     }
+     var path = "<%= config.root %>" + search_path;
+     searchFunc(path, 'local-search-input', 'local-search-result');
+ </script>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://leaderli.github.io/2019/08/27/log4j相关/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="lijun">
+      <meta itemprop="description" content="与其感慨路难行，不如马上就出发">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大狗哥传奇">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">log4j相关
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-08-27 23:30:03" itemprop="dateCreated datePublished" datetime="2019-08-27T23:30:03+08:00">2019-08-27</time>
+            </span>
+          
+
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-11-04 20:08:44" itemprop="dateModified" datetime="2019-11-04T20:08:44+08:00">2019-11-04</time>
+              </span>
+            
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/log/" itemprop="url" rel="index"><span itemprop="name">log</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="debug&#x6A21;&#x5F0F;&#x8FD0;&#x884C;">DEBUG&#x6A21;&#x5F0F;&#x8FD0;&#x884C;</h2>
+<p><code>log4j</code>&#x7684;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x4E2D;&#x914D;&#x7F6E;<code>log4j.debug=true</code>&#x5373;&#x53EF;&#x5F00;&#x542F;</p>
+<h2 id="&#x6982;&#x8FF0;">&#x6982;&#x8FF0;</h2>
+<p><code>log4j</code>&#x7684;<code>looger</code>&#x662F;&#x5C42;&#x7EA7;&#x7ED3;&#x6784;&#x7684;&#xFF0C;&#x4F8B;&#x5982;<code>com.li</code>&#x662F;<code>com.li.springboot</code>&#x7684;&#x7236;&#x7C7B;<code>logger</code><br>
+&#x53EF;&#x4F7F;&#x7528;&#x5982;&#x4E0B;&#x65B9;&#x5F0F;&#x53D6;&#x51FA;<code>logger</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.li.springboot.advice.log4j;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.apache.log4j.Logger;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LevelTest</span> </span>{</span><br><span class="line">    Logger logger= Logger.getLogger(LevelTest.class);</span><br><span class="line">    Logger logger= Logger.getLogger(<span class="string">&quot;com.li.springboot.advice.log4j.LevelTest&quot;</span>);</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p><code>getLogger</code>&#x6839;&#x636E;&#x53C2;&#x6570;<code>name</code>&#xFF0C;&#x5728;&#x4EFB;&#x610F;&#x5904;&#x53D6;&#x51FA;&#x7684;<code>logger</code>&#x90FD;&#x662F;&#x540C;&#x4E00;&#x4E2A; <code>root logger</code>&#x662F;&#x6240;&#x6709;<code>logger</code>&#x7684;&#x7236;&#x7C7B;&#xFF0C;&#x4E00;&#x5B9A;&#x5B58;&#x5728;&#x4F46;&#x662F;&#x5B83;&#x4E0D;&#x80FD;&#x76F4;&#x63A5;&#x4F7F;&#x7528;<code>getLogger</code>&#x901A;&#x8FC7;<code>name</code>&#x53D6;&#x51FA;&#x3002;&#x53EF;&#x4F7F;&#x7528;&#x5982;&#x4E0B;&#x65B9;&#x5F0F;&#x53D6;&#x51FA;</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Logger.getRootLogger()</span><br></pre></td></tr></table></figure>
+<p>&#x53EF;&#x4F7F;&#x7528;&#x7684;&#x65E5;&#x5FD7;&#x7EA7;&#x522B;<code>org.apache.log4j.Level</code> &gt;<code>TRACE</code>,<code>DEBUG</code>,<code>INFO</code>,<code>WARN</code>,<code>ERROR</code> and <code>FATAL</code></p>
+<p>&#x5F53;&#x6307;&#x5B9A;<code>name</code>&#x7684;<code>logger</code>&#x65E5;&#x5FD7;&#x8BF7;&#x6C42;&#x65F6;&#xFF0C;&#x540C;&#x65F6;&#x4F1A;&#x5C06;&#x8BE5;&#x8BF7;&#x6C42;&#x8F6C;&#x53D1;&#x81F3;&#x7236;&#x7C7B;<code>logger</code> &#x5F53;<code>logger</code>&#x6CA1;&#x6709;&#x5BF9;&#x5E94;&#x7684;&#x914D;&#x7F6E;&#x65F6;&#xFF0C;&#x4F1A;&#x627E;&#x6700;&#x8FD1;&#x7684;&#x7236;&#x7C7B;&#x914D;&#x7F6E;&#xFF0C;&#x9ED8;&#x8BA4;&#x60C5;&#x51B5;&#x4E0B;<code>logger</code>&#x914D;&#x7F6E;&#x4F1A;&#x7EE7;&#x627F;&#x7236;&#x7C7B;&#x7684;&#x914D;&#x7F6E;&#xFF0C;&#x53EF;&#x901A;&#x8FC7;&#x8BBE;&#x7F6E;<code>log4j.additivity.xxx=false</code>&#x4F7F;&#x5176;&#x4E0D;&#x7EE7;&#x627F;(xxx&#x662F;logger&#x7684;name)</p>
+<h2 id="&#x914D;&#x7F6E;">&#x914D;&#x7F6E;</h2>
+<ol type="1">
+<li><p>&#x521D;&#x59CB;&#x5316;Logger&#x5BB9;&#x5668;Hierarchy,&#x8BBE;&#x7F6E;&#x6839;&#x8282;&#x70B9;&#x4E3A;RootLogger</p></li>
+<li><p>&#x521D;&#x59CB;LoggerRepositorySelector(&#x5BB9;&#x5668;&#x9009;&#x62E9;&#x5668;)&#x4E3A;&#x9ED8;&#x8BA4;&#x7684;DefaultRepositorySelector,&#x5BB9;&#x5668;&#x4E3A;Hierarchy</p></li>
+<li><p>&#x8BFB;&#x53D6;&#x7CFB;&#x7EDF;&#x5C5E;&#x6027;log4j.defaultInitOverride,&#x5982;&#x679C;&#x6CA1;&#x6709;&#x8BBE;&#x7F6E;&#x6216;&#x8005;&#x4E3A;false&#x8FDB;&#x884C;&#x521D;&#x59CB;&#x5316;,&#x5426;&#x5219;&#x8DF3;&#x8FC7;&#x521D;&#x59CB;&#x5316;</p></li>
+<li><p>&#x8BFB;&#x53D6;&#x7CFB;&#x7EDF;&#x5C5E;&#x6027;log4j.configuration(log4j&#x6587;&#x4EF6;&#x8DEF;&#x5F84;&#x914D;&#x7F6E;),&#x5982;&#x679C;&#x5B58;&#x5728;&#x5BF9;&#x5E94;&#x7684;&#x6587;&#x4EF6;,&#x5219;&#x5F97;&#x5230;URL.&#x5982;&#x679C;&#x6CA1;&#x6709;&#x5BF9;&#x5E94;&#x7684;&#x6587;&#x4EF6;,&#x9996;&#x5148;&#x68C0;&#x67E5;&#x662F;&#x5426;&#x5B58;&#x5728;log4j.xml&#x6587;&#x4EF6;,&#x5982;&#x679C;&#x5B58;&#x5728;,&#x5F97;&#x5230;Log4j&#x914D;&#x7F6E;&#x6587;&#x4EF6;URL,&#x5982;&#x679C;&#x4E0D;&#x5B58;&#x5728;log4j.xml,&#x7EE7;&#x7EED;&#x68C0;&#x67E5;&#x662F;&#x5426;&#x5B58;&#x5728;log4j.properties&#x6587;&#x4EF6;,&#x5982;&#x679C;&#x5B58;&#x5728;&#x8BE5;&#x6587;&#x4EF6;,&#x5F97;&#x5230;log4j&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x7684;URL,&#x5426;&#x5219;&#x63D0;&#x793A;&#x6CA1;&#x6709;&#x53D1;&#x73B0;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x3002;</p></li>
+<li><p>&#x8BFB;&#x53D6;&#x7CFB;&#x7EDF;&#x5C5E;&#x6027;log4j.configuratorClass(&#x81EA;&#x5B9A;&#x4E49;Configurator&#x914D;&#x7F6E;&#x7C7B;&#x5168;&#x8DEF;&#x5F84;,&#x4E00;&#x822C;&#x4E0D;&#x81EA;&#x5B9A;&#x4E49;)</p></li>
+<li><p>&#x8C03;&#x7528;OptionConverter.selectAndConfigure(url, configuratorClassName,LogManager.getLoggerRepository()),&#x521D;&#x59CB;&#x5316;logger&#x5BB9;&#x5668;</p></li>
+</ol>
+<h3 id="&#x6269;&#x5C55;&#x914D;&#x7F6E;">&#x6269;&#x5C55;&#x914D;&#x7F6E;</h3>
+<p>&#x53EF;&#x4F7F;&#x7528;<code>BasicConfigurator.resetConfiguration()</code>&#x91CD;&#x7F6E;&#x914D;&#x7F6E; &#x53EF;&#x4F7F;&#x7528;<code>PropertyConfigurator.configure</code>&#x6307;&#x5B9A;&#x5176;&#x4ED6;&#x914D;&#x7F6E;&#x6587;&#x4EF6;</p>
+<h3 id="tomcat&#x4E0B;&#x7684;log4j"><code>tomcat</code>&#x4E0B;&#x7684;<code>log4j</code></h3>
+<p>&#x5F53;<code>log4j</code>&#x7684;<code>jar</code>&#x5305;&#x5728;<code>tomcat</code>&#x76EE;&#x5F55;&#x4E0B;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x4F7F;&#x7528;<code>BasicConfigurator.resetConfiguration()</code>&#x91CD;&#x7F6E;&#x914D;&#x7F6E;&#x65F6;&#xFF0C;&#x4F1A;&#x4FEE;&#x6539;<code>tomcat</code>&#x4E0B;&#x6240;&#x6709;&#x5E94;&#x7528;&#x7684;&#x65E5;&#x5FD7;&#x6253;&#x5370;&#xFF0C;&#x4E00;&#x822C;&#x60C5;&#x51B5;&#x4E0B; &#x6211;&#x4EEC;&#x5728;&#x4E3B;&#x5E94;&#x7528;&#x91CC;&#x505A;&#x914D;&#x7F6E;&#xFF0C;&#x5FFD;&#x7565;&#x5176;&#x4ED6;&#x5E94;&#x7528;&#x7684;&#x914D;&#x7F6E;&#x5373;&#x53EF;&#x3002;&#x4F46;&#x662F;&#x5F53;&#x4F60;&#x53D1;&#x5E03;&#x5176;&#x4ED6;&#x5E94;&#x7528;&#x65F6;&#xFF0C;&#x89E6;&#x53D1;<code>log4j</code>&#x7684;&#x521D;&#x59CB;&#x5316;&#x914D;&#x7F6E;&#xFF0C;&#x5219;&#x4F1A;&#x5F71;&#x54CD;&#x5230;&#x4E3B;&#x5E94;&#x7528;&#xFF0C;&#x53EF;&#x80FD;&#x9020;&#x6210;&#x4E3B;&#x5E94;&#x7528;&#x65E5;&#x5FD7;&#x4E0D;&#x6253;&#x5370;&#x3002;&#x8FD9;&#x4E2A;&#x65F6;&#x5019;&#x6211;&#x4EEC;&#x901A;&#x8FC7;<code>HierarchyEventListener</code>&#x6765;&#x76D1;&#x542C;<code>log4j</code>&#x7684;&#x914D;&#x7F6E;&#x662F;&#x5426;&#x88AB;&#x4FEE;&#x6539;&#xFF0C;&#x6765;&#x5728;&#x5176;&#x4ED6;&#x5E94;&#x7528;&#x91CD;&#x7F6E;&#x914D;&#x7F6E;&#x65F6;&#xFF0C;&#x91CD;&#x65B0;&#x89E6;&#x53D1;&#x4E3B;&#x5E94;&#x7528;&#x7684;&#x914D;&#x7F6E;&#x52A0;&#x8F7D;&#x8FC7;&#x7A0B;&#x5373;&#x53EF;&#x3002;</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> {</span><br><span class="line">    Logger.getRootLogger().getLoggerRepository().addHierarchyEventListener(<span class="keyword">new</span> HierarchyEventListener() {</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addAppenderEvent</span><span class="params">(Category cat, Appender appender)</span> </span>{</span><br><span class="line">            LogLog.debug(<span class="string">&quot;add &quot;</span> + cat.getName() + <span class="string">&quot;  &quot;</span> + appender);</span><br><span class="line">            flag = <span class="keyword">false</span>;</span><br><span class="line">        }</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">removeAppenderEvent</span><span class="params">(Category cat, Appender appender)</span> </span>{</span><br><span class="line">            <span class="comment">//log4j&#x914D;&#x7F6E;&#x88AB;&#x79FB;&#x9664;&#x524D;&#x7684;&#x56DE;&#x8C03;&#xFF0C;&#x6B64;&#x65F6;&#x914D;&#x7F6E;&#x8FD8;&#x662F;&#x751F;&#x6548;&#x7684;&#xFF0C;&#x6240;&#x4EE5;&#x8FD9;&#x91CC;&#x91CD;&#x65B0;&#x52A0;&#x8F7D;&#x662F;&#x65E0;&#x6548;&#x7684;&#xFF0C;&#x56DE;&#x8C03;&#x540E;&#x5C31;</span></span><br><span class="line">            <span class="comment">//&#x88AB;&#x91CD;&#x7F6E;&#x4E86;&#xFF0C;&#x6240;&#x4EE5;&#x9700;&#x8981;&#x5728;&#x5916;&#x9762;&#x53BB;&#x91CD;&#x65B0;&#x52A0;&#x8F7D;&#xFF0C;&#x8FD9;&#x91CC;&#x4EC5;&#x6253;&#x4E00;&#x4E2A;&#x6807;&#x8BB0;</span></span><br><span class="line">            LogLog.debug(<span class="string">&quot;remove &quot;</span> + cat.getName() + <span class="string">&quot;  &quot;</span> + appender);</span><br><span class="line">            flag = <span class="keyword">true</span>;</span><br><span class="line">        }</span><br><span class="line">    });</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">initLog4j</span><span class="params">()</span> </span>{</span><br><span class="line">    BasicConfigurator.resetConfiguration();</span><br><span class="line">    Properties properties = <span class="keyword">new</span> Properties();</span><br><span class="line">    <span class="keyword">try</span> {</span><br><span class="line">        properties.load(ClassLoader.getSystemResourceAsStream(<span class="string">&quot;mylog4j.properties&quot;</span>));</span><br><span class="line">    } <span class="keyword">catch</span> (IOException e) {</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    }</span><br><span class="line">    PropertyConfigurator.configure(properties);</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; cycle; i++) {</span><br><span class="line">    Thread.sleep(RandomUtils.nextInt(<span class="number">500</span>, <span class="number">1500</span>));</span><br><span class="line">        <span class="keyword">if</span> (flag) {</span><br><span class="line">            initLog4j();</span><br><span class="line">        }</span><br><span class="line">    logger.debug(<span class="string">&quot;123&quot;</span>);</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<h3 id="mdc"><code>MDC</code></h3>
+<p>&#x6253;&#x9020;&#x65E5;&#x5FD7;&#x94FE;&#x8DEF;&#xFF0C;<code>MDC</code>&#x7C7B;&#x4F3C;<code>ThreadLocal</code>&#x7C7B;&#xFF0C;&#x6839;&#x636E;&#x7EBF;&#x7A0B;&#x5B58;&#x5165;&#x4E00;&#x4E9B;&#x6570;&#x636E;&#xFF0C;&#x4EE5;&#x4F9B;&#x6253;&#x5370;&#x65E5;&#x5FD7;&#x7684;&#x65F6;&#x5019;&#x8F93;&#x51FA;(<code>%X{name}</code>)</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">MDC.clear();</span><br><span class="line">MDC.put(<span class="string">&quot;session&quot;</span>, <span class="string">&quot;xxxx&quot;</span>);</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">log4j.appender.consoleAppender.layout.ConversionPattern=%X{session}}%m%n</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        
+          
+        
+        <div class="post-tags">
+          
+            <a href="/tags/log4j/" rel="tag"># log4j</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div class="social_share">
+            
+            
+            
+              <div>
+                
+  <div class="bdsharebuttonbox">
+    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+    <a href="#" class="bds_douban" data-cmd="douban" title="分享到豆瓣网"></a>
+    <a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+    <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+    <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+    <a href="#" class="bds_tieba" data-cmd="tieba" title="分享到百度贴吧"></a>
+    <a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+    <a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+    <a href="#" class="bds_more" data-cmd="more"></a>
+    <a class="bds_count" data-cmd="count"></a>
+  </div>
+  <script>
+    window._bd_share_config = {
+      "common": {
+        "bdText": "",
+        "bdMini": "2",
+        "bdMiniList": false,
+        "bdPic": ""
+      },
+      "share": {
+        "bdSize": "16",
+        "bdStyle": "0"
+      },
+      "image": {
+        "viewList": ["tsina", "douban", "sqq", "qzone", "weixin", "twi", "fbook"],
+        "viewText": "分享到：",
+        "viewSize": "16"
+      }
+    }
+  </script>
+
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+              </div>
+            
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/08/26/spring循环依赖/" rel="next" title="spring循环依赖">
+                <i class="fa fa-chevron-left"></i> spring循环依赖
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/09/02/redis/" rel="prev" title="redis">
+                redis <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">lijun</p>
+              <div class="site-description motion-element" itemprop="description">与其感慨路难行，不如马上就出发</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">55</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">31</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">79</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#debug模式运行"><span class="nav-number">1.</span> <span class="nav-text">DEBUG模式运行</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#概述"><span class="nav-number">2.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置"><span class="nav-number">3.</span> <span class="nav-text">配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#扩展配置"><span class="nav-number">3.1.</span> <span class="nav-text">扩展配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tomcat下的log4j"><span class="nav-number">3.2.</span> <span class="nav-text">tomcat下的log4j</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mdc"><span class="nav-number">3.3.</span> <span class="nav-text">MDC</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">lijun</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.2.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.2.0"></script>
+
+  <script src="/js/motion.js?v=7.2.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.2.0"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.2.0"></script>
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.2.0"></script>
+<script src="/js/post-details.js?v=7.2.0"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.2.0"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.json";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+   <!-- 代码块复制功能 -->
+  <script type="text/javascript" src="/js/src/clipboard.min.js"></script>  
+  <script type="text/javascript" src="/js/src/clipboard-use.js"></script>
+</body>
+</html>

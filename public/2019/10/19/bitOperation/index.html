@@ -1,0 +1,1620 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext">
+  
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+<link rel="stylesheet" href="/css/main.css?v=7.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.2.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.2.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.2.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="&amp;#x5728; Java &amp;#x4E2D;&amp;#xFF0C;&amp;#x4F4D;&amp;#x8FD0;&amp;#x7B97;&amp;#x7B26;&amp;#x6709;&amp;#x5F88;&amp;#x591A;&amp;#xFF0C;&amp;#x4F8B;&amp;#x5982;&amp;#x4E0E;&amp;amp;&amp;#x3001;&amp;#x975E;~&amp;#x3001;&amp;#x6216;|&amp;#x3001;&amp;#x5F02;&amp;#x6216;^&amp;#x3001;&amp;#x79FB;&amp;#">
+<meta name="keywords" content="bit">
+<meta property="og:type" content="article">
+<meta property="og:title" content="bitOperation">
+<meta property="og:url" content="https://leaderli.github.io/2019/10/19/bitOperation/index.html">
+<meta property="og:site_name" content="大狗哥传奇">
+<meta property="og:description" content="&amp;#x5728; Java &amp;#x4E2D;&amp;#xFF0C;&amp;#x4F4D;&amp;#x8FD0;&amp;#x7B97;&amp;#x7B26;&amp;#x6709;&amp;#x5F88;&amp;#x591A;&amp;#xFF0C;&amp;#x4F8B;&amp;#x5982;&amp;#x4E0E;&amp;amp;&amp;#x3001;&amp;#x975E;~&amp;#x3001;&amp;#x6216;|&amp;#x3001;&amp;#x5F02;&amp;#x6216;^&amp;#x3001;&amp;#x79FB;&amp;#">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-11-12T15:56:25.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="bitOperation">
+<meta name="twitter:description" content="&amp;#x5728; Java &amp;#x4E2D;&amp;#xFF0C;&amp;#x4F4D;&amp;#x8FD0;&amp;#x7B97;&amp;#x7B26;&amp;#x6709;&amp;#x5F88;&amp;#x591A;&amp;#xFF0C;&amp;#x4F8B;&amp;#x5982;&amp;#x4E0E;&amp;amp;&amp;#x3001;&amp;#x975E;~&amp;#x3001;&amp;#x6216;|&amp;#x3001;&amp;#x5F02;&amp;#x6216;^&amp;#x3001;&amp;#x79FB;&amp;#">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="https://leaderli.github.io/2019/10/19/bitOperation/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>bitOperation | 大狗哥传奇</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">大狗哥传奇</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+  <script type="text/javascript">
+     var search_path = "<%= config.search.path %>";
+     if (search_path.length == 0) {
+     	search_path = "search.json";
+     }
+     var path = "<%= config.root %>" + search_path;
+     searchFunc(path, 'local-search-input', 'local-search-result');
+ </script>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://leaderli.github.io/2019/10/19/bitOperation/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="lijun">
+      <meta itemprop="description" content="与其感慨路难行，不如马上就出发">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大狗哥传奇">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">bitOperation
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-10-19 19:59:26" itemprop="dateCreated datePublished" datetime="2019-10-19T19:59:26+08:00">2019-10-19</time>
+            </span>
+          
+
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-11-12 23:56:25" itemprop="dateModified" datetime="2019-11-12T23:56:25+08:00">2019-11-12</time>
+              </span>
+            
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>&#x5728; Java &#x4E2D;&#xFF0C;&#x4F4D;&#x8FD0;&#x7B97;&#x7B26;&#x6709;&#x5F88;&#x591A;&#xFF0C;&#x4F8B;&#x5982;&#x4E0E;<code>&amp;</code>&#x3001;&#x975E;<code>~</code>&#x3001;&#x6216;<code>|</code>&#x3001;&#x5F02;&#x6216;<code>^</code>&#x3001;&#x79FB;&#x4F4D;<code>&lt;&lt;</code>&#x548C;<code>&gt;&gt;</code>&#x7B49;&#x3002;&#x8FD9;&#x4E9B;&#x8FD0;&#x7B97;&#x7B26;&#x5728;&#x65E5;&#x5E38;&#x7F16;&#x7801;&#x4E2D;&#x5F88;&#x5C11;&#x4F1A;&#x7528;&#x5230;&#x3002;</p>
+<p>&#x5728;&#x4E0B;&#x9762;&#x7684;&#x4E00;&#x4E2A;&#x4F8B;&#x5B50;&#x4E2D;&#xFF0C;&#x4F1A;&#x7528;&#x5230;&#x4F4D;&#x63A9;&#x7801;<code>BitMask</code>&#xFF0C;&#x5176;&#x4E2D;&#x5305;&#x542B;&#x5927;&#x91CF;&#x7684;&#x4F4D;&#x8FD0;&#x7B97;&#x3002;&#x4E0D;&#x53EA;&#x662F;&#x5728;<code>Java</code>&#x4E2D;&#xFF0C;&#x5176;&#x4ED6;&#x7F16;&#x5199;&#x8BED;&#x8A00;&#x4E2D;&#x4E5F;&#x662F;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#x7684;&#x3002;</p>
+<p>&#x4F8B;&#x5982;&#xFF0C;&#x5728;&#x4E00;&#x4E2A;&#x7CFB;&#x7EDF;&#x4E2D;&#xFF0C;&#x7528;&#x6237;&#x4E00;&#x822C;&#x6709;&#x67E5;&#x8BE2;<code>Select</code>&#x3001;&#x65B0;&#x589E;<code>Insert</code>&#x3001;&#x4FEE;&#x6539;<code>Update</code>&#x3001;&#x5220;&#x9664;<code>Delete</code>&#x56DB;&#x79CD;&#x6743;&#x9650;&#xFF0C;&#x56DB;&#x79CD;&#x6743;&#x9650;&#x6709;&#x591A;&#x79CD;&#x7EC4;&#x5408;&#x65B9;&#x5F0F;&#xFF0C;&#x4E5F;&#x5C31;&#x662F;&#x6709;<code>16</code>&#x4E2D;&#x4E0D;&#x540C;&#x7684;&#x6743;&#x9650;&#x72B6;&#x6001;&#xFF08;2 &#x7684; 4 &#x6B21;&#x65B9;&#xFF09;&#x3002;</p>
+<h2 id="permission"><code>Permission</code></h2>
+<p>&#x4E00;&#x822C;&#x60C5;&#x51B5;&#x4E0B;&#x4F1A;&#x60F3;&#x5230;&#x7528;&#x56DB;&#x4E2A;<code>boolean</code>&#x7C7B;&#x578B;&#x53D8;&#x91CF;&#x6765;&#x4FDD;&#x5B58;&#xFF1A;</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Permission</span> </span>{</span><br><span class="line">    <span class="comment">// &#x662F;&#x5426;&#x5141;&#x8BB8;&#x67E5;&#x8BE2;</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">boolean</span> allowSelect;</span><br><span class="line">    <span class="comment">// &#x662F;&#x5426;&#x5141;&#x8BB8;&#x65B0;&#x589E;</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">boolean</span> allowInsert;</span><br><span class="line">    <span class="comment">// &#x662F;&#x5426;&#x5141;&#x8BB8;&#x5220;&#x9664;</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">boolean</span> allowDelete;</span><br><span class="line">    <span class="comment">// &#x662F;&#x5426;&#x5141;&#x8BB8;&#x66F4;&#x65B0;</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">boolean</span> allowUpdate;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x4E0A;&#x9762;&#x7528;&#x56DB;&#x4E2A; boolean &#x7C7B;&#x578B;&#x53D8;&#x91CF;&#x6765;&#x4FDD;&#x5B58;&#x6BCF;&#x79CD;&#x6743;&#x9650;&#x72B6;&#x6001;&#x3002;</p>
+<h2 id="newpermission"><code>NewPermission</code></h2>
+<p>&#x4E0B;&#x9762;&#x662F;&#x53E6;&#x5916;&#x4E00;&#x79CD;&#x65B9;&#x5F0F;&#xFF0C;&#x4F7F;&#x7528;&#x4F4D;&#x63A9;&#x7801;&#x7684;&#x8BDD;&#xFF0C;&#x7528;&#x4E00;&#x4E2A;&#x4E8C;&#x8FDB;&#x5236;&#x6570;&#x5373;&#x53EF;&#xFF0C;&#x6BCF;&#x4E00;&#x4F4D;&#x6765;&#x8868;&#x793A;&#x4E00;&#x79CD;&#x6743;&#x9650;&#xFF0C;<code>0</code>&#x8868;&#x793A;&#x65E0;&#x6743;&#x9650;&#xFF0C;<code>1</code>&#x8868;&#x793A;&#x6709;&#x6743;&#x9650;&#x3002;</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">NewPermission</span> </span>{</span><br><span class="line">    <span class="comment">// &#x662F;&#x5426;&#x5141;&#x8BB8;&#x67E5;&#x8BE2;&#xFF0C;&#x4E8C;&#x8FDB;&#x5236;&#x7B2C;1&#x4F4D;&#xFF0C;0&#x8868;&#x793A;&#x5426;&#xFF0C;1&#x8868;&#x793A;&#x662F;</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> ALLOW_SELECT = <span class="number">1</span> &lt;&lt; <span class="number">0</span>; <span class="comment">// 0001</span></span><br><span class="line">    <span class="comment">// &#x662F;&#x5426;&#x5141;&#x8BB8;&#x65B0;&#x589E;&#xFF0C;&#x4E8C;&#x8FDB;&#x5236;&#x7B2C;2&#x4F4D;&#xFF0C;0&#x8868;&#x793A;&#x5426;&#xFF0C;1&#x8868;&#x793A;&#x662F;</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> ALLOW_INSERT = <span class="number">1</span> &lt;&lt; <span class="number">1</span>; <span class="comment">// 0010</span></span><br><span class="line">    <span class="comment">// &#x662F;&#x5426;&#x5141;&#x8BB8;&#x4FEE;&#x6539;&#xFF0C;&#x4E8C;&#x8FDB;&#x5236;&#x7B2C;3&#x4F4D;&#xFF0C;0&#x8868;&#x793A;&#x5426;&#xFF0C;1&#x8868;&#x793A;&#x662F;</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> ALLOW_UPDATE = <span class="number">1</span> &lt;&lt; <span class="number">2</span>; <span class="comment">// 0100</span></span><br><span class="line">    <span class="comment">// &#x662F;&#x5426;&#x5141;&#x8BB8;&#x5220;&#x9664;&#xFF0C;&#x4E8C;&#x8FDB;&#x5236;&#x7B2C;4&#x4F4D;&#xFF0C;0&#x8868;&#x793A;&#x5426;&#xFF0C;1&#x8868;&#x793A;&#x662F;</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> ALLOW_DELETE = <span class="number">1</span> &lt;&lt; <span class="number">3</span>; <span class="comment">// 1000</span></span><br><span class="line">    <span class="comment">// &#x5B58;&#x50A8;&#x76EE;&#x524D;&#x7684;&#x6743;&#x9650;&#x72B6;&#x6001;</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> flag&#xFF1B;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">        *  &#x91CD;&#x65B0;&#x8BBE;&#x7F6E;&#x6743;&#x9650;</span></span><br><span class="line"><span class="comment">        */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setPermission</span><span class="params">(<span class="keyword">int</span> permission)</span> </span>{</span><br><span class="line">        flag = permission;</span><br><span class="line">    }</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">        *  &#x6DFB;&#x52A0;&#x4E00;&#x9879;&#x6216;&#x591A;&#x9879;&#x6743;&#x9650;</span></span><br><span class="line"><span class="comment">        */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">enable</span><span class="params">(<span class="keyword">int</span> permission)</span> </span>{</span><br><span class="line">        flag |= permission;</span><br><span class="line">    }</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">        *  &#x5220;&#x9664;&#x4E00;&#x9879;&#x6216;&#x591A;&#x9879;&#x6743;&#x9650;</span></span><br><span class="line"><span class="comment">        */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">disable</span><span class="params">(<span class="keyword">int</span> permission)</span> </span>{</span><br><span class="line">        flag &amp;= ~permission;</span><br><span class="line">    }</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">        *  &#x662F;&#x5426;&#x62E5;&#x67D0;&#x4E9B;&#x6743;&#x9650;</span></span><br><span class="line"><span class="comment">        */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isAllow</span><span class="params">(<span class="keyword">int</span> permission)</span> </span>{</span><br><span class="line">        <span class="keyword">return</span> (flag &amp; permission) == permission;</span><br><span class="line">    }</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">        *  &#x662F;&#x5426;&#x7981;&#x7528;&#x4E86;&#x67D0;&#x4E9B;&#x6743;&#x9650;</span></span><br><span class="line"><span class="comment">        */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isNotAllow</span><span class="params">(<span class="keyword">int</span> permission)</span> </span>{</span><br><span class="line">        <span class="keyword">return</span> (flag &amp; permission) == <span class="number">0</span>;</span><br><span class="line">    }</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">        *  &#x662F;&#x5426;&#x4EC5;&#x4EC5;&#x62E5;&#x6709;&#x67D0;&#x4E9B;&#x6743;&#x9650;</span></span><br><span class="line"><span class="comment">        */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isOnlyAllow</span><span class="params">(<span class="keyword">int</span> permission)</span> </span>{</span><br><span class="line">        <span class="keyword">return</span> flag == permission;</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x4EE5;&#x4E0A;&#x4EE3;&#x7801;&#x4E2D;&#xFF0C;&#x7528;&#x56DB;&#x4E2A;&#x5E38;&#x91CF;&#x8868;&#x793A;&#x4E86;&#x6BCF;&#x4E2A;&#x4E8C;&#x8FDB;&#x5236;&#x4F4D;&#x4EE3;&#x7801;&#x7684;&#x6743;&#x9650;&#x9879;&#x3002;</p>
+<p>&#x4F8B;&#x5982;&#xFF1A;</p>
+<p><code>ALLOW_SELECT = 1 &lt;&lt; 0</code> &#x8F6C;&#x6210;&#x4E8C;&#x8FDB;&#x5236;&#x5C31;&#x662F;<code>0001</code>&#xFF0C;&#x4E8C;&#x8FDB;&#x5236;&#x7B2C;&#x4E00;&#x4F4D;&#x8868;&#x793A;<code>Select</code>&#x6743;&#x9650;&#x3002; <code>ALLOW_INSERT = 1 &lt;&lt; 1</code> &#x8F6C;&#x6210;&#x4E8C;&#x8FDB;&#x5236;&#x5C31;&#x662F;<code>0010</code>&#xFF0C;&#x4E8C;&#x8FDB;&#x5236;&#x7B2C;&#x4E8C;&#x4F4D;&#x8868;&#x793A;<code>Insert</code>&#x6743;&#x9650;&#x3002;</p>
+<p><code>private int flag</code>&#x5B58;&#x50A8;&#x4E86;&#x5404;&#x79CD;&#x6743;&#x9650;&#x7684;&#x542F;&#x7528;&#x548C;&#x505C;&#x7528;&#x72B6;&#x6001;&#xFF0C;&#x76F8;&#x5F53;&#x4E8E;&#x4EE3;&#x66FF;&#x4E86;<code>Permission</code>&#x4E2D;&#x7684;&#x56DB;&#x4E2A;<code>boolean</code>&#x7C7B;&#x578B;&#x7684;&#x53D8;&#x91CF;&#x3002;</p>
+<p>&#x7528;<code>flag</code>&#x7684;&#x56DB;&#x4E2A;&#x4E8C;&#x8FDB;&#x5236;&#x4F4D;&#x6765;&#x8868;&#x793A;&#x56DB;&#x79CD;&#x6743;&#x9650;&#x7684;&#x72B6;&#x6001;&#xFF0C;&#x6BCF;&#x4E00;&#x4F4D;&#x7684; 0 &#x548C; 1 &#x4EE3;&#x8868;&#x4E00;&#x9879;&#x6743;&#x9650;&#x7684;&#x542F;&#x7528;&#x548C;&#x505C;&#x7528;&#xFF0C;&#x4E0B;&#x9762;&#x5217;&#x4E3E;&#x4E86;&#x90E8;&#x5206;&#x72B6;&#x6001;&#x8868;&#x793A;&#x7684;&#x6743;&#x9650;&#xFF1A;</p>
+<table>
+<thead>
+<tr class="header">
+<th>flag</th>
+<th>&#x5220;&#x9664;</th>
+<th>&#x4FEE;&#x6539;</th>
+<th>&#x65B0;&#x589E;</th>
+<th>&#x67E5;&#x8BE2;</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1(0001)</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>&#x53EA;&#x5141;&#x8BB8;&#x67E5;&#x8BE2;&#xFF08;&#x5373;&#x7B49;&#x4E8E; ALLOW_SELECT&#xFF09;</td>
+</tr>
+<tr class="even">
+<td>2(0010)</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>&#x53EA;&#x5141;&#x8BB8;&#x65B0;&#x589E;&#xFF08;&#x5373;&#x7B49;&#x4E8E; ALLOW_INSERT&#xFF09;</td>
+</tr>
+<tr class="odd">
+<td>4(0100)</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>&#x53EA;&#x5141;&#x8BB8;&#x4FEE;&#x6539;&#xFF08;&#x5373;&#x7B49;&#x4E8E; ALLOW_UPDATE&#xFF09;</td>
+</tr>
+<tr class="even">
+<td>8(1000)</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>&#x53EA;&#x5141;&#x8BB8;&#x5220;&#x9664;&#xFF08;&#x5373;&#x7B49;&#x4E8E; ALLOW_DELETE&#xFF09;</td>
+</tr>
+<tr class="odd">
+<td>3(0011)</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>&#x53EA;&#x5141;&#x8BB8;&#x67E5;&#x8BE2;&#x548C;&#x65B0;&#x589E;</td>
+</tr>
+<tr class="even">
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>&#x56DB;&#x9879;&#x6743;&#x9650;&#x90FD;&#x4E0D;&#x5141;&#x8BB8;</td>
+</tr>
+<tr class="odd">
+<td>15(1111)</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>&#x56DB;&#x9879;&#x6743;&#x9650;&#x90FD;&#x5141;&#x8BB8;</td>
+</tr>
+</tbody>
+</table>
+<p>&#x4F7F;&#x7528;&#x4F4D;&#x63A9;&#x7801;&#x7684;&#x65B9;&#x5F0F;&#xFF0C;&#x53EA;&#x9700;&#x8981;&#x7528;&#x4E00;&#x4E2A;&#x5927;&#x4E8E;&#x6216;&#x7B49;&#x4E8E;<code>0</code>&#x4E14;&#x5C0F;&#x4E8E;<code>16</code>&#x7684;&#x6574;&#x6570;&#x5373;&#x53EF;&#x8868;&#x793A;&#x6240;&#x6709;&#x7684; 16 &#x79CD;&#x6743;&#x9650;&#x7684;&#x72B6;&#x6001;&#x3002;</p>
+<p>&#x6B64;&#x5916;&#xFF0C;&#x8FD8;&#x6709;&#x5F88;&#x591A;&#x8BBE;&#x7F6E;&#x6743;&#x9650;&#x548C;&#x5224;&#x65AD;&#x6743;&#x9650;&#x7684;&#x65B9;&#x6CD5;&#xFF0C;&#x9700;&#x8981;&#x7528;&#x5230;&#x4F4D;&#x8FD0;&#x7B97;&#xFF0C;&#x4F8B;&#x5982;&#xFF1A;</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">enable</span><span class="params">(<span class="keyword">int</span> permission)</span> </span>{</span><br><span class="line">    flag |= permission; <span class="comment">// &#x76F8;&#x5F53;&#x4E8E;flag = flag | permission;</span></span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x8C03;&#x7528;&#x8FD9;&#x4E2A;&#x65B9;&#x6CD5;&#x53EF;&#x4EE5;&#x5728;&#x73B0;&#x6709;&#x7684;&#x6743;&#x9650;&#x57FA;&#x7840;&#x4E0A;&#x6DFB;&#x52A0;&#x4E00;&#x9879;&#x6216;&#x591A;&#x9879;&#x6743;&#x9650;&#x3002;</p>
+<p>&#x6DFB;&#x52A0;&#x4E00;&#x9879;<code>Update</code>&#x6743;&#x9650;&#xFF1A;</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">permission.enable(NewPermission.ALLOW_UPDATE);</span><br></pre></td></tr></table></figure>
+<p>&#x5047;&#x8BBE;&#x73B0;&#x6709;&#x6743;&#x9650;&#x53EA;&#x6709;<code>Select</code>&#xFF0C;&#x4E5F;&#x5C31;&#x662F;<code>flag</code>&#x662F;<code>0001</code>&#x3002;&#x6267;&#x884C;&#x4EE5;&#x4E0A;&#x4EE3;&#x7801;&#xFF0C;<code>flag = 0001 | 0100</code>&#xFF0C;&#x4E5F;&#x5C31;&#x662F;<code>0101</code>&#xFF0C;&#x4FBF;&#x62E5;&#x6709;&#x4E86;<code>Select</code>&#x548C;<code>Update</code>&#x4E24;&#x9879;&#x6743;&#x9650;&#x3002;</p>
+<p>&#x6DFB;&#x52A0;<code>Insert</code>&#x3001;<code>Update</code>&#x3001;<code>Delete</code>&#x4E09;&#x9879;&#x6743;&#x9650;&#xFF1A;</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">permission.enable(NewPermission.ALLOW_INSERT</span><br><span class="line">    | NewPermission.ALLOW_UPDATE | NewPermission.ALLOW_DELETE);</span><br></pre></td></tr></table></figure>
+<p><code>NewPermission.ALLOW_INSERT | NewPermission.ALLOW_UPDATE | NewPermission.ALLOW_DELETE</code>&#x8FD0;&#x7B97;&#x7ED3;&#x679C;&#x662F;<code>1110</code>&#x3002;&#x5047;&#x8BBE;&#x73B0;&#x6709;&#x6743;&#x9650;&#x53EA;&#x6709;<code>Select</code>&#xFF0C;&#x4E5F;&#x5C31;&#x662F;<code>flag</code>&#x662F;<code>0001</code>&#x3002;<code>flag = 0001 | 1110&#xFF0C;&#x4E5F;&#x5C31;&#x662F;1111</code>&#xFF0C;&#x4FBF;&#x62E5;&#x6709;&#x4E86;&#x8FD9;&#x56DB;&#x9879;&#x6743;&#x9650;&#xFF0C;&#x76F8;&#x5F53;&#x4E8E;&#x6DFB;&#x52A0;&#x4E86;&#x4E09;&#x9879;&#x6743;&#x9650;&#x3002;</p>
+<p>&#x4E0A;&#x9762;&#x7684;&#x8BBE;&#x7F6E;&#x5982;&#x679C;&#x4F7F;&#x7528;&#x6700;&#x521D;&#x7684;<code>Permission</code>&#x7C7B;&#x7684;&#x8BDD;&#xFF0C;&#x5C31;&#x9700;&#x8981;&#x4E0B;&#x9762;&#x4E09;&#x884C;&#x4EE3;&#x7801;&#xFF1A;</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">permission.setAllowInsert(<span class="keyword">true</span>);</span><br><span class="line">permission.setAllowUpdate(<span class="keyword">true</span>);</span><br><span class="line">permission.setAllowDelete(<span class="keyword">true</span>);</span><br></pre></td></tr></table></figure>
+<h2 id="&#x4E8C;&#x8005;&#x5BF9;&#x6BD4;">&#x4E8C;&#x8005;&#x5BF9;&#x6BD4;</h2>
+<h3 id="&#x8BBE;&#x7F6E;&#x4EC5;&#x5141;&#x8BB8;-select-&#x548C;-insert-&#x6743;&#x9650;">&#x8BBE;&#x7F6E;&#x4EC5;&#x5141;&#x8BB8; Select &#x548C; Insert &#x6743;&#x9650;</h3>
+<p>Permission</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">permission.setAllowSelect(<span class="keyword">true</span>);</span><br><span class="line">permission.setAllowInsert(<span class="keyword">true</span>);</span><br><span class="line">permission.setAllowUpdate(<span class="keyword">false</span>);</span><br><span class="line">permission.setAllowDelete(<span class="keyword">false</span>);</span><br></pre></td></tr></table></figure>
+<p>NewPermission</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">permission.setPermission(NewPermission.ALLOW_SELECT | NewPermission.ALLOW_INSERT);</span><br></pre></td></tr></table></figure>
+<h3 id="&#x5224;&#x65AD;&#x662F;&#x5426;&#x5141;&#x8BB8;-select-&#x548C;-insertupdate-&#x6743;&#x9650;">&#x5224;&#x65AD;&#x662F;&#x5426;&#x5141;&#x8BB8; Select &#x548C; Insert&#x3001;Update &#x6743;&#x9650;</h3>
+<p><code>Permission</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (permission.isAllowSelect() &amp;&amp; permission.isAllowInsert() &amp;&amp; permission.isAllowUpdate())</span><br></pre></td></tr></table></figure>
+<p><code>NewPermission</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (permission. isAllow (NewPermission.ALLOW_SELECT</span><br><span class="line">    | NewPermission.ALLOW_INSERT | NewPermission.ALLOW_UPDATE))</span><br></pre></td></tr></table></figure>
+<h3 id="&#x5224;&#x65AD;&#x662F;&#x53EA;&#x5426;&#x5141;&#x8BB8;-select-&#x548C;-insert-&#x6743;&#x9650;">&#x5224;&#x65AD;&#x662F;&#x53EA;&#x5426;&#x5141;&#x8BB8; Select &#x548C; Insert &#x6743;&#x9650;</h3>
+<p><code>Permission</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (permission.isAllowSelect() &amp;&amp; permission.isAllowInsert()</span><br><span class="line">    &amp;&amp; !permission.isAllowUpdate() &amp;&amp; !permission.isAllowDelete())</span><br></pre></td></tr></table></figure>
+<p><code>NewPermission</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (permission. isOnlyAllow (NewPermission.ALLOW_SELECT | NewPermission.ALLOW_INSERT))</span><br></pre></td></tr></table></figure>
+<p>&#x4E8C;&#x8005;&#x5BF9;&#x6BD4;&#x53EF;&#x4EE5;&#x611F;&#x53D7;&#x5230;<code>MyPermission</code>&#x4F4D;&#x63A9;&#x7801;&#x65B9;&#x5F0F;&#x76F8;&#x5BF9;&#x4E8E;<code>Permission</code>&#x7684;&#x4F18;&#x52BF;&#xFF0C;&#x53EF;&#x4EE5;&#x8282;&#x7701;&#x5F88;&#x591A;&#x4EE3;&#x7801;&#x91CF;&#xFF0C;&#x4F4D;&#x8FD0;&#x7B97;&#x662F;&#x5E95;&#x5C42;&#x8FD0;&#x7B97;&#xFF0C;&#x6548;&#x7387;&#x4E5F;&#x975E;&#x5E38;&#x9AD8;&#xFF0C;&#x800C;&#x4E14;&#x7406;&#x89E3;&#x8D77;&#x6765;&#x4E5F;&#x5F88;&#x7B80;&#x5355;&#x3002;</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        
+          
+        
+        <div class="post-tags">
+          
+            <a href="/tags/bit/" rel="tag"># bit</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div class="social_share">
+            
+            
+            
+              <div>
+                
+  <div class="bdsharebuttonbox">
+    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+    <a href="#" class="bds_douban" data-cmd="douban" title="分享到豆瓣网"></a>
+    <a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+    <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+    <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+    <a href="#" class="bds_tieba" data-cmd="tieba" title="分享到百度贴吧"></a>
+    <a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+    <a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+    <a href="#" class="bds_more" data-cmd="more"></a>
+    <a class="bds_count" data-cmd="count"></a>
+  </div>
+  <script>
+    window._bd_share_config = {
+      "common": {
+        "bdText": "",
+        "bdMini": "2",
+        "bdMiniList": false,
+        "bdPic": ""
+      },
+      "share": {
+        "bdSize": "16",
+        "bdStyle": "0"
+      },
+      "image": {
+        "viewList": ["tsina", "douban", "sqq", "qzone", "weixin", "twi", "fbook"],
+        "viewText": "分享到：",
+        "viewSize": "16"
+      }
+    }
+  </script>
+
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+              </div>
+            
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/10/19/genericsAndReflect/" rel="next" title="genericsAndReflect">
+                <i class="fa fa-chevron-left"></i> genericsAndReflect
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/11/12/java数组/" rel="prev" title="java数组">
+                java数组 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">lijun</p>
+              <div class="site-description motion-element" itemprop="description">与其感慨路难行，不如马上就出发</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">55</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">31</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">79</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#permission"><span class="nav-number">1.</span> <span class="nav-text">Permission</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#newpermission"><span class="nav-number">2.</span> <span class="nav-text">NewPermission</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二者对比"><span class="nav-number">3.</span> <span class="nav-text">二者对比</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#设置仅允许-select-和-insert-权限"><span class="nav-number">3.1.</span> <span class="nav-text">设置仅允许 Select 和 Insert 权限</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#判断是否允许-select-和-insertupdate-权限"><span class="nav-number">3.2.</span> <span class="nav-text">判断是否允许 Select 和 Insert、Update 权限</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#判断是只否允许-select-和-insert-权限"><span class="nav-number">3.3.</span> <span class="nav-text">判断是只否允许 Select 和 Insert 权限</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">lijun</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.2.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.2.0"></script>
+
+  <script src="/js/motion.js?v=7.2.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.2.0"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.2.0"></script>
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.2.0"></script>
+<script src="/js/post-details.js?v=7.2.0"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.2.0"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.json";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+   <!-- 代码块复制功能 -->
+  <script type="text/javascript" src="/js/src/clipboard.min.js"></script>  
+  <script type="text/javascript" src="/js/src/clipboard-use.js"></script>
+</body>
+</html>

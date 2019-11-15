@@ -1,0 +1,1517 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext">
+  
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+<link rel="stylesheet" href="/css/main.css?v=7.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.2.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.2.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.2.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="&amp;#x95EE;&amp;#x9898;&amp;#x63CF;&amp;#x8FF0; &amp;#x5E94;&amp;#x7528;&amp;#x4E2D;&amp;#x9700;&amp;#x8981;&amp;#x5C06;&amp;#x591A;&amp;#x4E2A;logger&amp;#x7684;&amp;#x65E5;&amp;#x5FD7;&amp;#x8F93;&amp;#x51FA;&amp;#x5230;&amp;#x540C;&amp;#x4E00;&amp;#x4E2A;&amp;#x6587;&amp;#x4EF6;&amp;#x4E2D;&amp;">
+<meta name="keywords" content="log4j">
+<meta property="og:type" content="article">
+<meta property="og:title" content="log4j日志问题">
+<meta property="og:url" content="https://leaderli.github.io/2019/09/05/log4j日志问题/index.html">
+<meta property="og:site_name" content="大狗哥传奇">
+<meta property="og:description" content="&amp;#x95EE;&amp;#x9898;&amp;#x63CF;&amp;#x8FF0; &amp;#x5E94;&amp;#x7528;&amp;#x4E2D;&amp;#x9700;&amp;#x8981;&amp;#x5C06;&amp;#x591A;&amp;#x4E2A;logger&amp;#x7684;&amp;#x65E5;&amp;#x5FD7;&amp;#x8F93;&amp;#x51FA;&amp;#x5230;&amp;#x540C;&amp;#x4E00;&amp;#x4E2A;&amp;#x6587;&amp;#x4EF6;&amp;#x4E2D;&amp;">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-09-05T14:01:09.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="log4j日志问题">
+<meta name="twitter:description" content="&amp;#x95EE;&amp;#x9898;&amp;#x63CF;&amp;#x8FF0; &amp;#x5E94;&amp;#x7528;&amp;#x4E2D;&amp;#x9700;&amp;#x8981;&amp;#x5C06;&amp;#x591A;&amp;#x4E2A;logger&amp;#x7684;&amp;#x65E5;&amp;#x5FD7;&amp;#x8F93;&amp;#x51FA;&amp;#x5230;&amp;#x540C;&amp;#x4E00;&amp;#x4E2A;&amp;#x6587;&amp;#x4EF6;&amp;#x4E2D;&amp;">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="https://leaderli.github.io/2019/09/05/log4j日志问题/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>log4j日志问题 | 大狗哥传奇</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">大狗哥传奇</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+  <script type="text/javascript">
+     var search_path = "<%= config.search.path %>";
+     if (search_path.length == 0) {
+     	search_path = "search.json";
+     }
+     var path = "<%= config.root %>" + search_path;
+     searchFunc(path, 'local-search-input', 'local-search-result');
+ </script>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://leaderli.github.io/2019/09/05/log4j日志问题/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="lijun">
+      <meta itemprop="description" content="与其感慨路难行，不如马上就出发">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大狗哥传奇">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">log4j日志问题
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-09-05 21:21:29 / 修改时间：22:01:09" itemprop="dateCreated datePublished" datetime="2019-09-05T21:21:29+08:00">2019-09-05</time>
+            </span>
+          
+
+          
+            
+
+            
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/log4j/" itemprop="url" rel="index"><span itemprop="name">log4j</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="&#x95EE;&#x9898;&#x63CF;&#x8FF0;">&#x95EE;&#x9898;&#x63CF;&#x8FF0;</h2>
+<p>&#x5E94;&#x7528;&#x4E2D;&#x9700;&#x8981;&#x5C06;&#x591A;&#x4E2A;<code>logger</code>&#x7684;&#x65E5;&#x5FD7;&#x8F93;&#x51FA;&#x5230;&#x540C;&#x4E00;&#x4E2A;&#x6587;&#x4EF6;&#x4E2D;&#xFF0C;&#x4E14;&#x9700;&#x8981;&#x6839;&#x636E;&#x65F6;&#x95F4;&#x6BCF;&#x5929;&#x81EA;&#x52A8;&#x5206;&#x5272;&#x6587;&#x4EF6;&#x3002;&#x6211;&#x4EEC;&#x4F7F;&#x7528;<code>DailyRollingFileAppender</code> &#x914D;&#x7F6E;&#x5982;&#x4E0B;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"># &#x5F00;&#x542F;log4j&#x7684;&#x65E5;&#x5FD7;</span><br><span class="line">log4j.debug=true</span><br><span class="line">log4j.rootLogger=error, stdout</span><br><span class="line">log4j.logger.l1=DEBUG, fuck1</span><br><span class="line">log4j.logger.l2=DEBUG, fuck2</span><br><span class="line"></span><br><span class="line">#l1</span><br><span class="line">log4j.appender.fuck1=org.apache.log4j.DailyRollingFileAppender</span><br><span class="line">log4j.appender.fuck1.DatePattern=&apos;.&apos;-yyyy-MM-dd-HH-mm</span><br><span class="line">log4j.appender.fuck1.layout=org.apache.log4j.PatternLayout</span><br><span class="line">log4j.appender.fuck1.File=/Users/li/Downloads/log4j/log4j.log</span><br><span class="line">log4j.appender.fuck1.layout.ConversionPattern=%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m%n</span><br><span class="line"></span><br><span class="line">#l2</span><br><span class="line">log4j.appender.fuck2=org.apache.log4j.DailyRollingFileAppender</span><br><span class="line">log4j.appender.fuck2.DatePattern=&apos;.&apos;-yyyy-MM-dd-HH-mm</span><br><span class="line">log4j.appender.fuck2.layout=org.apache.log4j.PatternLayout</span><br><span class="line">log4j.appender.fuck2.File=/Users/li/Downloads/log4j/log4j.log</span><br><span class="line">log4j.appender.fuck2.layout.ConversionPattern=%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m%n</span><br></pre></td></tr></table></figure>
+<p>&#x6D4B;&#x8BD5;&#x4EE3;&#x7801;&#x6211;&#x4F7F;&#x7528;<code>Spring</code>&#x7684;<code>Scheduled</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.li.springboot.util;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.apache.log4j.Logger;</span><br><span class="line"><span class="keyword">import</span> org.springframework.scheduling.annotation.Scheduled;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Component;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ScheduledTask</span> </span>{</span><br><span class="line"></span><br><span class="line">    Logger logger = Logger.getLogger(<span class="string">&quot;l1&quot;</span>);</span><br><span class="line">    Logger logger2 = Logger.getLogger(<span class="string">&quot;l2&quot;</span>);</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> index = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Scheduled</span>(cron = <span class="string">&quot;*/1 * * * * *&quot;</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">log</span><span class="params">()</span> </span>{</span><br><span class="line">        logger.info(<span class="string">&quot;--------------------&quot;</span> + index++);</span><br><span class="line">        logger2.debug(<span class="string">&quot;--------------------&quot;</span> + index++);</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p><code>*/1 * * * * *</code>&#x8868;&#x793A;&#x6BCF;&#x79D2;&#x6267;&#x884C;&#x4E00;&#x6B21;</p>
+<p><code>log4j.appender.fuck1.DatePattern=&apos;.&apos;-yyyy-MM-dd-HH-mm</code>&#x8868;&#x793A;&#x6BCF;&#x5206;&#x949F;&#x5206;&#x5272;&#x4E00;&#x6B21;&#x6587;&#x4EF6;</p>
+<p>&#x5728;&#x6267;&#x884C;&#x5B9A;&#x65F6;&#x4EFB;&#x52A1;&#x5230;&#x5E95;&#x5207;&#x5272;&#x70B9;&#x65F6;&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x89C2;&#x5BDF;&#x5230;&#x65E5;&#x5FD7;&#x8F93;&#x51FA;</p>
+<p><code>log4j</code>&#x81EA;&#x8EAB;&#x7684;&#x65E5;&#x5FD7;&#x4E00;&#x5B9A;&#x8F93;&#x51FA;&#x5728;<code>System.out</code>&#x4E2D;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">2019-09-05 21:16:59 DEBUG l2:22 - --------------------44</span><br><span class="line">log4j: /Users/li/Downloads/log4j/log4j.log -&gt; /Users/li/Downloads/log4j/log4j.log.-2019-09-05-21-16</span><br><span class="line">log4j: setFile called: /Users/li/Downloads/log4j/log4j.log, true</span><br><span class="line">log4j: setFile ended</span><br><span class="line">2019-09-05 21:17:00 INFO  l1:21 - --------------------45</span><br><span class="line">log4j: /Users/li/Downloads/log4j/log4j.log -&gt; /Users/li/Downloads/log4j/log4j.log.-2019-09-05-21-16</span><br><span class="line">log4j: setFile called: /Users/li/Downloads/log4j/log4j.log, true</span><br><span class="line">log4j: setFile ended</span><br><span class="line">2019-09-05 21:17:00 DEBUG l2:22 - --------------------46</span><br></pre></td></tr></table></figure>
+<p>&#x6211;&#x4EEC;&#x89C2;&#x5BDF;&#x4E0B;&#x6E90;&#x7801;&#x5206;&#x6790;&#x4E0B;&#x8FD9;&#x4E2A;&#x8FC7;&#x7A0B;</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line">  <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">subAppend</span><span class="params">(LoggingEvent event)</span> </span>{</span><br><span class="line">    <span class="keyword">long</span> n = System.currentTimeMillis();</span><br><span class="line">    <span class="comment">//&#x68C0;&#x6D4B;&#x5F53;&#x524D;&#x65F6;&#x95F4;&#x70B9;&#x662F;&#x5426;&#x9700;&#x8981;&#x5206;&#x5272;&#x6587;&#x4EF6;</span></span><br><span class="line">    <span class="keyword">if</span> (n &gt;= nextCheck) {</span><br><span class="line">      now.setTime(n);</span><br><span class="line">      nextCheck = rc.getNextCheckMillis(now);</span><br><span class="line">      <span class="keyword">try</span> {</span><br><span class="line">        rollOver();</span><br><span class="line">      }</span><br><span class="line">      <span class="keyword">catch</span>(IOException ioe) {</span><br><span class="line">          <span class="keyword">if</span> (ioe <span class="keyword">instanceof</span> InterruptedIOException) {</span><br><span class="line">              Thread.currentThread().interrupt();</span><br><span class="line">          }</span><br><span class="line">        LogLog.error(<span class="string">&quot;rollOver() failed.&quot;</span>, ioe);</span><br><span class="line">      }</span><br><span class="line">    }</span><br><span class="line">    <span class="keyword">super</span>.subAppend(event);</span><br><span class="line">   }</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">rollOver</span><span class="params">()</span> <span class="keyword">throws</span> IOException </span>{</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* Compute filename, but only if datePattern is specified */</span></span><br><span class="line">    <span class="keyword">if</span> (datePattern == <span class="keyword">null</span>) {</span><br><span class="line">      errorHandler.error(<span class="string">&quot;Missing DatePattern option in rollOver().&quot;</span>);</span><br><span class="line">      <span class="keyword">return</span>;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    String datedFilename = fileName+sdf.format(now);</span><br><span class="line">    <span class="comment">// It is too early to roll over because we are still within the</span></span><br><span class="line">    <span class="comment">// bounds of the current interval. Rollover will occur once the</span></span><br><span class="line">    <span class="comment">// next interval is reached.</span></span><br><span class="line">    <span class="keyword">if</span> (scheduledFilename.equals(datedFilename)) {</span><br><span class="line">      <span class="keyword">return</span>;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="comment">// close current file, and rename it to datedFilename</span></span><br><span class="line">    <span class="keyword">this</span>.closeFile();</span><br><span class="line">    <span class="comment">//&#x5982;&#x679C;&#x5B58;&#x5728;&#x5176;&#x4ED6;&#x5206;&#x5272;&#x540E;&#x7684;&#x6587;&#x4EF6;&#xFF0C;&#x5219;&#x5220;&#x9664;</span></span><br><span class="line">    File target  = <span class="keyword">new</span> File(scheduledFilename);</span><br><span class="line">    <span class="keyword">if</span> (target.exists()) {</span><br><span class="line">      target.delete();</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    File file = <span class="keyword">new</span> File(fileName);</span><br><span class="line">    <span class="comment">//&#x5C06;&#x5F53;&#x524D;&#x65E5;&#x5FD7;&#x6587;&#x4EF6;&#x6539;&#x540D;&#x4E3A;&#x4EE3;&#x65E5;&#x671F;&#x7684;&#x6587;&#x4EF6;</span></span><br><span class="line">    <span class="keyword">boolean</span> result = file.renameTo(target);</span><br><span class="line">    <span class="keyword">if</span>(result) {</span><br><span class="line">      LogLog.debug(fileName +<span class="string">&quot; -&gt; &quot;</span>+ scheduledFilename);</span><br><span class="line">    } <span class="keyword">else</span> {</span><br><span class="line">      LogLog.error(<span class="string">&quot;Failed to rename [&quot;</span>+fileName+<span class="string">&quot;] to [&quot;</span>+scheduledFilename+<span class="string">&quot;].&quot;</span>);</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="keyword">try</span> {</span><br><span class="line">      <span class="comment">// This will also close the file. This is OK since multiple</span></span><br><span class="line">      <span class="comment">// close operations are safe.</span></span><br><span class="line">      <span class="comment">//&#x5C06;log4j&#x65E5;&#x5FD7;&#x7684;&#x8F93;&#x51FA;&#x91CD;&#x5B9A;&#x5411;&#x4E3A;&#x4E0D;&#x5E26;&#x65E5;&#x671F;&#x7684;&#x6587;&#x4EF6;</span></span><br><span class="line">      <span class="keyword">this</span>.setFile(fileName, <span class="keyword">true</span>, <span class="keyword">this</span>.bufferedIO, <span class="keyword">this</span>.bufferSize);</span><br><span class="line">    }</span><br><span class="line">    <span class="keyword">catch</span>(IOException e) {</span><br><span class="line">      errorHandler.error(<span class="string">&quot;setFile(&quot;</span>+fileName+<span class="string">&quot;, true) call failed.&quot;</span>);</span><br><span class="line">    }</span><br><span class="line">    scheduledFilename = datedFilename;</span><br><span class="line">  }</span><br></pre></td></tr></table></figure>
+<ol type="1">
+<li><p><code>logger</code>&#x7684;&#x65E5;&#x5FD7;&#x5728;<code>logger2</code>&#x4E4B;&#x524D;&#xFF0C;&#x56E0;&#x6B64;&#x5148;&#x89E6;&#x53D1;<code>rollOver</code>,&#x6B64;&#x65F6;&#x6CA1;&#x6709;&#x6587;&#x4EF6;<code>log4j.log.-2019-09-05-21-16</code>,&#x5C06;<code>log4j.log</code>&#x91CD;&#x547D;&#x540D;&#x4E3A;<code>log4j.log.-2019-09-05-21-16</code>,&#x5E76;&#x5C06;<code>logger</code>&#x7684;&#x65E5;&#x5FD7;&#x6D41;&#x91CD;&#x5B9A;&#x5411;&#x4E3A;<code>log4j.log</code></p></li>
+<li><p>&#x7D27;&#x63A5;&#x7740;<code>logger2</code>&#x7684;&#x65E5;&#x5FD7;&#x6D41;&#x89E6;&#x53D1;<code>rollOver</code>,&#x6B64;&#x65F6;&#x4F1A;&#x5C06;<code>log4j.log.-2019-09-05-21-16</code>&#x5220;&#x9664;&#xFF0C;&#x540C;&#x65F6;&#x5C06;<code>log4j.log</code>&#x91CD;&#x547D;&#x540D;&#x4E3A;<code>log4j.log.-2019-09-05-21-16</code>&#xFF0C;&#x5E76;&#x5C06;<code>logger2</code>&#x7684;&#x65E5;&#x5FD7;&#x6D41;&#x91CD;&#x5B9A;&#x5411;&#x4E3A;<code>log4j.log</code>&#x3002;&#x6B64;&#x65F6;<code>logger</code>&#x7684;&#x65E5;&#x5FD7;&#x6D41;&#x5C31;&#x7684;&#x6587;&#x4EF6;&#x540D;&#x88AB;&#x6539;&#x540D;&#x4E86;&#x3002;</p></li>
+<li><p>&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x770B;&#x51FA;&#x7B2C;&#x4E00;&#x8F6E;&#x7684;&#x65E5;&#x5FD7;&#x88AB;<code>logger2</code>&#x89E6;&#x53D1;&#x7684;<code>rollOver</code>&#x5220;&#x9664;&#x4E86;&#xFF0C;&#x800C;<code>logger</code>&#x7684;&#x65E5;&#x5FD7;&#x6D41;&#x8F93;&#x51FA;&#x5230;<code>&#x4E0A;&#x4E00;&#x8F6E;</code></p></li>
+</ol>
+<h2 id="&#x89E3;&#x51B3;&#x65B9;&#x6848;">&#x89E3;&#x51B3;&#x65B9;&#x6848;</h2>
+<p>&#x6839;&#x636E;&#x5206;&#x6790;&#xFF0C;&#x6211;&#x4EEC;&#x786E;&#x4FDD;<code>target.delete()</code>&#x548C;<code>ile.renameTo(target)</code>&#x53EA;&#x88AB;&#x6267;&#x884C;&#x4E00;&#x6B21;&#xFF0C;&#x4E14;&#x5176;&#x4ED6;<code>logger</code>&#x5728;&#x6307;&#x5B9A;&#x65F6;&#x95F4;&#x91CD;&#x65B0;&#x5C06;&#x65E5;&#x5FD7;&#x6D41;&#x6307;&#x5411;&#x5230;&#x6700;&#x65B0;&#x7684;<code>log4j.log</code>&#x5373;&#x53EF;&#x3002;</p>
+<p>&#x6BD4;&#x5982;&#x8BF4;&#x7B80;&#x5355;&#x7684;&#x91CD;&#x5199;<code>DailyRollingFileAppender</code>,&#x5728;<code>rollOver</code>&#x4EE3;&#x7801;&#x5904;&#x7A0D;&#x4F5C;&#x4FEE;&#x6539;</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">File target = <span class="keyword">new</span> File(scheduledFilename);</span><br><span class="line"><span class="comment">//&#x5F53;&#x76EE;&#x6807;&#x6587;&#x4EF6;&#x5DF2;&#x7ECF;&#x5B58;&#x5728;&#x65F6;&#xFF0C;&#x5C31;&#x8BF4;&#x660E;&#x5DF2;&#x7ECF;&#x88AB;&#x5207;&#x5272;&#x8FC7;&#x4E86;&#xFF0C;&#x5219;&#x7B80;&#x5355;&#x91CD;&#x5B9A;&#x5411;&#x5373;&#x53EF;</span></span><br><span class="line"><span class="keyword">if</span> (!target.exists()) {</span><br><span class="line">    File file = <span class="keyword">new</span> File(fileName);</span><br><span class="line">    <span class="keyword">boolean</span> result = file.renameTo(target);</span><br><span class="line">    <span class="keyword">if</span> (result) {</span><br><span class="line">        LogLog.debug(fileName + <span class="string">&quot; -&gt; &quot;</span> + scheduledFilename);</span><br><span class="line">    } <span class="keyword">else</span> {</span><br><span class="line">        LogLog.error(<span class="string">&quot;Failed to rename [&quot;</span> + fileName + <span class="string">&quot;] to [&quot;</span> + scheduledFilename + <span class="string">&quot;].&quot;</span>);</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"><span class="keyword">try</span> {</span><br><span class="line">        <span class="keyword">this</span>.setFile(fileName, <span class="keyword">true</span>, <span class="keyword">this</span>.bufferedIO, <span class="keyword">this</span>.bufferSize);</span><br><span class="line">    } <span class="keyword">catch</span> (IOException e) {</span><br><span class="line">        errorHandler.error(<span class="string">&quot;setFile(&quot;</span> + fileName + <span class="string">&quot;, true) call failed.&quot;</span>);</span><br><span class="line">}</span><br><span class="line">    scheduledFilename = datedFilename;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        
+          
+        
+        <div class="post-tags">
+          
+            <a href="/tags/log4j/" rel="tag"># log4j</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div class="social_share">
+            
+            
+            
+              <div>
+                
+  <div class="bdsharebuttonbox">
+    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+    <a href="#" class="bds_douban" data-cmd="douban" title="分享到豆瓣网"></a>
+    <a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+    <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+    <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+    <a href="#" class="bds_tieba" data-cmd="tieba" title="分享到百度贴吧"></a>
+    <a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+    <a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+    <a href="#" class="bds_more" data-cmd="more"></a>
+    <a class="bds_count" data-cmd="count"></a>
+  </div>
+  <script>
+    window._bd_share_config = {
+      "common": {
+        "bdText": "",
+        "bdMini": "2",
+        "bdMiniList": false,
+        "bdPic": ""
+      },
+      "share": {
+        "bdSize": "16",
+        "bdStyle": "0"
+      },
+      "image": {
+        "viewList": ["tsina", "douban", "sqq", "qzone", "weixin", "twi", "fbook"],
+        "viewText": "分享到：",
+        "viewSize": "16"
+      }
+    }
+  </script>
+
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+              </div>
+            
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/09/04/aop概念/" rel="next" title="aop概念">
+                <i class="fa fa-chevron-left"></i> aop概念
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/09/08/vue入门/" rel="prev" title="vue入门">
+                vue入门 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">lijun</p>
+              <div class="site-description motion-element" itemprop="description">与其感慨路难行，不如马上就出发</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">55</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">31</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">79</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#问题描述"><span class="nav-number">1.</span> <span class="nav-text">问题描述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解决方案"><span class="nav-number">2.</span> <span class="nav-text">解决方案</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">lijun</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.2.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.2.0"></script>
+
+  <script src="/js/motion.js?v=7.2.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.2.0"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.2.0"></script>
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.2.0"></script>
+<script src="/js/post-details.js?v=7.2.0"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.2.0"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.json";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+   <!-- 代码块复制功能 -->
+  <script type="text/javascript" src="/js/src/clipboard.min.js"></script>  
+  <script type="text/javascript" src="/js/src/clipboard-use.js"></script>
+</body>
+</html>

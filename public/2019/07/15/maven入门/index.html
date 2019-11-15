@@ -1,0 +1,1649 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext">
+  
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+<link rel="stylesheet" href="/css/main.css?v=7.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.2.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.2.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.2.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="&amp;#x7701;&amp;#x7565;&amp;#x4E0B;&amp;#x8F7D;&amp;#x5B89;&amp;#x88C5;&amp;#x8FC7;&amp;#x7A0B; &amp;#x914D;&amp;#x7F6E; maven &amp;#x9ED8;&amp;#x8BA4;&amp;#x76EE;&amp;#x5F55;&amp;#x5728;${user.home}/.m2/ settings.xml&amp;#x914D;&amp;#x7F6E;&amp;#x6587;&amp;#x4EF6;&amp;#x4E3A; m">
+<meta name="keywords" content="maven,入门教程">
+<meta property="og:type" content="article">
+<meta property="og:title" content="maven入门">
+<meta property="og:url" content="https://leaderli.github.io/2019/07/15/maven入门/index.html">
+<meta property="og:site_name" content="大狗哥传奇">
+<meta property="og:description" content="&amp;#x7701;&amp;#x7565;&amp;#x4E0B;&amp;#x8F7D;&amp;#x5B89;&amp;#x88C5;&amp;#x8FC7;&amp;#x7A0B; &amp;#x914D;&amp;#x7F6E; maven &amp;#x9ED8;&amp;#x8BA4;&amp;#x76EE;&amp;#x5F55;&amp;#x5728;${user.home}/.m2/ settings.xml&amp;#x914D;&amp;#x7F6E;&amp;#x6587;&amp;#x4EF6;&amp;#x4E3A; m">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://leaderli.github.io/images/maven入门_1.jpg">
+<meta property="og:updated_time" content="2019-11-12T18:07:06.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="maven入门">
+<meta name="twitter:description" content="&amp;#x7701;&amp;#x7565;&amp;#x4E0B;&amp;#x8F7D;&amp;#x5B89;&amp;#x88C5;&amp;#x8FC7;&amp;#x7A0B; &amp;#x914D;&amp;#x7F6E; maven &amp;#x9ED8;&amp;#x8BA4;&amp;#x76EE;&amp;#x5F55;&amp;#x5728;${user.home}/.m2/ settings.xml&amp;#x914D;&amp;#x7F6E;&amp;#x6587;&amp;#x4EF6;&amp;#x4E3A; m">
+<meta name="twitter:image" content="https://leaderli.github.io/images/maven入门_1.jpg">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="https://leaderli.github.io/2019/07/15/maven入门/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>maven入门 | 大狗哥传奇</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">大狗哥传奇</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+  <script type="text/javascript">
+     var search_path = "<%= config.search.path %>";
+     if (search_path.length == 0) {
+     	search_path = "search.json";
+     }
+     var path = "<%= config.root %>" + search_path;
+     searchFunc(path, 'local-search-input', 'local-search-result');
+ </script>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://leaderli.github.io/2019/07/15/maven入门/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="lijun">
+      <meta itemprop="description" content="与其感慨路难行，不如马上就出发">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大狗哥传奇">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">maven入门
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-07-15 19:00:45" itemprop="dateCreated datePublished" datetime="2019-07-15T19:00:45+08:00">2019-07-15</time>
+            </span>
+          
+
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-11-13 02:07:06" itemprop="dateModified" datetime="2019-11-13T02:07:06+08:00">2019-11-13</time>
+              </span>
+            
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/maven/" itemprop="url" rel="index"><span itemprop="name">maven</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>&#x7701;&#x7565;&#x4E0B;&#x8F7D;&#x5B89;&#x88C5;&#x8FC7;&#x7A0B;</p>
+<h2 id="&#x914D;&#x7F6E;">&#x914D;&#x7F6E;</h2>
+<p>maven &#x9ED8;&#x8BA4;&#x76EE;&#x5F55;&#x5728;<code>${user.home}/.m2/</code> <code>settings.xml</code>&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x4E3A; maven &#x7684;&#x5168;&#x5C40;&#x914D;&#x7F6E;</p>
+<h3 id="&#x955C;&#x50CF;">&#x955C;&#x50CF;</h3>
+<p>maven &#x9ED8;&#x8BA4;&#x4E2D;&#x592E;&#x4ED3;&#x5E93;&#x8BBF;&#x95EE;&#x901F;&#x5EA6;&#x8F83;&#x6162;&#xFF0C;&#x53EF;&#x901A;&#x8FC7;&#x914D;&#x7F6E;&#x963F;&#x91CC;&#x4E91;&#x7684;&#x955C;&#x50CF;&#x52A0;&#x901F;&#x8BBF;&#x95EE;&#x3002;&#x5F53;&#x9700;&#x8981;&#x7981;&#x6B62;&#x8BBF;&#x95EE;&#x4E2D;&#x592E;&#x4ED3;&#x5E93;&#x65F6;&#xFF0C;&#x4E5F;&#x53EF;&#x901A;&#x8FC7;&#x914D;&#x7F6E;&#x955C;&#x50CF;&#x5C06;&#x4E2D;&#x592E;&#x4ED3;&#x5E93;&#x6307;&#x5B9A;&#x4E3A;&#x8FDC;&#x7A0B;&#x4ED3;&#x5E93;</p>
+<p>&#x963F;&#x91CC;&#x4E91;&#x955C;&#x50CF;&#x5730;&#x5740;&#xFF1A;</p>
+<blockquote>
+<p><code>http://maven.aliyun.com/nexus/content/groups/public/</code></p>
+</blockquote>
+<p>&#x5728;<code>${user.home}/.m2/settings.xml</code>&#x4E2D;&#x65B0;&#x589E;&#x5982;&#x4E0B;&#x914D;&#x7F6E;</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">settings</span>&gt;</span></span><br><span class="line">  ...</span><br><span class="line">  <span class="tag">&lt;<span class="name">mirrors</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">mirror</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">id</span>&gt;</span>UK<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">name</span>&gt;</span>UK Central<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">url</span>&gt;</span>http://uk.maven.org/maven2<span class="tag">&lt;/<span class="name">url</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">mirrorOf</span>&gt;</span>central<span class="tag">&lt;/<span class="name">mirrorOf</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">mirror</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">mirrors</span>&gt;</span></span><br><span class="line">  ...</span><br><span class="line"><span class="tag">&lt;/<span class="name">settings</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ol type="1">
+<li><code>&lt;mirrorOf&gt;central&lt;/mirrorOf&gt;</code> &#x91CC;&#x662F;&#x8981;&#x66FF;&#x4EE3;&#x7684;&#x4ED3;&#x5E93;&#x7684; id&#x3002;</li>
+<li><code>&lt;mirrorOf&gt;*&lt;/mirrorOf&gt;</code> &#x5339;&#x914D;&#x6240;&#x6709;&#x4ED3;&#x5E93;</li>
+<li><code>&lt;mirrorOf&gt;external:*&lt;/mirrorOf&gt;</code> &#x5339;&#x914D;&#x6240;&#x6709;&#x8FDC;&#x7A0B;&#x4ED3;&#x5E93;&#xFF0C;&#x4F7F;&#x7528;<code>localhost</code>&#x7684;&#x9664;&#x5916;&#xFF0C;&#x4F7F;&#x7528;<code>file://</code>&#x534F;&#x8BAE;&#x7684;&#x9664;&#x5916;&#x3002;&#x4E5F;&#x5C31;&#x662F;&#x8BF4;&#xFF0C;&#x5339;&#x914D;&#x6240;&#x6709;&#x4E0D;&#x5728;&#x672C;&#x673A;&#x4E0A;&#x7684;&#x8FDC;&#x7A0B;&#x4ED3;&#x5E93;&#x3002;</li>
+<li><code>&lt;mirrorOf&gt;repo1,repo2&lt;/mirrorOf&gt;</code> &#x5339;&#x914D;&#x4ED3;&#x5E93; repo1 &#x548C; repo2&#xFF0C;&#x4F7F;&#x7528;&#x9017;&#x53F7;&#x5206;&#x9694;&#x591A;&#x4E2A;&#x8FDC;&#x7A0B;&#x4ED3;&#x5E93;&#x3002;</li>
+<li><code>&lt;mirrorOf&gt;*,!repo1&lt;/miiroOf&gt;</code> &#x5339;&#x914D;&#x6240;&#x6709;&#x8FDC;&#x7A0B;&#x4ED3;&#x5E93;&#xFF0C;repo1 &#x9664;&#x5916;&#xFF0C;&#x4F7F;&#x7528;&#x611F;&#x53F9;&#x53F7;&#x5C06;&#x4ED3;&#x5E93;&#x4ECE;&#x5339;&#x914D;&#x4E2D;&#x6392;&#x9664;&#x3002;</li>
+</ol>
+<h2 id="pom">POM</h2>
+<p>pom &#x662F;&#x6700;&#x57FA;&#x7840;&#x7684;&#x7EC4;&#x4EF6;&#xFF0C;&#x662F; maven &#x7528;&#x6765;&#x6784;&#x5EFA;&#x9879;&#x76EE;&#x7684;&#x57FA;&#x7840;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#xFF0C;&#x5176;&#x4E2D;&#x5305;&#x62EC;&#x8BB8;&#x591A;&#x9ED8;&#x8BA4;&#x5C5E;&#x6027;&#x3002;</p>
+<h3 id="super-pom">Super POM</h3>
+<p>&#x6240;&#x6709;&#x7684; pom &#x6587;&#x4EF6;&#x90FD;&#x7EE7;&#x627F;&#x81EA;<code>Super POM</code>&#xFF0C;&#x9664;&#x975E;&#x4F60;&#x8BBE;&#x7F6E;&#x4E86;&#x4E0D;&#x7EE7;&#x627F;&#x3002;</p>
+<p>&#x4E0B;&#x9762;&#x662F; Maven 3.5.4 &#x7248;&#x672C;&#x7684;<code>Super POM</code>&#x6458;&#x8981;</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">project</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">modelVersion</span>&gt;</span>4.0.0<span class="tag">&lt;/<span class="name">modelVersion</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">repositories</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">repository</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">id</span>&gt;</span>central<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">name</span>&gt;</span>Central Repository<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">url</span>&gt;</span>https://repo.maven.apache.org/maven2<span class="tag">&lt;/<span class="name">url</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">layout</span>&gt;</span>default<span class="tag">&lt;/<span class="name">layout</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">snapshots</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">enabled</span>&gt;</span>false<span class="tag">&lt;/<span class="name">enabled</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">snapshots</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">repository</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">repositories</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">pluginRepositories</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">pluginRepository</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">id</span>&gt;</span>central<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">name</span>&gt;</span>Central Repository<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">url</span>&gt;</span>https://repo.maven.apache.org/maven2<span class="tag">&lt;/<span class="name">url</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">layout</span>&gt;</span>default<span class="tag">&lt;/<span class="name">layout</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">snapshots</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">enabled</span>&gt;</span>false<span class="tag">&lt;/<span class="name">enabled</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">snapshots</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">releases</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">updatePolicy</span>&gt;</span>never<span class="tag">&lt;/<span class="name">updatePolicy</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">releases</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">pluginRepository</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">pluginRepositories</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">build</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">directory</span>&gt;</span>${project.basedir}/target<span class="tag">&lt;/<span class="name">directory</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">outputDirectory</span>&gt;</span>${project.build.directory}/classes<span class="tag">&lt;/<span class="name">outputDirectory</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">finalName</span>&gt;</span>${project.artifactId}-${project.version}<span class="tag">&lt;/<span class="name">finalName</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">testOutputDirectory</span>&gt;</span>${project.build.directory}/test-classes<span class="tag">&lt;/<span class="name">testOutputDirectory</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">sourceDirectory</span>&gt;</span>${project.basedir}/src/main/java<span class="tag">&lt;/<span class="name">sourceDirectory</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">scriptSourceDirectory</span>&gt;</span>${project.basedir}/src/main/scripts<span class="tag">&lt;/<span class="name">scriptSourceDirectory</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">testSourceDirectory</span>&gt;</span>${project.basedir}/src/test/java<span class="tag">&lt;/<span class="name">testSourceDirectory</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">resources</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">resource</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">directory</span>&gt;</span>${project.basedir}/src/main/resources<span class="tag">&lt;/<span class="name">directory</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">resource</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">resources</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">testResources</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">testResource</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">directory</span>&gt;</span>${project.basedir}/src/test/resources<span class="tag">&lt;/<span class="name">directory</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">testResource</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">testResources</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">pluginManagement</span>&gt;</span></span><br><span class="line">      <span class="comment">&lt;!-- <span class="doctag">NOTE:</span> These plugins will be removed from future versions of the super POM --&gt;</span></span><br><span class="line">      <span class="comment">&lt;!-- They are kept for the moment as they are very unlikely to conflict with lifecycle mappings (MNG-4453) --&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">plugins</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>maven-antrun-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.3<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>maven-assembly-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.2-beta-5<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>maven-dependency-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.8<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>maven-release-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.5.3<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">plugins</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">pluginManagement</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">build</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">reporting</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">outputDirectory</span>&gt;</span>${project.build.directory}/site<span class="tag">&lt;/<span class="name">outputDirectory</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">reporting</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">profiles</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- <span class="doctag">NOTE:</span> The release profile will be removed from future versions of the super POM --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">profile</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">id</span>&gt;</span>release-profile<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">activation</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">name</span>&gt;</span>performRelease<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">value</span>&gt;</span>true<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">activation</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">build</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">plugins</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">inherited</span>&gt;</span>true<span class="tag">&lt;/<span class="name">inherited</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>maven-source-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">executions</span>&gt;</span></span><br><span class="line">              <span class="tag">&lt;<span class="name">execution</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">id</span>&gt;</span>attach-sources<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">goals</span>&gt;</span></span><br><span class="line">                  <span class="tag">&lt;<span class="name">goal</span>&gt;</span>jar-no-fork<span class="tag">&lt;/<span class="name">goal</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">goals</span>&gt;</span></span><br><span class="line">              <span class="tag">&lt;/<span class="name">execution</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">executions</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">inherited</span>&gt;</span>true<span class="tag">&lt;/<span class="name">inherited</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>maven-javadoc-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">executions</span>&gt;</span></span><br><span class="line">              <span class="tag">&lt;<span class="name">execution</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">id</span>&gt;</span>attach-javadocs<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">goals</span>&gt;</span></span><br><span class="line">                  <span class="tag">&lt;<span class="name">goal</span>&gt;</span>jar<span class="tag">&lt;/<span class="name">goal</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">goals</span>&gt;</span></span><br><span class="line">              <span class="tag">&lt;/<span class="name">execution</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">executions</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">inherited</span>&gt;</span>true<span class="tag">&lt;/<span class="name">inherited</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>maven-deploy-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">              <span class="tag">&lt;<span class="name">updateReleaseInfo</span>&gt;</span>true<span class="tag">&lt;/<span class="name">updateReleaseInfo</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">plugins</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">build</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">profile</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">profiles</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">project</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="&#x5C5E;&#x6027;">&#x5C5E;&#x6027;</h2>
+<h3 id="&#x5185;&#x7F6E;&#x5C5E;&#x6027;">&#x5185;&#x7F6E;&#x5C5E;&#x6027;</h3>
+<ul>
+<li><p><code>${basedir}</code>&#x8868;&#x793A;&#x9879;&#x76EE;&#x6839;&#x76EE;&#x5F55;&#xFF0C;&#x5373;&#x5305;&#x542B;<code>pom.xml</code>&#x6587;&#x4EF6;&#x7684;&#x76EE;&#x5F55;;</p></li>
+<li><p><code>${version}</code>&#x8868;&#x793A;&#x9879;&#x76EE;&#x7248;&#x672C;&#x3002;</p></li>
+<li><p><code>${project.basedir}</code>&#x540C;<code>${basedir}</code>;</p></li>
+</ul>
+<h3 id="pom-&#x5C5E;&#x6027;">pom &#x5C5E;&#x6027;</h3>
+<p>&#x4F7F;&#x7528; pom &#x5C5E;&#x6027;&#x53EF;&#x4EE5;&#x5F15;&#x7528;&#x5230; pom.xml &#x6587;&#x4EF6;&#x5BF9;&#x5E94;&#x5143;&#x7D20;&#x7684;&#x503C;,&#x7EE7;&#x627F;&#x81EA;<code>Super POM</code></p>
+<ul>
+<li><code>${project.build.sourceDirectory}</code>:&#x9879;&#x76EE;&#x7684;&#x4E3B;&#x6E90;&#x7801;&#x76EE;&#x5F55;&#xFF0C;&#x9ED8;&#x8BA4;&#x4E3A;<code>src/main/java/</code></li>
+<li><code>${project.build.testSourceDirectory}</code>:&#x9879;&#x76EE;&#x7684;&#x6D4B;&#x8BD5;&#x6E90;&#x7801;&#x76EE;&#x5F55;&#xFF0C;&#x9ED8;&#x8BA4;&#x4E3A;<code>/src/test/java/</code></li>
+<li><code>${project.build.directory}</code>:&#x9879;&#x76EE;&#x6784;&#x5EFA;&#x8F93;&#x51FA;&#x76EE;&#x5F55;&#xFF0C;&#x9ED8;&#x8BA4;&#x4E3A;<code>target/</code></li>
+<li><code>${project.outputDirectory}</code>:&#x9879;&#x76EE;&#x4E3B;&#x4EE3;&#x7801;&#x7F16;&#x8BD1;&#x8F93;&#x51FA;&#x76EE;&#x5F55;&#xFF0C;&#x9ED8;&#x8BA4;&#x4E3A;<code>target/classes/</code></li>
+<li><code>${project.testOutputDirectory}</code>:&#x9879;&#x76EE;&#x6D4B;&#x8BD5;&#x4EE3;&#x7801;&#x7F16;&#x8BD1;&#x8F93;&#x51FA;&#x76EE;&#x5F55;&#xFF0C;&#x9ED8;&#x8BA4;&#x4E3A;<code>target/testclasses/</code></li>
+<li><code>${project.groupId}</code>:&#x9879;&#x76EE;&#x7684;<code>groupId</code></li>
+<li><code>${project.artifactId}</code>:&#x9879;&#x76EE;&#x7684;<code>artifactId</code></li>
+<li><code>${project.version}</code>:&#x9879;&#x76EE;&#x7684;<code>version</code>,&#x4E8E;<code>${version}</code>&#x7B49;&#x4EF7;</li>
+<li><code>${project.build.finalName}</code>:&#x9879;&#x76EE;&#x6253;&#x5305;&#x8F93;&#x51FA;&#x6587;&#x4EF6;&#x7684;&#x540D;&#x79F0;&#xFF0C;&#x9ED8;&#x8BA4; &#x4E3A;<code>${project.artifactId}${project.version}</code></li>
+</ul>
+<h3 id="&#x81EA;&#x5B9A;&#x4E49;&#x5C5E;&#x6027;">&#x81EA;&#x5B9A;&#x4E49;&#x5C5E;&#x6027;</h3>
+<p>&#x5728;<code>pom.xml</code>&#x6587;&#x4EF6;&#x7684;<code>&lt;properties&gt;</code>&#x6807;&#x7B7E;&#x4E0B;&#x5B9A;&#x4E49;&#x7684; Maven &#x5C5E;&#x6027;,&#x5728;&#x5176;&#x4ED6;&#x5730;&#x65B9;&#x4F7F;&#x7528;<code>${property}</code>&#x4F7F;&#x7528;&#x8BE5;&#x5C5E;&#x6027;&#x503C;&#x3002;</p>
+<h3 id="&#x6587;&#x4EF6;&#x5C5E;&#x6027;">&#x6587;&#x4EF6;&#x5C5E;&#x6027;</h3>
+<p>&#x4E0E; pom &#x5C5E;&#x6027;&#x540C;&#x7406;,&#x7528;&#x6237;&#x4F7F;&#x7528;&#x4EE5;<code>settings</code>&#x5F00;&#x5934;&#x7684;&#x5C5E;&#x6027;&#x5F15;&#x7528;<code>settings.xml</code>&#x6587;&#x4EF6;&#x4E2D;&#x7684; XML &#x5143;&#x7D20;&#x503C;<code>${settings.localRepository}</code>&#x8868;&#x793A;&#x672C;&#x5730;&#x4ED3;&#x5E93;&#x7684;&#x5730;&#x5740;;</p>
+<h3 id="java-&#x7CFB;&#x7EDF;&#x5C5E;&#x6027;">Java &#x7CFB;&#x7EDF;&#x5C5E;&#x6027;</h3>
+<p>&#x6240;&#x6709;&#x7684; Java &#x7CFB;&#x7EDF;&#x5C5E;&#x6027;&#x90FD;&#x53EF;&#x4EE5;&#x4F7F;&#x7528; Maven &#x5C5E;&#x6027;&#x5F15;&#x7528;,&#x4F7F;&#x7528;<code>mvn help:system</code>&#x547D;&#x4EE4;&#x53EF;&#x67E5;&#x770B;&#x6240;&#x6709;&#x7684; Java &#x7CFB;&#x7EDF;&#x5C5E;&#x6027;;<code>System.getProperties()</code>&#x53EF;&#x5F97;&#x5230;&#x6240;&#x6709;&#x7684; Java &#x5C5E;&#x6027;;<code>${user.home}</code>&#x8868;&#x793A;&#x7528;&#x6237;&#x76EE;&#x5F55;;</p>
+<h3 id="&#x73AF;&#x5883;&#x53D8;&#x91CF;&#x5C5E;&#x6027;">&#x73AF;&#x5883;&#x53D8;&#x91CF;&#x5C5E;&#x6027;</h3>
+<p>&#x6240;&#x6709;&#x7684;&#x73AF;&#x5883;&#x53D8;&#x91CF;&#x90FD;&#x53EF;&#x4EE5;&#x7528;&#x4EE5;<code>env.</code>&#x5F00;&#x5934;&#x7684; Maven &#x5C5E;&#x6027;&#x5F15;&#x7528;&#x4F7F;&#x7528;<code>mvn help:system</code>&#x547D;&#x4EE4;&#x53EF;&#x67E5;&#x770B;&#x6240;&#x6709;&#x73AF;&#x5883;&#x53D8;&#x91CF;;${env.JAVA_HOME}&#x8868;&#x793A; JAVA_HOME &#x73AF;&#x5883;&#x53D8;&#x91CF;&#x7684;&#x503C;;</p>
+<h2 id="&#x7F16;&#x8BD1;&#x8D44;&#x6E90;&#x6587;&#x4EF6;">&#x7F16;&#x8BD1;&#x8D44;&#x6E90;&#x6587;&#x4EF6;</h2>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">project</span> <span class="attr">xmlns</span>=<span class="string">&quot;http://maven.apache.org/POM/4.0.0&quot;</span></span></span><br><span class="line"><span class="tag">  <span class="attr">xmlns:xsi</span>=<span class="string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span></span><br><span class="line"><span class="tag">  <span class="attr">xsi:schemaLocation</span>=<span class="string">&quot;http://maven.apache.org/POM/4.0.0</span></span></span><br><span class="line"><span class="tag"><span class="string">                      https://maven.apache.org/xsd/maven-4.0.0.xsd&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">build</span>&gt;</span></span><br><span class="line">    ...</span><br><span class="line">    <span class="tag">&lt;<span class="name">resources</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">resource</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">targetPath</span>&gt;</span>META-INF/plexus<span class="tag">&lt;/<span class="name">targetPath</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">filtering</span>&gt;</span>false<span class="tag">&lt;/<span class="name">filtering</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">directory</span>&gt;</span>${basedir}/src/main/plexus<span class="tag">&lt;/<span class="name">directory</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">includes</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">include</span>&gt;</span>configuration.xml<span class="tag">&lt;/<span class="name">include</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">includes</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">excludes</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">exclude</span>&gt;</span>**/*.properties<span class="tag">&lt;/<span class="name">exclude</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">excludes</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">resource</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">resources</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">testResources</span>&gt;</span></span><br><span class="line">      ...</span><br><span class="line">    <span class="tag">&lt;/<span class="name">testResources</span>&gt;</span></span><br><span class="line">    ...</span><br><span class="line">  <span class="tag">&lt;/<span class="name">build</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">project</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>targetPath</code> &#x7F16;&#x8BD1;&#x76EE;&#x5F55;,&#x9ED8;&#x8BA4;&#x4F4D;&#x7F6E;&#x4E3A;<code>classes</code>&#x76EE;&#x5F55;</li>
+<li><code>directory</code> &#x9879;&#x76EE;&#x8D44;&#x6E90;&#x76EE;&#x5F55;</li>
+</ul>
+<h3 id="&#x751F;&#x547D;&#x5468;&#x671F;&#x548C;&#x9636;&#x6BB5;">&#x751F;&#x547D;&#x5468;&#x671F;&#x548C;&#x9636;&#x6BB5;</h3>
+<p>clean</p>
+<blockquote>
+<p>pre-clean, clean, post-clean</p>
+</blockquote>
+<p>default</p>
+<blockquote>
+<p>validate, initialize, generate-sources, process-sources, generate-resources, process-resources, compile, process-classes, generate-test-sources, process-test-sources, generate-test-resources, process-test-resources, test-compile, process-test-classes, test, prepare-package, package, pre-integration-test, integration-test, post-integration-test, verify, install, deploy</p>
+</blockquote>
+<p>site</p>
+<blockquote>
+<p>pre-site, site, post-site, site-deploy</p>
+</blockquote>
+<h3 id="phase">phase</h3>
+<p>&#x6267;&#x884C;&#x6307;&#x5B9A;&#x9636;&#x6BB5;&#x53CA;&#x8BE5;&#x9636;&#x6BB5;&#x7684;&#x6240;&#x6709;&#x524D;&#x7F6E;&#x9636;&#x6BB5;&#x7684;&#x63D2;&#x4EF6;&#x3002;</p>
+<h3 id="goal">goal</h3>
+<p><code>mvn tomcat7:deploy</code>&#x8FD9;&#x65F6; goal &#x4E3A;<code>deploy</code><br>
+<code>mvn clean:clean</code>&#x8FD9;&#x65F6; goal &#x4E3A;<code>clean</code><br>
+<code>goal</code>&#x53EF;&#x53EA;&#x8FD0;&#x884C;&#x6307;&#x5B9A;<code>goal</code>&#x7684;&#x63D2;&#x4EF6;&#xFF0C;&#x800C;&#x4E0D;&#x4F1A;&#x8C03;&#x7528;&#x524D;&#x7F6E;</p>
+<h3 id="&#x8C03;&#x8BD5;&#x9ED8;&#x8BA4;">&#x8C03;&#x8BD5;&#x9ED8;&#x8BA4;</h3>
+<p><code>mvn compile -X</code><br>
+&#x53EF;&#x4EE5;&#x67E5;&#x770B;<code>compile</code>&#x63D2;&#x4EF6;&#x7684;&#x6240;&#x6709;&#x7EC6;&#x8282;&#xFF0C;&#x5305;&#x62EC;&#x9ED8;&#x8BA4;&#x914D;&#x7F6E;&#xFF0C;&#x6BD4;&#x5982;&#x65E5;&#x5FD7;&#x5982;&#x4E0B; <img src="/images/maven&#x5165;&#x95E8;_1.jpg" alt="&#x8BE6;&#x7EC6;&#x65E5;&#x5FD7;"></p>
+<h3 id="&#x63D2;&#x4EF6;&#x4ECB;&#x7ECD;">&#x63D2;&#x4EF6;&#x4ECB;&#x7ECD;</h3>
+<p>&#x63D2;&#x4EF6;&#x7684;<code>pom</code>&#x4F1A;&#x6307;&#x5B9A;&#x9ED8;&#x8BA4;<code>phase</code>&#xFF0C;<code>goal</code>:<a href="https://maven.apache.org/plugins/index.html" target="_blank" rel="noopener">&#x63D2;&#x4EF6;&#x7684;&#x5B98;&#x65B9;&#x6587;&#x6863;</a></p>
+<h4 id="clean">clean</h4>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">build</span>&gt;</span></span><br><span class="line">    ...</span><br><span class="line">    <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>maven-clean-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.1.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">    ...</span><br><span class="line"><span class="tag">&lt;/<span class="name">build</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>clean &#x63D2;&#x4EF6;&#x4E3B;&#x8981;&#x6E05;&#x7406;&#x7F16;&#x8BD1;&#x751F;&#x6210;&#x7684;&#x6587;&#x4EF6;&#xFF0C;&#x9ED8;&#x8BA4;&#x7684;&#x7F16;&#x8BD1;&#x76EE;&#x5F55;&#x914D;&#x7F6E;&#x5728;&#x4EE5;&#x4E0B;&#x5C5E;&#x6027;&#x4E2D;</p>
+<blockquote>
+<p><code>project.build.directory</code> &gt; <code>project.build.outputDirectory</code> &gt; <code>project.build.testOutputDirectory</code> &gt; <code>project.reporting.outputDirectory</code></p>
+</blockquote>
+<h4 id="compiler">compiler</h4>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"> <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.maven.plugins<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>maven-compiler-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.8.1<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">compilerVersion</span>&gt;</span>1.8<span class="tag">&lt;/<span class="name">compilerVersion</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">source</span>&gt;</span>1.8<span class="tag">&lt;/<span class="name">source</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">target</span>&gt;</span>1.8<span class="tag">&lt;/<span class="name">target</span>&gt;</span></span><br><span class="line">           <span class="tag">&lt;<span class="name">compilerArgs</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">arg</span>&gt;</span>-verbose<span class="tag">&lt;/<span class="name">arg</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">arg</span>&gt;</span>-Xlint:all,-options,-path<span class="tag">&lt;/<span class="name">arg</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;/<span class="name">compilerArgs</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><code>compilerArgs</code> javac &#x53C2;&#x6570;<br>
+<code>source</code> &#x6E90;&#x7801; jdk &#x7248;&#x672C;<br>
+<code>target</code> &#x7F16;&#x8BD1; jdk &#x7248;&#x672C;<br>
+&#x5176;&#x4ED6;&#x8BE6;&#x7EC6;&#x53C2;&#x6570;&#x4ECB;&#x7ECD;&#x8BF7;&#x67E5;&#x770B; :<a href="https://maven.apache.org/plugins/maven-compiler-plugin/compile-mojo.html" target="_blank" rel="noopener">compiler:compile &#x53C2;&#x6570;&#x4ECB;&#x7ECD;</a></p>
+<p>&#x901A;&#x8FC7; debug &#x6A21;&#x5F0F;&#x8FD0;&#x884C; compile&#xFF0C;&#x53EF;&#x4EE5;&#x770B;&#x5230; compile &#x7F16;&#x8BD1;&#x7684;&#x6E90;&#x76EE;&#x5F55;&#x4EE5;&#x53CA;&#x76EE;&#x6807;&#x76EE;&#x5F55;</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">buildDirectory</span> <span class="attr">default-value</span>=<span class="string">&quot;${project.build.directory}&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">classpathElements</span> <span class="attr">default-value</span>=<span class="string">&quot;${project.compileClasspathElements}&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">compileSourceRoots</span> <span class="attr">default-value</span>=<span class="string">&quot;${project.compileSourceRoots}&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+<p><code>${project.build.directory}</code> &#x5728;<code>Super POM</code>&#x4E2D;&#x6709;&#x5B9A;&#x4E49;&#xFF0C;&#x9ED8;&#x8BA4;&#x503C;&#x4E3A;<code>${project.basedir}/target</code><br>
+<code>${project.compileSourceRoots}</code> &#x9ED8;&#x8BA4;&#x503C;&#x4E3A;<code>${project.basedir}/${project.build.sourceDirectory}</code>&#x901A;&#x8FC7;&#x67E5;&#x770B; maven &#x6E90;&#x7801;:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> org.apache.maven.project;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MavenProject</span> <span class="keyword">implements</span> <span class="title">Cloneable</span> </span>{</span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">private</span> List&lt;String&gt; compileSourceRoots = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">    ...</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addCompileSourceRoot</span><span class="params">( String path )</span></span></span><br><span class="line"><span class="function">    </span>{</span><br><span class="line">        addPath( getCompileSourceRoots(), path );</span><br><span class="line">    }</span><br><span class="line">    ...</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> org.apache.maven.project;</span><br><span class="line"><span class="meta">@Component</span>( role = ProjectBuilder.class )</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DefaultProjectBuilder</span></span></span><br><span class="line"><span class="class">    <span class="keyword">implements</span> <span class="title">ProjectBuilder</span></span></span><br><span class="line"><span class="class"></span>{</span><br><span class="line">    ...</span><br><span class="line">        <span class="keyword">if</span> ( project.getFile() != <span class="keyword">null</span> )</span><br><span class="line">        {</span><br><span class="line">            Build build = project.getBuild();</span><br><span class="line">            project.addScriptSourceRoot( build.getScriptSourceDirectory() );</span><br><span class="line">            project.addCompileSourceRoot( build.getSourceDirectory() );</span><br><span class="line">            project.addTestCompileSourceRoot( build.getTestSourceDirectory() );</span><br><span class="line">        }</span><br><span class="line">    ...</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> org.apache.maven.project;</span><br><span class="line"><span class="meta">@Deprecated</span></span><br><span class="line"><span class="meta">@Component</span>( role = PathTranslator.class )</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DefaultPathTranslator</span> <span class="keyword">implements</span> <span class="title">PathTranslator</span> </span>{</span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">if</span> ( build != <span class="keyword">null</span> )</span><br><span class="line">      {</span><br><span class="line">          build.setDirectory( alignToBaseDirectory( build.getDirectory(), basedir ) );</span><br><span class="line">          build.setSourceDirectory( alignToBaseDirectory( build.getSourceDirectory(), basedir ) );</span><br><span class="line">    ...</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> org.apache.maven.model.interpolation;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">AbstractStringBasedModelInterpolator</span></span></span><br><span class="line"><span class="class">    <span class="keyword">implements</span> <span class="title">ModelInterpolator</span></span></span><br><span class="line"><span class="class"></span>{</span><br><span class="line"> <span class="keyword">static</span></span><br><span class="line">    {</span><br><span class="line">        List&lt;String&gt; translatedPrefixes = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// MNG-1927, MNG-2124, MNG-3355:</span></span><br><span class="line">        <span class="comment">// If the build section is present and the project directory is non-null, we should make</span></span><br><span class="line">        <span class="comment">// sure interpolation of the directories below uses translated paths.</span></span><br><span class="line">        <span class="comment">// Afterward, we&apos;ll double back and translate any paths that weren&apos;t covered during interpolation via the</span></span><br><span class="line">        <span class="comment">// code below...</span></span><br><span class="line">        translatedPrefixes.add( <span class="string">&quot;build.directory&quot;</span> );</span><br><span class="line">        translatedPrefixes.add( <span class="string">&quot;build.outputDirectory&quot;</span> );</span><br><span class="line">        translatedPrefixes.add( <span class="string">&quot;build.testOutputDirectory&quot;</span> );</span><br><span class="line">        translatedPrefixes.add( <span class="string">&quot;build.sourceDirectory&quot;</span> );</span><br><span class="line">        translatedPrefixes.add( <span class="string">&quot;build.testSourceDirectory&quot;</span> );</span><br><span class="line">        translatedPrefixes.add( <span class="string">&quot;build.scriptSourceDirectory&quot;</span> );</span><br><span class="line">        translatedPrefixes.add( <span class="string">&quot;reporting.outputDirectory&quot;</span> );</span><br><span class="line"></span><br><span class="line">        TRANSLATED_PATH_EXPRESSIONS = translatedPrefixes;</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line">...</span><br><span class="line"></span><br><span class="line"><span class="keyword">protected</span> List&lt;? extends InterpolationPostProcessor&gt; createPostProcessors( <span class="keyword">final</span> Model model, <span class="keyword">final</span> File projectDir, <span class="keyword">final</span> ModelBuildingRequest config )</span><br><span class="line">    {</span><br><span class="line">        List&lt;InterpolationPostProcessor&gt; processors = <span class="keyword">new</span> ArrayList&lt;&gt;( <span class="number">2</span> );</span><br><span class="line">        <span class="keyword">if</span> ( projectDir != <span class="keyword">null</span> ){</span><br><span class="line">            processors.add( <span class="keyword">new</span> PathTranslatingPostProcessor( PROJECT_PREFIXES, TRANSLATED_PATH_EXPRESSIONS,projectDir, pathTranslator ) );</span><br><span class="line">        }</span><br><span class="line">        processors.add( <span class="keyword">new</span> UrlNormalizingPostProcessor( urlNormalizer ) );</span><br><span class="line">        <span class="keyword">return</span> processors;</span><br><span class="line">    }</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<h4 id="resources">resources</h4>
+<p>&#x7F16;&#x8BD1;&#x65F6;&#x62F7;&#x8D1D;&#x8D44;&#x6E90;&#x6587;&#x4EF6;,&#x4E0D;&#x9700;&#x8981;&#x663E;&#x5F0F;&#x7684;&#x8C03;&#x7528;&#x63D2;&#x4EF6;</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">build</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">finalName</span>&gt;</span>${project.artifactId}<span class="tag">&lt;/<span class="name">finalName</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">resources</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">resource</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">targetPath</span>&gt;</span>${project.build.directory}/META-INF<span class="tag">&lt;/<span class="name">targetPath</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">directory</span>&gt;</span>${basedir}/resources<span class="tag">&lt;/<span class="name">directory</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">resource</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">resources</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">build</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><code>targetPath</code>&#x7F16;&#x8BD1;&#x540E;&#x76EE;&#x5F55;,&#x9ED8;&#x8BA4;&#x662F;&#x4EE5;<code>${project.build.outputDirectory}</code>&#x4E3A;&#x524D;&#x7F00;&#x7684;<br>
+<code>directory</code> &#x6E90;&#x8D44;&#x6E90;&#x76EE;&#x5F55;,&#x9ED8;&#x8BA4;&#x662F;&#x4EE5;<code>${basedir}</code>&#x4E3A;&#x524D;&#x7F00;&#x7684;<br>
+<code>finalName</code> &#x6253;&#x5305;&#x540E;&#x7684;&#x9879;&#x76EE;&#x540D;,&#x9ED8;&#x8BA4;&#x4E3A;<code>${project.artifactId}-${project.version}</code></p>
+<h4 id="dependency">dependency</h4>
+<p>&#x89E3;&#x51B3;&#x6253;&#x5305;&#x4F9D;&#x8D56;&#x7684; jar &#x5305;</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">  <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.maven.plugins<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>maven-dependency-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.10<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">executions</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">execution</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">id</span>&gt;</span>copy-dependencies<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">phase</span>&gt;</span>package<span class="tag">&lt;/<span class="name">phase</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">goals</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">goal</span>&gt;</span>copy-dependencies<span class="tag">&lt;/<span class="name">goal</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">goals</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">outputDirectory</span>&gt;</span>${project.build.directory}/lib<span class="tag">&lt;/<span class="name">outputDirectory</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">execution</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">executions</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><code>outputDirectory</code>&#x8868;&#x793A;&#x4F9D;&#x8D56; jar &#x9ED8;&#x8BA4;&#x8F93;&#x51FA;&#x76EE;&#x5F55;&#xFF0C;&#x9ED8;&#x8BA4;&#x662F;<code>${basedir}</code><br>
+<code>goal</code>:<code>copy-dependencies</code> <a href="https://maven.apache.org/plugins/maven-dependency-plugin/copy-dependencies-mojo.html" target="_blank" rel="noopener">&#x76F8;&#x5173;&#x914D;&#x7F6E;&#x8BE6;&#x7EC6;</a></p>
+<h4 id="antrun">antrun</h4>
+<p>&#x6267;&#x884C;&#x811A;&#x672C;</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"> <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>maven-antrun-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span> <span class="comment">&lt;!-- &#x62F7;&#x8D1D;&#x63D2;&#x4EF6; --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">executions</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">execution</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">id</span>&gt;</span>copy<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">phase</span>&gt;</span>package<span class="tag">&lt;/<span class="name">phase</span>&gt;</span> <span class="comment">&lt;!-- maven&#x751F;&#x547D;&#x5468;&#x671F; --&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">              <span class="tag">&lt;<span class="name">tasks</span>&gt;</span> <span class="comment">&lt;!-- &#x5176;&#x4ED6;&#x8BED;&#x6CD5;&#x81EA;&#x884C;&#x767E;&#x5EA6;maven-antrun-plugin&#x63D2;&#x4EF6;&#x7684;&#x76F8;&#x5173;&#x7528;&#x6CD5;--&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">echo</span> <span class="attr">message</span>=<span class="string">&quot;${project.build.directory}&quot;</span>/&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">echo</span> <span class="attr">message</span>=<span class="string">&quot;${output.jar.director}&quot;</span>/&gt;</span></span><br><span class="line">              <span class="tag">&lt;/<span class="name">tasks</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">goals</span>&gt;</span></span><br><span class="line">              <span class="tag">&lt;<span class="name">goal</span>&gt;</span>run<span class="tag">&lt;/<span class="name">goal</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">goals</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;/<span class="name">execution</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">executions</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><code>tasks</code>&#x5177;&#x4F53;&#x8BED;&#x6CD5;<a href="https://ant.apache.org/manual/index.html" target="_blank" rel="noopener">&#x53C2;&#x8003; ant &#x5B98;&#x65B9;&#x6587;&#x6863;</a></p>
+<h3 id="&#x4F9D;&#x8D56;&#x51B2;&#x7A81;">&#x4F9D;&#x8D56;&#x51B2;&#x7A81;</h3>
+<p>Maven &#x91C7;&#x7528;&#x201C;&#x6700;&#x8FD1;&#x83B7;&#x80DC;&#x7B56;&#x7565;&#xFF08;nearest wins strategy&#xFF09;&#x201D;&#x7684;&#x65B9;&#x5F0F;&#x5904;&#x7406;&#x4F9D;&#x8D56;&#x51B2;&#x7A81;&#xFF0C;&#x5373;&#x5982;&#x679C;&#x4E00;&#x4E2A;&#x9879;&#x76EE;&#x6700;&#x7EC8;&#x4F9D;&#x8D56;&#x4E8E;&#x76F8;&#x540C; artifact &#x7684;&#x591A;&#x4E2A;&#x7248;&#x672C;&#xFF0C;&#x5728;&#x4F9D;&#x8D56;&#x6811;&#x4E2D;&#x79BB;&#x9879;&#x76EE;&#x6700;&#x8FD1;&#x7684;&#x90A3;&#x4E2A;&#x7248;&#x672C;&#x5C06;&#x88AB;&#x4F7F;&#x7528;</p>
+<p>1.&#x5F53;&#x524D;&#x6A21;&#x5757;&#x76F4;&#x63A5;&#x5F15;&#x5165;&#x5408;&#x9002;&#x7248;&#x672C;&#x7684;&#x4F9D;&#x8D56;</p>
+<p>2.&#x4F7F;&#x7528; <code>dependency:tree -Dverbose&quot;</code>&#x67E5;&#x770B;&#x662F;&#x5426;&#x6709;&#x51B2;&#x7A81;&#x7684;&#x4F9D;&#x8D56;,&#x6839;&#x636E;&#x8F93;&#x51FA;&#x7684;&#x4F9D;&#x8D56;&#x5173;&#x7CFB;&#x56FE;&#x67E5;&#x770B;&#x662F;&#x5426;&#x5305;&#x542B;<code>conflict</code>&#xFF0C;&#x7136;&#x540E;&#x6839;&#x636E;&#x9700;&#x8981;&#x6392;&#x9664;&#x4E0D;&#x9700;&#x8981;&#x5F15;&#x5165;&#x7684;&#x7248;&#x672C; &#x901A;&#x8FC7;&#x4F9D;&#x8D56;&#x6392;&#x9664;</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>jaxen<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jaxen<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.2.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">exclusions</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">exclusion</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>xml-apis<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>xml-apis<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">exclusion</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">exclusions</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="dependencymanagement">dependencyManagement</h3>
+<p>&#x793A;&#x4F8B;&#x8BF4;&#x660E;&#xFF0C;</p>
+<p>&#x5728;&#x7236;&#x6A21;&#x5757;&#x4E2D;&#xFF1A;</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependencyManagement</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>mysql<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mysql-connector-java<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">version</span>&gt;</span>5.1.44<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependencyManagement</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>&#x90A3;&#x4E48;&#x5728;&#x5B50;&#x6A21;&#x5757;&#x4E2D;&#x53EA;&#x9700;&#x8981;<code>&lt;groupId&gt;</code>&#x548C;<code>&lt;artifactId&gt;</code>&#x5373;&#x53EF;&#xFF0C;&#x5982;&#xFF1A;</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">           <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>mysql<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">           <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mysql-connector-java<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>&#x8BF4;&#x660E;&#xFF1A; &#x4F7F;&#x7528; dependencyManagement &#x53EF;&#x4EE5;&#x7EDF;&#x4E00;&#x7BA1;&#x7406;&#x9879;&#x76EE;&#x7684;&#x7248;&#x672C;&#x53F7;&#xFF0C;&#x786E;&#x4FDD;&#x5E94;&#x7528;&#x7684;&#x5404;&#x4E2A;&#x9879;&#x76EE;&#x7684;&#x4F9D;&#x8D56;&#x548C;&#x7248;&#x672C;&#x4E00;&#x81F4;&#xFF0C;&#x4E0D;&#x7528;&#x6BCF;&#x4E2A;&#x6A21;&#x5757;&#x9879;&#x76EE;&#x90FD;&#x5F04;&#x4E00;&#x4E2A;&#x7248;&#x672C;&#x53F7;&#xFF0C;&#x4E0D;&#x5229;&#x4E8E;&#x7BA1;&#x7406;&#xFF0C;&#x5F53;&#x9700;&#x8981;&#x53D8;&#x66F4;&#x7248;&#x672C;&#x53F7;&#x7684;&#x65F6;&#x5019;&#x53EA;&#x9700;&#x8981;&#x5728;&#x7236;&#x7C7B;&#x5BB9;&#x5668;&#x91CC;&#x66F4;&#x65B0;&#xFF0C;&#x4E0D;&#x9700;&#x8981;&#x4EFB;&#x4F55;&#x4E00;&#x4E2A;&#x5B50;&#x9879;&#x76EE;&#x7684;&#x4FEE;&#x6539;&#xFF1B;&#x5982;&#x679C;&#x67D0;&#x4E2A;&#x5B50;&#x9879;&#x76EE;&#x9700;&#x8981;&#x53E6;&#x5916;&#x4E00;&#x4E2A;&#x7279;&#x6B8A;&#x7684;&#x7248;&#x672C;&#x53F7;&#x65F6;&#xFF0C;&#x53EA;&#x9700;&#x8981;&#x5728;&#x81EA;&#x5DF1;&#x7684;&#x6A21;&#x5757; dependencies &#x4E2D;&#x58F0;&#x660E;&#x4E00;&#x4E2A;&#x7248;&#x672C;&#x53F7;&#x5373;&#x53EF;&#x3002;&#x5B50;&#x7C7B;&#x5C31;&#x4F1A;&#x4F7F;&#x7528;&#x5B50;&#x7C7B;&#x58F0;&#x660E;&#x7684;&#x7248;&#x672C;&#x53F7;&#xFF0C;&#x4E0D;&#x7EE7;&#x627F;&#x4E8E;&#x7236;&#x7C7B;&#x7248;&#x672C;&#x53F7;&#x3002;</p>
+<h4 id="&#x4E0E;-dependencies-&#x533A;&#x522B;">&#x4E0E; dependencies &#x533A;&#x522B;</h4>
+<ol type="1">
+<li>Dependencies &#x76F8;&#x5BF9;&#x4E8E; dependencyManagement&#xFF0C;&#x6240;&#x6709;&#x751F;&#x547D;&#x5728; dependencies &#x91CC;&#x7684;&#x4F9D;&#x8D56;&#x90FD;&#x4F1A;&#x81EA;&#x52A8;&#x5F15;&#x5165;&#xFF0C;&#x5E76;&#x9ED8;&#x8BA4;&#x88AB;&#x6240;&#x6709;&#x7684;&#x5B50;&#x9879;&#x76EE;&#x7EE7;&#x627F;&#x3002;</li>
+<li>dependencyManagement &#x91CC;&#x53EA;&#x662F;&#x58F0;&#x660E;&#x4F9D;&#x8D56;&#xFF0C;&#x5E76;&#x4E0D;&#x81EA;&#x52A8;&#x5B9E;&#x73B0;&#x5F15;&#x5165;&#xFF0C;&#x56E0;&#x6B64;&#x5B50;&#x9879;&#x76EE;&#x9700;&#x8981;&#x663E;&#x793A;&#x7684;&#x58F0;&#x660E;&#x9700;&#x8981;&#x7528;&#x7684;&#x4F9D;&#x8D56;&#x3002;&#x5982;&#x679C;&#x4E0D;&#x5728;&#x5B50;&#x9879;&#x76EE;&#x4E2D;&#x58F0;&#x660E;&#x4F9D;&#x8D56;&#xFF0C;&#x662F;&#x4E0D;&#x4F1A;&#x4ECE;&#x7236;&#x9879;&#x76EE;&#x4E2D;&#x7EE7;&#x627F;&#x4E0B;&#x6765;&#x7684;&#xFF1B;&#x53EA;&#x6709;&#x5728;&#x5B50;&#x9879;&#x76EE;&#x4E2D;&#x5199;&#x4E86;&#x8BE5;&#x4F9D;&#x8D56;&#x9879;&#xFF0C;&#x5E76;&#x4E14;&#x6CA1;&#x6709;&#x6307;&#x5B9A;&#x5177;&#x4F53;&#x7248;&#x672C;&#xFF0C;&#x624D;&#x4F1A;&#x4ECE;&#x7236;&#x9879;&#x76EE;&#x4E2D;&#x7EE7;&#x627F;&#x8BE5;&#x9879;&#xFF0C;&#x5E76;&#x4E14; version &#x548C; scope &#x90FD;&#x8BFB;&#x53D6;&#x81EA;&#x7236; pom;&#x53E6;&#x5916;&#x5982;&#x679C;&#x5B50;&#x9879;&#x76EE;&#x4E2D;&#x6307;&#x5B9A;&#x4E86;&#x7248;&#x672C;&#x53F7;&#xFF0C;&#x90A3;&#x4E48;&#x4F1A;&#x4F7F;&#x7528;&#x5B50;&#x9879;&#x76EE;&#x4E2D;&#x6307;&#x5B9A;&#x7684; jar &#x7248;&#x672C;&#x3002;</li>
+</ol>
+<h2 id="springboot&#x6253;&#x5305;"><code>SpringBoot</code>&#x6253;&#x5305;</h2>
+<p><code>SpringBoot</code>&#x6253;&#x5305;&#x4F1A;&#x751F;&#x6210;&#x4E24;&#x4E2A;&#x6587;&#x4EF6;</p>
+<blockquote>
+<p>MyApplication-0.0.1-SNAPSHOT.war (&#x53EF;&#x8FD0;&#x884C;&#x884C;&#x6587;&#x4EF6;) MyApplication-0.0.1-SNAPSHOT.war.original(&#x4E0D;&#x53EF;&#x8FD0;&#x884C;&#x6587;&#x4EF6;&#xFF0C;&#x7528;&#x4EE5;&#x53D1;&#x5E03;&#x5728;&#x5BB9;&#x5668;&#x4E0B;)</p>
+</blockquote>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        
+          
+        
+        <div class="post-tags">
+          
+            <a href="/tags/maven/" rel="tag"># maven</a>
+          
+            <a href="/tags/入门教程/" rel="tag"># 入门教程</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div class="social_share">
+            
+            
+            
+              <div>
+                
+  <div class="bdsharebuttonbox">
+    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+    <a href="#" class="bds_douban" data-cmd="douban" title="分享到豆瓣网"></a>
+    <a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+    <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+    <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+    <a href="#" class="bds_tieba" data-cmd="tieba" title="分享到百度贴吧"></a>
+    <a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+    <a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+    <a href="#" class="bds_more" data-cmd="more"></a>
+    <a class="bds_count" data-cmd="count"></a>
+  </div>
+  <script>
+    window._bd_share_config = {
+      "common": {
+        "bdText": "",
+        "bdMini": "2",
+        "bdMiniList": false,
+        "bdPic": ""
+      },
+      "share": {
+        "bdSize": "16",
+        "bdStyle": "0"
+      },
+      "image": {
+        "viewList": ["tsina", "douban", "sqq", "qzone", "weixin", "twi", "fbook"],
+        "viewText": "分享到：",
+        "viewSize": "16"
+      }
+    }
+  </script>
+
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+              </div>
+            
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/14/linux相关问题/" rel="next" title="linux相关问题">
+                <i class="fa fa-chevron-left"></i> linux相关问题
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/07/19/springboot数据库密码加密/" rel="prev" title="springboot数据库密码加密">
+                springboot数据库密码加密 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">lijun</p>
+              <div class="site-description motion-element" itemprop="description">与其感慨路难行，不如马上就出发</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">55</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">31</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">79</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#配置"><span class="nav-number">1.</span> <span class="nav-text">配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#镜像"><span class="nav-number">1.1.</span> <span class="nav-text">镜像</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pom"><span class="nav-number">2.</span> <span class="nav-text">POM</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#super-pom"><span class="nav-number">2.1.</span> <span class="nav-text">Super POM</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#属性"><span class="nav-number">3.</span> <span class="nav-text">属性</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#内置属性"><span class="nav-number">3.1.</span> <span class="nav-text">内置属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pom-属性"><span class="nav-number">3.2.</span> <span class="nav-text">pom 属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自定义属性"><span class="nav-number">3.3.</span> <span class="nav-text">自定义属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文件属性"><span class="nav-number">3.4.</span> <span class="nav-text">文件属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#java-系统属性"><span class="nav-number">3.5.</span> <span class="nav-text">Java 系统属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#环境变量属性"><span class="nav-number">3.6.</span> <span class="nav-text">环境变量属性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编译资源文件"><span class="nav-number">4.</span> <span class="nav-text">编译资源文件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#生命周期和阶段"><span class="nav-number">4.1.</span> <span class="nav-text">生命周期和阶段</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#phase"><span class="nav-number">4.2.</span> <span class="nav-text">phase</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#goal"><span class="nav-number">4.3.</span> <span class="nav-text">goal</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#调试默认"><span class="nav-number">4.4.</span> <span class="nav-text">调试默认</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#插件介绍"><span class="nav-number">4.5.</span> <span class="nav-text">插件介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#clean"><span class="nav-number">4.5.1.</span> <span class="nav-text">clean</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#compiler"><span class="nav-number">4.5.2.</span> <span class="nav-text">compiler</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#resources"><span class="nav-number">4.5.3.</span> <span class="nav-text">resources</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#dependency"><span class="nav-number">4.5.4.</span> <span class="nav-text">dependency</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#antrun"><span class="nav-number">4.5.5.</span> <span class="nav-text">antrun</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#依赖冲突"><span class="nav-number">4.6.</span> <span class="nav-text">依赖冲突</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#dependencymanagement"><span class="nav-number">4.7.</span> <span class="nav-text">dependencyManagement</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#与-dependencies-区别"><span class="nav-number">4.7.1.</span> <span class="nav-text">与 dependencies 区别</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#springboot打包"><span class="nav-number">5.</span> <span class="nav-text">SpringBoot打包</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">lijun</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.2.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.2.0"></script>
+
+  <script src="/js/motion.js?v=7.2.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.2.0"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.2.0"></script>
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.2.0"></script>
+<script src="/js/post-details.js?v=7.2.0"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.2.0"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.json";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+   <!-- 代码块复制功能 -->
+  <script type="text/javascript" src="/js/src/clipboard.min.js"></script>  
+  <script type="text/javascript" src="/js/src/clipboard-use.js"></script>
+</body>
+</html>
