@@ -82,14 +82,13 @@
           var resultContent = document.getElementById(content_id);
           var inputEventFunction = function() {
             var searchText = input.value.trim().toLowerCase();
-            var keywords = searchText.split(/[\s\-]+/);
+            var keywords = searchText.split(/[\|]/);
             if (keywords.length > 1) {
               keywords.push(searchText);
             }
             var resultItems = [];
             if (searchText.length > 0) {
               // perform local searching
-                            console.log('---fcuk-----------' + searchText)
               datas.forEach(function(data) {
                 var isMatch = false;
                 var hitCount = 0;
@@ -117,8 +116,25 @@
                         text = text.toLowerCase();
                         word = word.toLowerCase();
                       }
+                      var words = [],grep_position=[]
+                      if(wordLen>5){
+                        var words = word.split(/[+]/);
+                        word =words[0]
+                      }
                       while ((position = text.indexOf(word, startPosition)) > -1) {
-                        index.push({position: position, word: word});
+                        if ( wordLen>5  && words.length>1){
+                            var grep = words[1]
+                            if(grep.length>1 ){
+
+                             if((grep_position = text.indexOf(grep, -1)) > -1){
+                              index.push({position: position, word: word});
+                             } 
+                            }else{
+                              index.push({position: grep_position, word: grep});
+                            }
+                        }else{
+                          index.push({position: position, word: word});
+                        }
                         startPosition = position + wordLen;
                       }
                       return index;
