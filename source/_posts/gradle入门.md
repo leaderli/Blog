@@ -1,10 +1,10 @@
 ---
 title: gradle入门
 date: 2019-08-18 16:29:38
-categories: build
+categories: java
 tags:
-- build
-- gradle
+  - build
+  - gradle
 ---
 
 ## 刷新依赖

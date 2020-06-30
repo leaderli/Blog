@@ -1,11 +1,11 @@
 ---
 title: springboot数据库密码加密
 date: 2019-07-19 10:50:31
-categories: springboot
-tags: 
-- springboot
-- datasource
-- 加密
+categories: spring
+tags:
+  - springboot
+  - datasource
+  - 加密
 ---
 
 ## 方案一
@@ -41,7 +41,7 @@ spring:
 
 ## 方案二
 
-使用jasypt
+使用 jasypt
 
 ```xml
 <dependency>
@@ -105,7 +105,7 @@ spring:
       }
     };
   }
-  ```
+```
 
 ## 方案三
 
@@ -129,15 +129,15 @@ spring:
 
 ```java
 public class DecodeBeanFactoryPostProcessor implements BeanFactoryPostProcessor {
-  
-  
+
+
   private ConfigurableEnvironment environment;
-  
+
   public DecodeBeanFactoryPostProcessor(ConfigurableEnvironment environment) {
     this.environment = environment;
   }
-  
-  
+
+
   @Override
   public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
     MutablePropertySources propertySources = environment.getPropertySources();

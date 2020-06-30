@@ -3,13 +3,13 @@ title: spring循环依赖
 date: 2019-08-26 23:34:14
 categories: spring
 tags:
-- 源码
-- spring
+  - 源码
+  - spring
 ---
 
 ## 概述
 
-一般只应用于单例模式
+一般只应用于单例模式,主要原理是将 bean 先缓存在 beanfactory,`prototype`无法解决循环依赖问题。
 示例代码
 
 ```java
@@ -49,9 +49,9 @@ public class B {
 
 `getBean(A)`->`instance(A)`->`autowired(B)`->`getBean(B)`->`instance(B)`->`autowired(A)`->循环依赖
 
-解决方案：
-    1.`A`首先调用构造函数`newInstance`，此时`A`的引用值已确定  
-    2. 将`A`的引用缓存，创建`B`时直接使用缓存的`A`的引用  
+解决方案： 1.`A`首先调用构造函数`newInstance`，此时`A`的引用值已确定
+
+2.  将`A`的引用缓存，创建`B`时直接使用缓存的`A`的引用
 
 则实际实例化过程大致如下：
 
@@ -77,7 +77,7 @@ public AnnotationConfigApplicationContext(Class<?>... annotatedClasses) {
 }
 ```
 
-省略扫描过程，直接看bean加载的过程
+省略扫描过程，直接看 bean 加载的过程
 
 ```java
 @Override
@@ -193,7 +193,7 @@ for (String beanName : beanNames) {
 
 ```java
 protected <T> T doGetBean(final String name, @Nullable final Class<T> requiredType,
-                            @Nullable final Object[] args, boolean typeCheckOnly) throws BeansException  
+                            @Nullable final Object[] args, boolean typeCheckOnly) throws BeansException
 
     final String beanName = transformedBeanName(name);
     Object bean;
@@ -255,7 +255,7 @@ if (mbd.isSingleton()) {
     });
     bean = getObjectForBeanInstance(sharedInstance, name, beanName, mbd);
 }
- ```
+```
 
 继续回到`A`的创建，在`getSingleton`中未取到缓存是，`A`尝试`createBean`，也就是上述代码部分。
 追踪调用关系可以知道最终调用`org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory#createBean(java.lang.String, org.springframework.beans.factory.support.RootBeanDefinition, java.lang.Object[])`后进入`org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory#doCreateBean`

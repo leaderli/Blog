@@ -1,16 +1,16 @@
 ---
 title: spring静态资源加载源码浅析
 date: 2019-08-04 01:28:59
-categories: springboot
+categories: spring
 tags:
-- springboot
-- springmvc
-- 源码
+  - springboot
+  - springmvc
+  - 源码
 ---
 
 ## 自定义资源处理器
 
-`DispatcherServlet`会拦截所有请求，针对`js`,`css`等静态资源文件，我们不期望被`controller`拦截，通过重写`WebMvcConfigurationSupport`的`addResourceHandlers`方法，由拦截指定规则的请求url。代码如下
+`DispatcherServlet`会拦截所有请求，针对`js`,`css`等静态资源文件，我们不期望被`controller`拦截，通过重写`WebMvcConfigurationSupport`的`addResourceHandlers`方法，由拦截指定规则的请求 url。代码如下
 
 ```java
 package com.li.springboot.config;
@@ -32,7 +32,7 @@ public class WebMvc extends WebMvcConfigurationSupport {
 
 ## 源码分析
 
-`SpringBoot`拦截url，根据`HandlerMapping`找到对应的`Handler`去执行相关操作。
+`SpringBoot`拦截 url，根据`HandlerMapping`找到对应的`Handler`去执行相关操作。
 
 `DispatcherServlet`初始化时会调用初始化方法时会加载`HandlerMapping`
 

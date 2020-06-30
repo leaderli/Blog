@@ -1,7 +1,7 @@
 ---
 title: maven入门
 date: 2019-07-15 19:00:45
-categories: maven
+categories: java
 tags:
   - maven
   - 入门教程
@@ -182,6 +182,59 @@ pom 是最基础的组件，是 maven 用来构建项目的基础配置文件，
 </project>
 ```
 
+### 配置 mvn 的 jdk 版本
+
+可统一在`settings.xml`中新增如下配置
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<settings
+    xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
+    <localRepository>${user.home}/.m2/repository</localRepository>
+    <profiles>
+        <profile>
+            <id>jdk</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+                <jdk>1.8</jdk>
+            </activation>
+            <properties>
+                <maven.compiler.source>1.8</maven.compiler.source>
+                <maven.compiler.target>1.8</maven.compiler.target>
+                <maven.compiler.compilerVersion>1.8</maven.compiler.compilerVersion>
+            </properties>
+        </profile>
+    </profiles>
+</settings>
+
+```
+
+也在项目 pom 中增加配置
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.leaderli</groupId>
+    <artifactId>vxml-test</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+    </properties>
+    <dependencies>
+    ...
+    </dependencies>
+
+</project>
+```
+
 ## 属性
 
 ### 内置属性
@@ -283,7 +336,7 @@ site
 
 `mvn compile -X`  
 可以查看`compile`插件的所有细节，包括默认配置，比如日志如下
-![详细日志](/images/maven入门_1.jpg)
+![详细日志](./images/maven入门_1.jpg)
 
 ### 插件介绍
 
@@ -561,9 +614,77 @@ Maven 采用“最近获胜策略（nearest wins strategy）”的方式处理�
 1. Dependencies 相对于 dependencyManagement，所有生命在 dependencies 里的依赖都会自动引入，并默认被所有的子项目继承。
 2. dependencyManagement 里只是声明依赖，并不自动实现引入，因此子项目需要显示的声明需要用的依赖。如果不在子项目中声明依赖，是不会从父项目中继承下来的；只有在子项目中写了该依赖项，并且没有指定具体版本，才会从父项目中继承该项，并且 version 和 scope 都读取自父 pom;另外如果子项目中指定了版本号，那么会使用子项目中指定的 jar 版本。
 
+## 模块
+
+maven 的模块是在父类 pom 中定义聚合关系，其本质仅仅是一次性批量按顺序执行所有子模块的 mvn 命令而已
+我们已一个简单的示例来说明
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+    xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.leaderli</groupId>
+    <artifactId>maven-parent</artifactId>
+    <version>1</version>
+    <packaging>pom</packaging>
+    <modules>
+        <module>maven-child1</module>
+        <module>maven-child2</module>
+    </modules>
+</project>
+```
+
+```xml
+
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+    xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.leaderli</groupId>
+    <artifactId>maven-child1</artifactId>
+    <version>1</version>
+    <packaging>pom</packaging>
+    <parent>
+        <groupId>com.leaderli</groupId>
+        <artifactId>maven-parent</artifactId>
+        <version>1</version>
+    </parent>
+</project>
+```
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+    xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.leaderli</groupId>
+    <artifactId>maven-child2</artifactId>
+    <version>1</version>
+    <packaging>pom</packaging>
+    <parent>
+        <groupId>com.leaderli</groupId>
+        <artifactId>maven-parent</artifactId>
+        <version>1</version>
+    </parent>
+</project>
+```
+
+当我们在父类 pom 中执行打包命令`mvn install`时，其实就是依次在`maven-parent`,`maven-child1`,`maven-child2`上执行`mvn install`的过程
+
 ## `SpringBoot`打包
 
 `SpringBoot`打包会生成两个文件
 
 > MyApplication-0.0.1-SNAPSHOT.war (可运行行文件)
 > MyApplication-0.0.1-SNAPSHOT.war.original(不可运行文件，用以发布在容器下)
+
+## 强制刷新本地缓存
+
+`mvn dependency:purge-local-repository`

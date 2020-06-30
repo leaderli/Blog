@@ -1,13 +1,14 @@
 ---
 title: idea debug
 date: 2019-08-04 22:43:05
-categories: idea
+categories: tips
 tags:
-- idea 
-- debug
+  - idea
+  - debug
+  - tips
 ---
 
->IDEA开发web项目时，建议使用`debug`启动模式，这样可以随时打断点调试项目
+> IDEA 开发 web 项目时，建议使用`debug`启动模式，这样可以随时打断点调试项目
 
 ## 1. 使用异常类型断点，在抛出异常时快速进入报错点
 

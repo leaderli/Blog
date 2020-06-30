@@ -1,9 +1,9 @@
 ---
 title: log4j日志问题
 date: 2019-09-05 21:21:29
-categories: log4j
+categories: java
 tags:
-- log4j
+  - log4j
 ---
 
 ## 问题描述
@@ -60,9 +60,9 @@ public class ScheduledTask {
 
 ```
 
-`*/1 * * * * *`表示每秒执行一次  
+`*/1 * * * * *`表示每秒执行一次
 
-`log4j.appender.fuck1.DatePattern='.'-yyyy-MM-dd-HH-mm`表示每分钟分割一次文件  
+`log4j.appender.fuck1.DatePattern='.'-yyyy-MM-dd-HH-mm`表示每分钟分割一次文件
 
 在执行定时任务到底切割点时，我们可以观察到日志输出
 

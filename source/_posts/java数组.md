@@ -1,9 +1,9 @@
 ---
 title: java数组
 date: 2019-11-12 09:36:54
-categories: java基础
+categories: java
 tags:
-  - array
+  - jvm
 ---
 
 ## java 在堆中的内存分为三个部分

@@ -3,9 +3,10 @@ title: docker基础
 date: 2019-07-22 21:22:57
 categories: docker
 tags:
-- docker
-- 基础教程
+  - docker
+  - 基础教程
 ---
+
 ## 指南
 
 ### 安装
@@ -13,7 +14,7 @@ tags:
 [官方安装文档](https://docs.docker.com/install/)
 
 `docker --version` 查看版本号
-`docker info` 查看docker详细信息
+`docker info` 查看 docker 详细信息
 
 ### 概述
 
@@ -28,6 +29,8 @@ REPOSITORY                                             TAG                 IMAGE
 jenkins/jenkins                                        2.138.4             b8efbb99cea6        7 months ago        701MB
 registry.cn-hangzhou.aliyuncs.com/helowin/oracle_11g   latest              3fa112fd3642        3 years ago         6.85GB
 ```
+
+可通过`docker pull <image:TAG>`下载镜像，不显示指定`TAG`则下载`latest`版本的，当使用`docker run <image>`时若本地镜像没有则会自动下载远程镜像
 
 #### container
 
@@ -130,9 +133,9 @@ friendlyhello                                          latest              9f7c2
 python                                                 2.7-slim            5caa018c2dc0        9 days ago          137MB
 ```
 
- 执行`docker run -d -p 4000:80 friendlyhello`，以后台进程的方式运行容器
+执行`docker run -d -p 4000:80 friendlyhello`，以后台进程的方式运行容器
 
- 可通过[http://localhost:4000](http://localhost:4000)访问首页
+可通过[http://localhost:4000](http://localhost:4000)访问首页
 
 版本控制
 `docker tag image username/repository:tag`
@@ -158,6 +161,38 @@ docker push username/repository:tag            # Upload tagged image to registry
 docker run username/repository:tag                   # Run image from a registry
 ```
 
+### 启动容器
+
+```bash
+#-p 映射端口    <宿主端口:容器端口>
+docker run -p   4001:8080  friendlyhello
+#-d 以守护进程启动
+docker run -d -p  4001:8080  friendlyhello
+```
+
+### 进入容器
+
+进入容器，并以`bash`作为`shell`
+`docker exec -it 6bcaf729d3d4 bash`
+
+`6bcaf729d3d4`容器 id，可通过`docker ps`查看
+
+```shell
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                               NAMES
+6bcaf729d3d4        jenkins             "/bin/tini -- /usr/l…"   31 seconds ago      Up 29 seconds       50000/tcp, 0.0.0.0:8002->8080/tcp   jenkins
+```
+
+以 root 权限登录
+`sudo docker exec -ti -u root 6bcaf729d3d4 bash`
+
+### 删除容器
+
+```shell
+docker container rm <containerID>
+#删除所有
+docker container rm `docker container ls -a -q`
+```
+
 ## 服务化
 
 ## 下载镜像
@@ -166,12 +201,44 @@ docker run username/repository:tag                   # Run image from a registry
 `name`镜像名
 `tag`镜像版本
 
->若速度较慢，可以配置阿里云镜像加速 [镜像加速参考文档](https://cr.console.aliyun.com/cn-hangzhou/instances/mirrors)
+> 若速度较慢，可以配置阿里云镜像加速 [镜像加速参考文档](https://cr.console.aliyun.com/cn-hangzhou/instances/mirrors)
 
 ## 删除镜像
 
 `docker images`查看所有镜像
 `dockder rmi 'image_id'`删除镜像
+删除所有镜像
+
+```shell
+docker rmi -f `docker images -q`
+```
+
+## 保存镜像
+
+当在镜像启动的容器中做了修改，比如下载了软件，做了配置等。我们可以将容器保存为镜像。
+`docker commit [OPTIONS] CONTAINER [REPOSITORY[:TAG]]`
+示例
+`docker commit a8eb6111cf26 li-ubuntu`
+后续我们就可以使用新的镜像名称来启动应用了
+`docker run -it li-ubuntu /bin/bash`
+
+## 导出镜像
+
+```shell
+docker save -o update1.tar update
+```
+
+## 加载离线镜像
+
+```shell
+docker load -i update1.tar
+```
+
+## 安装离线镜像
+
+```shell
+
+```
 
 ## 查看日志
 
@@ -186,13 +253,13 @@ docker logs [OPTIONS] CONTAINER
         --until string   显示自某个timestamp之前的日志，或相对时间，如42m（即42分钟）
 ```
 
-查看指定时间后的日志，只显示最后100行：
+查看指定时间后的日志，只显示最后 100 行：
 
 ```shell
 docker logs -f -t --since="2018-02-08" --tail=100 CONTAINER_ID`
 ```
 
-查看最近30分钟的日志:
+查看最近 30 分钟的日志:
 
 ```shell
 docker logs --since 30m CONTAINER_ID
@@ -219,25 +286,17 @@ docker run -d -p 8002:8080 -v ~/jenkins:/var/jenkins_home -v /Library/Java/JavaV
 
 ```
 
-`/Library/Java/JavaVirtualMachines/jdk1.8.0_131.jdk/Contents/Home:/mnt/java`挂载jdk
+`/Library/Java/JavaVirtualMachines/jdk1.8.0_131.jdk/Contents/Home:/mnt/java`挂载`jdk`
 
-## 进入容器
+## 容器内 vim 安装
 
-`docker exec -it 6bcaf729d3d4 bash`
+进入容器中使用`vi`提示不存在
 
-`6bcaf729d3d4`容器id，可通过`docker ps`查看
+`apt-get update`更新软件包管理工具,这个命令的作用是：同步 /etc/apt/sources.list 和 /etc/apt/sources.list.d 中列出的源的索引，这样才能获取到最新的软件包。
+`apt-get install vim`安装 vi
 
-```shell
-CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                               NAMES
-6bcaf729d3d4        jenkins             "/bin/tini -- /usr/l…"   31 seconds ago      Up 29 seconds       50000/tcp, 0.0.0.0:8002->8080/tcp   jenkins
-```
+## 开启`ssh`登录
 
-以root权限登录
-`sudo docker exec -ti -u root 6bcaf729d3d4 bash`
-
-## 容器内vi安装
-
-进入容器中使用vi提示不存在
-
-`apt-get update`更新软件包管理工具
-`apt-get install vi`安装vi
+1. 安装服务端`apt-get install openssh-server`
+2. 启动`ssh`服务,使用命令`service ssh start`或者`/ect/init.d/ssh start`
+3. 关闭`ssh`服务，`service ssh stop`

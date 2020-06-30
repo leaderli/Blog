@@ -1,10 +1,10 @@
 ---
 title: spring ControllerAdvice源码分析
 date: 2019-08-06 23:33:10
-categories: springboot
+categories: spring
 tags:
-- springboot
-- ControllerAdvice
+  - springboot
+  - ControllerAdvice
 ---
 
 ## 版本说明
@@ -13,7 +13,7 @@ tags:
 `springboot`:2.1.6.RELEAS  
 `maven`:3.6.1  
 `database`:mysql-5.7.14  
-`lombok插件`  
+`lombok插件`
 
 ## 源码分析
 
@@ -184,9 +184,9 @@ public Object beforeBodyWrite(@Nullable Object body, MethodParameter returnType,
 }
 ```
 
- 最后贴下`@ControllerAdvice`实现类
+最后贴下`@ControllerAdvice`实现类
 
- ```java
+```java
 package com.li.springboot.controller;
 
 import lombok.extern.slf4j.Slf4j;
@@ -200,15 +200,15 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 @ControllerAdvice
 @Slf4j
 public class MyControllerAdvice implements ResponseBodyAdvice{
-    @Override
-    public boolean supports(MethodParameter returnType, Class converterType) {
-        return true;
-    }
+   @Override
+   public boolean supports(MethodParameter returnType, Class converterType) {
+       return true;
+   }
 
-    @Override
-    public Object beforeBodyWrite(Object body, MethodParameter returnType, MediaType selectedContentType, Class selectedConverterType, ServerHttpRequest request, ServerHttpResponse response) {
-        log.debug("MyControllerAdvice beforeBodyWrite");
-        return body;
-    }
+   @Override
+   public Object beforeBodyWrite(Object body, MethodParameter returnType, MediaType selectedContentType, Class selectedConverterType, ServerHttpRequest request, ServerHttpResponse response) {
+       log.debug("MyControllerAdvice beforeBodyWrite");
+       return body;
+   }
 }
- ```
+```

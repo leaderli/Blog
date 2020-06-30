@@ -1,10 +1,10 @@
 ---
 title: jquery相关
 date: 2019-09-10 02:19:49
-categories: html
+categories: 前端
 tags:
-- jquery
-- html
+  - jquery
+  - html
 ---
 
 ## 引入公共页面
@@ -14,5 +14,5 @@ tags:
 ```
 
 ```js
-$("#header").load("header.html")
+$("#header").load("header.html");
 ```

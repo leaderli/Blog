@@ -1,7 +1,7 @@
 ---
 title: Spring自定义ReturnValueHandlers
 date: 2019-08-05 21:38:39
-categories: springboot
+categories: spring
 tags:
   - spring
   - springboot
@@ -219,7 +219,7 @@ private HandlerMethodReturnValueHandler selectHandler(@Nullable Object value, Me
 
 默认的返回值处理器有以下
 
-![返回值处理器](/images/Spring自定义ReturnValueHandlers_返回值处理器.jpg)
+![返回值处理器](./images/Spring自定义ReturnValueHandlers_返回值处理器.jpg)
 
 我们查看下典型的`@ResponseBody`的处理器`RequestResponseBodyMethodProcessor`的方法`supportsReturnType`就明白`selectHandler`是如何起作用的
 
@@ -367,4 +367,4 @@ public class MyReturnValueHandler extends AbstractMessageConverterMethodProcesso
 ```
 
 实现后我们可以看到返回值处理器的集合变化
-![返回值处理器2](/images/Spring自定义ReturnValueHandlers_返回值处理器2.jpg)
+![返回值处理器2](./images/Spring自定义ReturnValueHandlers_返回值处理器2.jpg)

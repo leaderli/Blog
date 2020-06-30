@@ -3,8 +3,8 @@ title: restTemplate使用
 date: 2019-08-09 14:22:45
 categories: spring
 tags:
-- spring
-- restTemplate
+  - spring
+  - restTemplate
 ---
 
 ## 基础
@@ -71,11 +71,11 @@ public <T> T postForObject(String url, @Nullable Object request, Class<T> respon
 在实际请求时:
 `{default}`会被替换为`demo`  
 `{replace}`会被替换为`someuri`  
- 替换后的值中包含`/`会无法正常解析。  
+ 替换后的值中包含`/`会无法正常解析。
 
 ## uriTemplateHandler
 
-根据需要，生成满足自己需要的URI。
+默认的 uriTemplateHandler 会将 uriVariables 中的 value 进行转译，因此无法'/'会被解析为 ascii 符号。根据需要，生成满足自己需要的 URI。
 
 ```java
 public interface UriTemplateHandler {
@@ -84,7 +84,7 @@ public interface UriTemplateHandler {
 }
 ```
 
-返回的URI经过自定义处理器会将`{xxx}`,替换为`uriVariables`中对应的值，这个可以正常解析`/`
+返回的 URI 经过自定义处理器会将`{xxx}`,替换为`uriVariables`中对应的值，这个可以正常解析`/`
 
 ```java
 RestTemplate rest = restTemplate();
@@ -230,7 +230,7 @@ RestTemplate rest = new RestTemplateBuilder().rootUri("http://localhost:8080").b
 rest.postForObject("/test", "", String.class, variables);
 ```
 
-## POST请求参数
+## POST 请求参数
 
 上传文件的请求模拟
 
@@ -245,7 +245,8 @@ String msg = restTemplate.postForObject("http://localhost:8082/upload/any", mult
 ## 上传文件的错误
 
 错误信息
-> The request was rejected because no multipart boundary was found  
+
+> The request was rejected because no multipart boundary was found
 
 通过查找该报错信息打印处可以定位
 
@@ -448,3 +449,19 @@ private void writeMultipart(final MultiValueMap<String, Object> parts, HttpOutpu
 ```
 
 所以我们定位一下具体发生错误的情况下使用的是何种`messageConverter`即可
+
+## `messageConverter`有关问题
+
+当请求的`api`返回的`content-type`不是标准的`application/json`时，默认的`messageConverter`不支持处理
+
+```java
+List<HttpMessageConverter<?>> messageConverters = new ArrayList<HttpMessageConverter<?>>();
+//Add the Jackson Message converter
+MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
+
+// Note: here we are making this converter to process any kind of response,
+// not only application/*json, which is the default behaviour
+converter.setSupportedMediaTypes(Collections.singletonList(MediaType.ALL));
+messageConverters.add(converter);
+restTemplate.setMessageConverters(messageConverters);
+```

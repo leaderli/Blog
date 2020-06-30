@@ -1,11 +1,12 @@
 ---
 title: mybatis入门
 date: 2019-07-31 23:01:52
-categories: mybatis
+categories: java
 tags:
-- mybatis
-- mysql
+  - mybatis
+  - mysql
 ---
+
 ## 版本说明
 
 `jdk`:1.8.0_131
@@ -134,7 +135,7 @@ INSERT INTO node (id, parent_id) VALUES (7, 3);
 
 ```
 
-pom文件
+pom 文件
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -203,15 +204,16 @@ pom文件
 
 ## DataSource
 
-`dataSource`标签用来定义一个标准的`DataSource`标准，`mybatis`内置了三种类型的`DataSource`  
->`type="[UNPOOLED|POOLED|JNDI]"`
+`dataSource`标签用来定义一个标准的`DataSource`标准，`mybatis`内置了三种类型的`DataSource`
+
+> `type="[UNPOOLED|POOLED|JNDI]"`
 
 ### `UNPOOLED`
 
 每一次数据操作都新建。可做如下配置
+
 > `driver`  
-> `url`
-> `username`  
+> `url` > `username`  
 > `password`  
 > `defaultTransactionIsolationLevel`:数据库隔离级别  
 > `defaultNetworkTimeout`
@@ -220,14 +222,15 @@ pom文件
 ### `POOLED`
 
 使用连接池来管理数据源,除了`UNPOOLED`的配置还可做如下配置
->`poolMaximumActiveConnections`  
->`poolMaximumIdleConnections`  
->`poolMaximumCheckoutTime`  
->`poolTimeToWait`  
->`poolMaximumLocalBadConnectionTolerance`  
->`poolPingQuery`  
->`poolPingEnabled`  
->`poolPingConnectionsNotUsedFor`  
+
+> `poolMaximumActiveConnections`  
+> `poolMaximumIdleConnections`  
+> `poolMaximumCheckoutTime`  
+> `poolTimeToWait`  
+> `poolMaximumLocalBadConnectionTolerance`  
+> `poolPingQuery`  
+> `poolPingEnabled`  
+> `poolPingConnectionsNotUsedFor`
 
 ### `JNDI`
 
@@ -275,35 +278,35 @@ env.encoding=UTF8
 
 `mybatis`默认别名有如下
 
-|别名|class类型|
-|:-:|:-:|
-|_byte|byte|
-|_long|long|
-|_short|short|
-|_int|int|
-|_integer|int|
-|_double|double|
-|_float|float|
-|_boolean|boolean|
-|string|String|
-|byte|Byte|
-|long|Long|
-|short|Short|
-|int|Integer|
-|integer|Integer|
-|double|Double|
-|float|Float|
-|boolean|Boolean|
-|date|Date|
-|decimal|BigDecimal|
-|bigdecimal|BigDecimal|
-|object|Object|
-|map|Map|
-|hashmap|HashMap|
-|list|List|
-|arraylist|ArrayList|
-|collection|Collection|
-|iterator|Iterator|
+|    别名    | class 类型 |
+| :--------: | :--------: |
+|   \_byte   |    byte    |
+|   \_long   |    long    |
+|  \_short   |   short    |
+|   \_int    |    int     |
+| \_integer  |    int     |
+|  \_double  |   double   |
+|  \_float   |   float    |
+| \_boolean  |  boolean   |
+|   string   |   String   |
+|    byte    |    Byte    |
+|    long    |    Long    |
+|   short    |   Short    |
+|    int     |  Integer   |
+|  integer   |  Integer   |
+|   double   |   Double   |
+|   float    |   Float    |
+|  boolean   |  Boolean   |
+|    date    |    Date    |
+|  decimal   | BigDecimal |
+| bigdecimal | BigDecimal |
+|   object   |   Object   |
+|    map     |    Map     |
+|  hashmap   |  HashMap   |
+|    list    |    List    |
+| arraylist  | ArrayList  |
+| collection | Collection |
+|  iterator  |  Iterator  |
 
 可指定其他别名
 
@@ -318,47 +321,47 @@ env.encoding=UTF8
 
 ## typeHandlers
 
-每当MyBatis在PreparedStatement上设置参数或从ResultSet中检索值时，都会使用TypeHandler以适合Java类型的方式检索值。 下表描述了默认的TypeHandlers。
+每当 MyBatis 在 PreparedStatement 上设置参数或从 ResultSet 中检索值时，都会使用 TypeHandler 以适合 Java 类型的方式检索值。 下表描述了默认的 TypeHandlers。
 
-|Type Handler|java Types|JDBC Types|
-|:-|:-|:-|
-|BooleanTypeHandler|java.lang.Boolean, boolean|Any compatible BOOLEAN|
-|ByteTypeHandler|java.lang.Byte, byte|Any compatible NUMERIC or BYTE|
-|ShortTypeHandler|java.lang.Short, short|Any compatible NUMERIC or SMALLINT|
-|IntegerTypeHandler|java.lang.Integer, int|Any compatible NUMERIC or INTEGER|
-|LongTypeHandler|java.lang.Long, long|Any compatible NUMERIC or BIGINT|
-|FloatTypeHandler|java.lang.Float, float|Any compatible NUMERIC or FLOAT|
-|DoubleTypeHandler|java.lang.Double, double|Any compatible NUMERIC or DOUBLE|
-|BigDecimalTypeHandler|java.math.BigDecimal|Any compatible NUMERIC or DECIMAL|
-|StringTypeHandler|java.lang.String|CHAR, VARCHAR|
-|ClobReaderTypeHandler|java.io.Reader|-|
-|ClobTypeHandler|java.lang.String|CLOB, LONGVARCHAR|
-|NStringTypeHandler|java.lang.String|NVARCHAR, NCHAR|
-|NClobTypeHandler|java.lang.String|NCLOB|
-|BlobInputStreamTypeHandler|java.io.InputStream|-|
-|ByteArrayTypeHandler|byte[]|Any compatible byte stream type|
-|BlobTypeHandler|byte[]|BLOB, LONGVARBINARY|
-|DateTypeHandler|java.util.Date|TIMESTAMP|
-|DateOnlyTypeHandler|java.util.Date|DATE|
-|TimeOnlyTypeHandler|java.util.Date|TIME|
-|SqlTimestampTypeHandler|java.sql.Timestamp|TIMESTAMP|
-|SqlDateTypeHandler|java.sql.Date|DATE|
-|SqlTimeTypeHandler|java.sql.Time|TIME|
-|ObjectTypeHandler|Any OTHER, or unspecified||
-|EnumTypeHandler |Enumeration Type|VARCHAR any string compatible type, as the code is stored (not index).|
-|EnumOrdinalTypeHandler|Enumeration Type|Any compatible NUMERIC or DOUBLE, as the position is stored (not the code itself).|
-|SqlxmlTypeHandler|java.lang.String|SQLXML|
-|InstantTypeHandler|java.time.Instant|TIMESTAMP|
-|LocalDateTimeTypeHandler|java.time.LocalDateTime|TIMESTAMP|
-|LocalDateTypeHandler|java.time.LocalDate|DATE|
-|LocalTimeTypeHandler|java.time.LocalTime|TIME|
-|OffsetDateTimeTypeHandler|java.time.OffsetDateTime|TIMESTAMP|
-|OffsetTimeTypeHandler|java.time.OffsetTime|TIME|
-|ZonedDateTimeTypeHandler|java.time.ZonedDateTime|TIMESTAMP|
-|YearTypeHandler|java.time.Year|INTEGER|
-|MonthTypeHandler|java.time.Month|INTEGER|
-|YearMonthTypeHandler|java.time.YearMonth|VARCHAR or LONGVARCHAR|
-|JapaneseDateTypeHandler|java.time.chrono.JapaneseDate|DATE|
+| Type Handler               | java Types                    | JDBC Types                                                                         |
+| :------------------------- | :---------------------------- | :--------------------------------------------------------------------------------- |
+| BooleanTypeHandler         | java.lang.Boolean, boolean    | Any compatible BOOLEAN                                                             |
+| ByteTypeHandler            | java.lang.Byte, byte          | Any compatible NUMERIC or BYTE                                                     |
+| ShortTypeHandler           | java.lang.Short, short        | Any compatible NUMERIC or SMALLINT                                                 |
+| IntegerTypeHandler         | java.lang.Integer, int        | Any compatible NUMERIC or INTEGER                                                  |
+| LongTypeHandler            | java.lang.Long, long          | Any compatible NUMERIC or BIGINT                                                   |
+| FloatTypeHandler           | java.lang.Float, float        | Any compatible NUMERIC or FLOAT                                                    |
+| DoubleTypeHandler          | java.lang.Double, double      | Any compatible NUMERIC or DOUBLE                                                   |
+| BigDecimalTypeHandler      | java.math.BigDecimal          | Any compatible NUMERIC or DECIMAL                                                  |
+| StringTypeHandler          | java.lang.String              | CHAR, VARCHAR                                                                      |
+| ClobReaderTypeHandler      | java.io.Reader                | -                                                                                  |
+| ClobTypeHandler            | java.lang.String              | CLOB, LONGVARCHAR                                                                  |
+| NStringTypeHandler         | java.lang.String              | NVARCHAR, NCHAR                                                                    |
+| NClobTypeHandler           | java.lang.String              | NCLOB                                                                              |
+| BlobInputStreamTypeHandler | java.io.InputStream           | -                                                                                  |
+| ByteArrayTypeHandler       | byte[]                        | Any compatible byte stream type                                                    |
+| BlobTypeHandler            | byte[]                        | BLOB, LONGVARBINARY                                                                |
+| DateTypeHandler            | java.util.Date                | TIMESTAMP                                                                          |
+| DateOnlyTypeHandler        | java.util.Date                | DATE                                                                               |
+| TimeOnlyTypeHandler        | java.util.Date                | TIME                                                                               |
+| SqlTimestampTypeHandler    | java.sql.Timestamp            | TIMESTAMP                                                                          |
+| SqlDateTypeHandler         | java.sql.Date                 | DATE                                                                               |
+| SqlTimeTypeHandler         | java.sql.Time                 | TIME                                                                               |
+| ObjectTypeHandler          | Any OTHER, or unspecified     |                                                                                    |
+| EnumTypeHandler            | Enumeration Type              | VARCHAR any string compatible type, as the code is stored (not index).             |
+| EnumOrdinalTypeHandler     | Enumeration Type              | Any compatible NUMERIC or DOUBLE, as the position is stored (not the code itself). |
+| SqlxmlTypeHandler          | java.lang.String              | SQLXML                                                                             |
+| InstantTypeHandler         | java.time.Instant             | TIMESTAMP                                                                          |
+| LocalDateTimeTypeHandler   | java.time.LocalDateTime       | TIMESTAMP                                                                          |
+| LocalDateTypeHandler       | java.time.LocalDate           | DATE                                                                               |
+| LocalTimeTypeHandler       | java.time.LocalTime           | TIME                                                                               |
+| OffsetDateTimeTypeHandler  | java.time.OffsetDateTime      | TIMESTAMP                                                                          |
+| OffsetTimeTypeHandler      | java.time.OffsetTime          | TIME                                                                               |
+| ZonedDateTimeTypeHandler   | java.time.ZonedDateTime       | TIMESTAMP                                                                          |
+| YearTypeHandler            | java.time.Year                | INTEGER                                                                            |
+| MonthTypeHandler           | java.time.Month               | INTEGER                                                                            |
+| YearMonthTypeHandler       | java.time.YearMonth           | VARCHAR or LONGVARCHAR                                                             |
+| JapaneseDateTypeHandler    | java.time.chrono.JapaneseDate | DATE                                                                               |
 
 你可以通过继承`org.apache.ibatis.type.TypeHandler`或者使用`org.apache.ibatis.type.BaseTypeHandler`来使用非标准的`TypeHandler`
 
@@ -381,7 +384,7 @@ import java.sql.SQLException;
 * includeNullJdbcType=true表示当sql字段类型未知也可使用
 */
 @MappedJdbcTypes(value=JdbcType.VARCHAR,includeNullJdbcType=true)
-@MappedTypes(String.class)  
+@MappedTypes(String.class)
 public class ExampleTypeHandler extends BaseTypeHandler<String> {
 
     @Override
@@ -417,7 +420,7 @@ public class ExampleTypeHandler extends BaseTypeHandler<String> {
 </typeHandlers>
 ```
 
- 也可临时指定
+也可临时指定
 
 ```xml
 <resultMap id="blogMap" type="blog">
@@ -462,15 +465,18 @@ public class GenericTypeHandler<E extends MyObject> extends BaseTypeHandler<E> {
 插件需要继承`org.apache.ibatis.plugin.Interceptor`，其中注解`Intercepts`的值，表示切面的位置
 
 `type`
->`Executor` (update, query, flushStatements, commit, rollback, getTransaction, close, isClosed)  
->`ParameterHandler` (getParameterObject, setParameters)  
->`ResultSetHandler` (handleResultSets, handleOutputParameters)  
->`StatementHandler` (prepare, parameterize, batch, update, query)  
+
+> `Executor` (update, query, flushStatements, commit, rollback, getTransaction, close, isClosed)  
+> `ParameterHandler` (getParameterObject, setParameters)  
+> `ResultSetHandler` (handleResultSets, handleOutputParameters)  
+> `StatementHandler` (prepare, parameterize, batch, update, query)
 
 `method`
+
 > `type`里的方法名
 
 `args`
+
 > `type`里的方法的参数类型
 
 `metdho`和`args`可以定位到一个具体的`java`方法。所以`method`和`args`的值参考`type`中的方法即可
@@ -584,7 +590,8 @@ SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(reader, environ
 ```
 
 `#{id}`这个通知`mybatis`创建一个`PreparedStatement`参数，在预编译阶段实际`sql`语句会被替换为
->`select * from Blog where id = ?`
+
+> `select * from Blog where id = ?`
 
 实际执行代码类型如下
 
@@ -600,37 +607,37 @@ ps.setInt(1,id);
 `resultMap` 扩展的返回类型的`id`  
 `flushCache` 是否清空二级缓存，默认不清空  
 `useCache` 是否开启二级缓存，默认不缓存  
-`timeout`  请求超时时间  
+`timeout` 请求超时时间  
 `fetchSize` 返回最大条数，默认不限制  
 `statementType` 可选`STATEMENT`,`PREPARED`或`CALLABLE`，决定使用的是 `Statement`,`PreparedStatement`或`CallableStatement`，默认的是`PREPARED`  
 `resultSetType`  
 `databaseId` `databaseIdProvider` 多种数据库引擎支持  
 `resultOrdered`  
-`resultSets`  
+`resultSets`
 
 ### insert, update and delete
 
 `id` `SQL`映射唯一标识  
 `parameterType` 请求参数`class`类型  
 `flushCache` 是否清空二级缓存，默认不清空  
-`timeout`  请求超时时间  
+`timeout` 请求超时时间  
 `statementType` 可选`STATEMENT`,`PREPARED`或`CALLABLE`，决定使用的是 `Statement`,`PreparedStatement`或`CallableStatement`，默认的是`PREPARED`  
 `useGeneratedKeys` 是否使用数据库自增主键  
 `keyProperty` 用于指定传入的`java`成员变量  
 `keyColumn` 用于指定数据库表的主键字段  
-`databaseId` `databaseIdProvider` 多种数据库引擎支持  
+`databaseId` `databaseIdProvider` 多种数据库引擎支持
 
 #### 返回主键
 
- 在配置了`useGeneratedKeys`时，如何取得返回的主键
+在配置了`useGeneratedKeys`时，如何取得返回的主键
 
- ```xml
-   <insert id="insertBlog" useGeneratedKeys="true" keyProperty="java_id" keyColumn="id">
-    insert into blog( title,author_id) values (#{title},#{author_id})
-  </insert>
- ```
+```xml
+  <insert id="insertBlog" useGeneratedKeys="true" keyProperty="java_id" keyColumn="id">
+   insert into blog( title,author_id) values (#{title},#{author_id})
+ </insert>
+```
 
- ```java
+```java
 SqlSession sqlSession = sqlSessionFactory.openSession();
 Map map = new HashMap();
 map.put("title", "title3");
@@ -638,7 +645,7 @@ map.put("author_id", "102");
 int insert = sqlSession.insert("org.mybatis.example.BlogMapper.insertBlog", map);
 System.out.println(map);
 sqlSession.commit();
- ```
+```
 
 > {title=title3, author_id=102, java_id=6}
 
@@ -651,7 +658,7 @@ sqlSession.commit();
 `keyColumn` 用于指定数据库表的主键字段  
 `order` `Before`或者`After`,若是`Before`,则先生成主键，执行`insert`。而设置为`After`,则先`insert`,再讲返回的主键插入的写入请求的`pojo`中  
 `resultType` 返回主键类型  
-`statementType` 可选`STATEMENT`,`PREPARED`或`CALLABLE`，决定使用的是 `Statement`,`PreparedStatement`或`CallableStatement`，默认的是`PREPARED`  
+`statementType` 可选`STATEMENT`,`PREPARED`或`CALLABLE`，决定使用的是 `Statement`,`PreparedStatement`或`CallableStatement`，默认的是`PREPARED`
 
 #### 批量插入
 
@@ -695,10 +702,13 @@ User findByColumn(@Param("column") String column, @Param("value") String value);
 
 #### `#{}`高阶
 
->`#{age,javaType=int,jdbcType=NUMERIC,typeHandler=MyTypeHandler}`
+可以指定某个属性使用独立的处理器，该处理器可以不用注册，但是需要使用全名，如果使用简称则需要已经注册的
+
+> `#{age,javaType=int,jdbcType=NUMERIC,typeHandler=MyTypeHandler}`
 
 指定`double`的精度
->`#{height,javaType=double,jdbcType=NUMERIC,numericScale=2}`
+
+> `#{height,javaType=double,jdbcType=NUMERIC,numericScale=2}`
 
 ### ResultMap
 
@@ -708,9 +718,10 @@ User findByColumn(@Param("column") String column, @Param("value") String value);
 `id` 主键
 `type` 返回`class`类型
 `autoMapping` 自动匹配的模式。查询的`ResultSet`转换`pojo`时，会自动查找同名属性(忽略大小写)
->`NONE`表示不启用自动映射
->`PARTIAL`表示只对非嵌套的resultMap进行自动映射
->`FULL`表示对所有的resultMap都进行自动映射
+
+> `NONE`表示不启用自动映射
+> `PARTIAL`表示只对非嵌套的 resultMap 进行自动映射
+> `FULL`表示对所有的 resultMap 都进行自动映射
 
 ```xml
 <resultMap id="detailedBlogResultMap" type="Blog">
@@ -745,46 +756,43 @@ User findByColumn(@Param("column") String column, @Param("value") String value);
 
 #### id & result
 
-映射基本类型，`id`表示主键  
->`property` `pojo`成员变量  
->`column`  数据库字段  
->`javaType` 成员变量`class`类型  
->`jdbcType`  数据库字段类型  
->`typeHandler`  使用具体的处理器去处理
+映射基本类型，`id`表示主键
+
+> `property` `pojo`成员变量  
+> `column` 数据库字段  
+> `javaType` 成员变量`class`类型  
+> `jdbcType` 数据库字段类型  
+> `typeHandler` 使用具体的处理器去处理
 
 支持的数据库类型
->`BIT` `FLOAT` `CHAR` `TIMESTAMP` `OTHER` `UNDEFINED`
->`TINYINT` `REAL` `VARCHAR` `BINARY` `BLOB` `NVARCHAR`
->`SMALLINT` `DOUBLE` `LONGVARCHAR` `VARBINARY` `CLOB` `NCHAR`
->`INTEGER` `NUMERIC` `DATE` `LONGVARBINARY` `BOOLEAN` `NCLOB`
->`BIGINT` `DECIMAL` `TIME` `NULL` `CURSOR` `ARRAY`
+
+> `BIT` `FLOAT` `CHAR` `TIMESTAMP` `OTHER` `UNDEFINED` >`TINYINT` `REAL` `VARCHAR` `BINARY` `BLOB` `NVARCHAR` >`SMALLINT` `DOUBLE` `LONGVARCHAR` `VARBINARY` `CLOB` `NCHAR` >`INTEGER` `NUMERIC` `DATE` `LONGVARBINARY` `BOOLEAN` `NCLOB` >`BIGINT` `DECIMAL` `TIME` `NULL` `CURSOR` `ARRAY`
 
 #### constructor
 
 为`type`有参构造器传递参数，分为`<idArg>`（主键）和`<arg>`，默认构造器参数根据顺序进行传参。
->`property` `pojo`成员变量  
->`column`  数据库字段  
->`javaType` 成员变量`class`类型  
->`jdbcType`  数据库字段类型  
->`typeHandler`  使用具体的处理器去处理
->`select` 其他映射语句的id，根据其查询值注入构造器参数中
->`resultMap` 引入其他`resultMap`
-> `name` 根据名称指定具体参数值，无视参数顺序。
+
+> `property` `pojo`成员变量  
+> `column` 数据库字段  
+> `javaType` 成员变量`class`类型  
+> `jdbcType` 数据库字段类型  
+> `typeHandler` 使用具体的处理器去处理
+> `select` 其他映射语句的 id，根据其查询值注入构造器参数中
+> `resultMap` 引入其他`resultMap` > `name` 根据名称指定具体参数值，无视参数顺序。
 
 #### association
 
 一定要注意集合类型的长度
 
->`property` `pojo`成员变量  
->`column`  数据库字段  
->`javaType` 成员变量`class`类型  
->`jdbcType`  数据库字段类型  
->`typeHandler` 使用具体的处理器去处理
->`select` 其他映射语句的id，根据其查询值注入到成员变量中
->`resultMap` 引入其他`resultMap`
->`fetchType` 可设置为`lazy`或`eager`是否延迟加载
->`columnPrefix` 当涉及到多表查询时，多表的字段相同，那么`sql`语句就需要使用`as`来区分字段。
-例如：
+> `property` `pojo`成员变量  
+> `column` 数据库字段  
+> `javaType` 成员变量`class`类型  
+> `jdbcType` 数据库字段类型  
+> `typeHandler` 使用具体的处理器去处理
+> `select` 其他映射语句的 id，根据其查询值注入到成员变量中
+> `resultMap` 引入其他`resultMap` >`fetchType` 可设置为`lazy`或`eager`是否延迟加载
+> `columnPrefix` 当涉及到多表查询时，多表的字段相同，那么`sql`语句就需要使用`as`来区分字段。
+> 例如：
 
 ```xml
 <select id="selectBlog" resultMap="blogResult">
@@ -860,7 +868,7 @@ User findByColumn(@Param("column") String column, @Param("value") String value);
 
 ## SpringBoot
 
-maven依赖
+maven 依赖
 
 ```xml
 <dependency>
@@ -872,7 +880,7 @@ maven依赖
 
 [官方文档](http://www.mybatis.org/spring-boot-starter/mybatis-spring-boot-autoconfigure/)
 
-可在`springboot`配置文件`application.properties`(或`application.yml`).中配置`Mybatis`使用`mybatis`前缀作为配置  
+可在`springboot`配置文件`application.properties`(或`application.yml`).中配置`Mybatis`使用`mybatis`前缀作为配置
 
 `config-location` `mybatis`配置文件目录
 `mapper-locations` `mapper`文件目录地址
@@ -902,7 +910,7 @@ public class MyBatisConfig {
 `Interceptor`  
 `TypeHandler`  
 `LanguageDriver (Requires to use together with mybatis-spring 2.0.2+)`  
-`DatabaseIdProvider`  
+`DatabaseIdProvider`
 
 ```java
 @Configuration

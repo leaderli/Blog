@@ -1,13 +1,13 @@
 ---
 title: maven相关
 date: 2019-07-09 23:01:19
-categories: maven
+categories: tips
 tags:
-- maven
-- idea
+  - maven
+  - idea
 ---
 
-### idea中无法直接下载源代码
+### idea 中无法直接下载源代码
 
 可在项目目录下手动执行命令下载
 
@@ -15,7 +15,7 @@ tags:
 mvn dependency:resolve -Dclassifier=sources
 ```
 
-### maven父类pom
+### maven 父类 pom
 
 定义父类`pom`
 
@@ -40,6 +40,6 @@ mvn dependency:resolve -Dclassifier=sources
   </parent>
 ```
 
-### eclipse中maven项目不自动编译
+### eclipse 中 maven 项目不自动编译
 
 执行`clean`，再`compile`即可。

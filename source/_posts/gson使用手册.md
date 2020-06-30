@@ -1,9 +1,10 @@
 ---
 title: gson使用手册
 date: 2019-08-01 21:22:36
-categories: 手册
+categories: tips
 tags:
-- gson
+  - gson
+  - tips
 ---
 
 ## 基本类型
@@ -41,7 +42,7 @@ class BagOfPrimitives {
 // Serialization
 BagOfPrimitives obj = new BagOfPrimitives();
 Gson gson = new Gson();
-String json = gson.toJson(obj);  
+String json = gson.toJson(obj);
 
 // ==> json is {"value1":1,"value2":"abc"}
 ```
@@ -178,6 +179,93 @@ String json = gson.toJson(userBean);
 userBean = gson.fromJson(json, UserBean.class);
 //UserBean(name="123")
 ```
+
+## 使用 JsonSerializer 统一处理 null
+
+```java
+package com.leaderli.demo.util;
+
+import com.google.gson.*;
+import org.junit.jupiter.api.Test;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+
+public class GsonTest {
+
+    private static class MapJsonSerializer implements JsonSerializer {
+
+        @Override
+        public JsonElement serialize(Object o, Type type, JsonSerializationContext jsonSerializationContext) {
+            return serialize(o,(Class)type);
+        }
+
+
+        private <T> JsonElement serialize(Object o, Class<T> type) {
+            if (Map.class.isAssignableFrom(type)) {
+                JsonObject jsonObject = new JsonObject();
+                Map<?, ?> map = (Map) o;
+                map.forEach((k, v) -> {
+                    if (k == null) {
+                        return;
+                    }
+                    String key = String.valueOf(k);
+                    if (v == null) {
+                        jsonObject.add(key, new JsonPrimitive(""));
+                    } else {
+                        jsonObject.add(key, serialize(v, v.getClass()));
+                    }
+
+                });
+                return jsonObject;
+            } else if (Iterable.class.isAssignableFrom(type)) {
+                Iterable<?> iterable = (Iterable) o;
+                JsonArray array = new JsonArray();
+                iterable.forEach(e -> {
+                    if (e == null) {
+                        array.add(new JsonPrimitive(""));
+                    } else {
+
+                        array.add(serialize(e, e.getClass()));
+                    }
+
+                });
+                return array;
+            } else {
+
+                return new JsonPrimitive(String.valueOf(o));
+            }
+        }
+    }
+
+    @Test
+    public void test() {
+
+        Gson gson = new GsonBuilder().registerTypeHierarchyAdapter(Map.class, new MapJsonSerializer()).create();
+
+        Map map = new HashMap();
+        map.put("str",null);
+        map.put("set",new HashSet<>());
+        ArrayList<Object> list = new ArrayList<>();
+        list.add(1);
+        list.add(null);
+        map.put("list", list);
+        Map temp= new HashMap();
+        temp.put("temp",null);
+        map.put("temp",temp);
+
+        System.out.println(gson.toJson(map));
+
+
+    }
+}
+
+```
+
+> {"str":"","temp":{"temp":""},"set":[],"list":["1",""]}
 
 ## 优化打印
 

@@ -406,10 +406,10 @@ protected Object doCreateBean(final String beanName, final RootBeanDefinition mb
 ### `populateBean`
 
 这里我们简单介绍一下`@Autowired`是何时被加载的。我们通过打断点，并设置`evaluate`语句，在断点处输出日志的方式查看  
-![spring-initMethod执行过程_2019-11-14-01-27-39.png](/images/spring-initMethod执行过程_2019-11-14-01-27-39.png)
+![spring-initMethod执行过程_2019-11-14-01-27-39.png](./images/spring-initMethod执行过程_2019-11-14-01-27-39.png)
 
 断点调试最后输出的日志如下  
-![spring-initMethod执行过程_2019-11-14-01-29-22.png](/images/spring-initMethod执行过程_2019-11-14-01-29-22.png)
+![spring-initMethod执行过程_2019-11-14-01-29-22.png](./images/spring-initMethod执行过程_2019-11-14-01-29-22.png)
 我们可以得知被`@Autowired`的属性或方法是否处理器`AutowiredAnnotationBeanPostProcessor`去实现的，具体加载过程参考 {% post_link Spring_Autowired源码分析 %}
 
 ```java
@@ -558,7 +558,7 @@ void setInitMethodName(@Nullable String initMethodName);
 #### applyBeanPostProcessorsBeforeInitialization
 
 我们同样通过断点调试的方式来观察，`@PostConstruct`方法是何时被执行的  
-![spring-initMethod执行过程_2019-11-14-01-45-47.png](/images/spring-initMethod执行过程_2019-11-14-01-45-47.png)
+![spring-initMethod执行过程_2019-11-14-01-45-47.png](./images/spring-initMethod执行过程_2019-11-14-01-45-47.png)
 我们可以得知是在`CommonAnnotationBeanPostProcessor`中被处理的
 
 我们查看其源码

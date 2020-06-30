@@ -1,10 +1,10 @@
 ---
 title: SpringBoot自定义扫描器
 date: 2019-08-18 22:53:36
-categories: springboot
+categories: spring
 tags:
-- scanner
-- 自定义扫描器
+  - scanner
+  - 自定义扫描器
 ---
 
 实现自定义注解扫描器，将被`JsonBean`注解的类，注入到`spring`容器中，当由`spring`生成时，自动根据对应的`json`文件自动生成。

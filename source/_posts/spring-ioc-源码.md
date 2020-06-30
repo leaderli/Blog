@@ -19,6 +19,6 @@ tags:
 
 详细属性值如下图所示：
 
-![BeanDefinition](/images/spring-ioc-源码_BeanDefinition.png)
+![BeanDefinition](./images/spring-ioc-源码_BeanDefinition.png)
 
 `Spring`在扫描类后将类的`BeanDefiniton`元数据存储在`BeanFactory`中，当需要时，`BeanFactory`根据`BeanDefinition`信息生成`Bean`

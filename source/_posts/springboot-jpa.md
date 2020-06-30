@@ -1,11 +1,11 @@
 ---
 title: springboot-jpa
 date: 2019-07-30 21:50:50
-categories: springboot
-tags: 
-- springboot
-- jpa
-- mysql
+categories: spring
+tags:
+  - springboot
+  - jpa
+  - mysql
 ---
 
 ## 版本说明
@@ -18,7 +18,7 @@ tags:
 
 ## 概述
 
-项目基于maven，pom配置如下
+项目基于 maven，pom 配置如下
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -191,7 +191,7 @@ spring:
   datasource:
     url: jdbc:mysql://localhost:3306/app
     username: root
-    password: '{cipher}cm9vdA'
+    password: "{cipher}cm9vdA"
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     show-sql: true
@@ -200,7 +200,6 @@ logging:
     root: error
     com:
       li: debug
-
 ```
 
 其他，略

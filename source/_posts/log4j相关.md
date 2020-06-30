@@ -1,14 +1,14 @@
 ---
 title: log4j相关
 date: 2019-08-27 23:30:03
-categories: log
+categories: java
 tags:
-- log4j
+  - log4j
 ---
 
-## DEBUG模式运行
+## DEBUG 模式运行
 
- `log4j`的配置文件中配置`log4j.debug=true`即可开启
+`log4j`的配置文件中配置`log4j.debug=true`即可开启
 
 ## 概述
 
@@ -36,24 +36,25 @@ Logger.getRootLogger()
 ```
 
 可使用的日志级别`org.apache.log4j.Level`
->`TRACE`,`DEBUG`,`INFO`,`WARN`,`ERROR` and `FATAL`
+
+> `TRACE`,`DEBUG`,`INFO`,`WARN`,`ERROR` and `FATAL`
 
 当指定`name`的`logger`日志请求时，同时会将该请求转发至父类`logger`
-当`logger`没有对应的配置时，会找最近的父类配置，默认情况下`logger`配置会继承父类的配置，可通过设置`log4j.additivity.xxx=false`使其不继承(xxx是logger的name)
+当`logger`没有对应的配置时，会找最近的父类配置，默认情况下`logger`配置会继承父类的配置，可通过设置`log4j.additivity.xxx=false`使其不继承(xxx 是 logger 的 name)
 
 ## 配置
 
-1. 初始化Logger容器Hierarchy,设置根节点为RootLogger  
+1. 初始化 Logger 容器 Hierarchy,设置根节点为 RootLogger
 
-2. 初始LoggerRepositorySelector(容器选择器)为默认的DefaultRepositorySelector,容器为Hierarchy  
+2. 初始 LoggerRepositorySelector(容器选择器)为默认的 DefaultRepositorySelector,容器为 Hierarchy
 
-3. 读取系统属性log4j.defaultInitOverride,如果没有设置或者为false进行初始化,否则跳过初始化  
+3. 读取系统属性 log4j.defaultInitOverride,如果没有设置或者为 false 进行初始化,否则跳过初始化
 
-4. 读取系统属性log4j.configuration(log4j文件路径配置),如果存在对应的文件,则得到URL.如果没有对应的文件,首先检查是否存在log4j.xml文件,如果存在,得到Log4j配置文件URL,如果不存在log4j.xml,继续检查是否存在log4j.properties文件,如果存在该文件,得到log4j配置文件的URL,否则提示没有发现配置文件。  
+4. 读取系统属性 log4j.configuration(log4j 文件路径配置),如果存在对应的文件,则得到 URL.如果没有对应的文件,首先检查是否存在 log4j.xml 文件,如果存在,得到 Log4j 配置文件 URL,如果不存在 log4j.xml,继续检查是否存在 log4j.properties 文件,如果存在该文件,得到 log4j 配置文件的 URL,否则提示没有发现配置文件。
 
-5. 读取系统属性log4j.configuratorClass(自定义Configurator配置类全路径,一般不自定义)  
+5. 读取系统属性 log4j.configuratorClass(自定义 Configurator 配置类全路径,一般不自定义)
 
-6. 调用OptionConverter.selectAndConfigure(url, configuratorClassName,LogManager.getLoggerRepository()),初始化logger容器  
+6. 调用 OptionConverter.selectAndConfigure(url, configuratorClassName,LogManager.getLoggerRepository()),初始化 logger 容器
 
 ### 扩展配置
 

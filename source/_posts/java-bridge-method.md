@@ -3,14 +3,12 @@ title: java-bridge-method
 date: 2019-08-09 21:25:04
 categories: java
 tags:
-- java
-- reflect
-- 泛型
+  - 泛型
 ---
 
 ## 桥接方法
 
-泛型类型擦除的影响，以及bridge方法介绍
+泛型类型擦除的影响，以及 bridge 方法介绍
 
 ```java
 public class Node<T> {
@@ -42,7 +40,7 @@ Node node = new MyNode(5);
 n.setData("Hello");
 ```
 
-我们的子类中实际是没有setData(Object.class)的方法的，`java`编译器在进行类型擦除的时候会自动生成一个`synthetic`方法，也叫`bridge`方法,我们通过生成的字节码可以看到实际`bridge`方法，首先校验类型是否为`Integer`，然后在调用`setData(Integer.class)`因此，上述代码会抛出`ClassCastException`
+我们的子类中实际是没有 setData(Object.class)的方法的，`java`编译器在进行类型擦除的时候会自动生成一个`synthetic`方法，也叫`bridge`方法,我们通过生成的字节码可以看到实际`bridge`方法，首先校验类型是否为`Integer`，然后在调用`setData(Integer.class)`因此，上述代码会抛出`ClassCastException`
 
 ```java
 public void setData(java.lang.Integer);
@@ -108,7 +106,7 @@ ParameterizedTypeImpl[] types = (ParameterizedTypeImpl[]) MyNode.class.getGeneri
 
 ```
 
-## Spring注入桥接子类注意
+## Spring 注入桥接子类注意
 
 ```java
 public interface Generic<T,R> {}
@@ -130,5 +128,5 @@ public class G4 implements Generic<String, List> {}
    @Autowired
    List<Generic<Object, ? extends Collection>> generics; //G1 G2 G3
    @Autowired
-   List<Generic<Object, Collection>> generics; //G1 G2 
+   List<Generic<Object, Collection>> generics; //G1 G2
 ```

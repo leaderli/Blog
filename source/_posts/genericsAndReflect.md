@@ -3,10 +3,8 @@ title: genericsAndReflect
 date: 2019-10-19 19:51:27
 categories: java
 tags:
-- reflect
-- generick
-- 泛型
-- 反射
+  - 泛型
+  - 反射
 ---
 
 ## `void`类型的范型方法
@@ -56,7 +54,7 @@ public void  test() throws Exception {
 }
 ```
 
-可变参数不可直接显式使用null作为参数
+可变参数不可直接显式使用 null 作为参数
 
 ```java
 public class TestStatic {
@@ -110,7 +108,7 @@ List<Fruit> fruits = new ArrayList<Fruit>();
 List<? super Apple> = fruits;
 ```
 
-## 如何修改final修饰符的值
+## 如何修改 final 修饰符的值
 
 ```java
 String str = "fuck";

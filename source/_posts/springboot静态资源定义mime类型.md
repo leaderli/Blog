@@ -1,11 +1,11 @@
 ---
 title: springboot静态资源定义mime类型
 date: 2019-08-02 23:52:43
-categories: springboot
+categories: spring
 tags:
-- springboot
-- mime
-- 问题
+  - springboot
+  - mime
+  - 问题
 ---
 
 ## 问题描述
@@ -14,9 +14,9 @@ tags:
 
 ## 背景知识
 
->MIME(Multipurpose Internet Mail Extensions)多用途互联网邮件扩展类型。是设定某种扩展名的文件用一种应用程序来打开的方式类型，当该扩展名文件被访问的时候，浏览器会自动使用指定应用程序来打开。多用于指定一些客户端自定义的文件名，以及一些媒体文件打开方式。
+> MIME(Multipurpose Internet Mail Extensions)多用途互联网邮件扩展类型。是设定某种扩展名的文件用一种应用程序来打开的方式类型，当该扩展名文件被访问的时候，浏览器会自动使用指定应用程序来打开。多用于指定一些客户端自定义的文件名，以及一些媒体文件打开方式。
 
-详情可参考[MIME参考文档](https://baike.baidu.com/item/MIME/2900607?fr=aladdin)
+详情可参考[MIME 参考文档](https://baike.baidu.com/item/MIME/2900607?fr=aladdin)
 
 ## 解决方案
 
@@ -63,7 +63,7 @@ public class HbbtvMimeMapping implements WebServerFactoryCustomizer<Configurable
 }
 ```
 
-## Spring加载静态资源的`mime`源码分析
+## Spring 加载静态资源的`mime`源码分析
 
 针对`SpringBoot2`，一般我们使用的是`tomcat`容器,我们自定义的加载`mimeType`的类注入了`ConfigurableServletWebServerFactory`实现类中`TomcatServletWebServerFactory`，其方法`configureContext`将自定义的`mimeType`存储到集合中
 节选片段
@@ -170,7 +170,7 @@ public String getMimeType(String file) {
     return context.findMimeMapping(extension);
 
 }
- ```
+```
 
 最后可以看到`response`的`ContentType`和`mediaType`息息相关。
 

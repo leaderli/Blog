@@ -1,10 +1,10 @@
 ---
 title: oracle练习
 date: 2019-07-04 17:16:47
-categories: oracle
-tags: 
--  sql
--  oracle 
+categories: db
+tags:
+  - sql
+  - oracle
 ---
 
 ### 建表语句和数据插入
@@ -367,4 +367,12 @@ SELECT
   SUM(CASE WHEN course  = '化学' THEN score ELSE 0 END ) 化学
 FROM kecheng
 GROUP BY ID,NAME;
+```
+
+## `decode`
+
+将查询结果转换为另一个值，可以设定默认值
+
+```sql
+SELECT DECODE(course,'语文‘,'yuwen','数学','shuxue','qitar') pingying FROM kecheng
 ```

@@ -7,9 +7,25 @@ tags:
   - shell
 ---
 
+## 概述
+
+每条`shell`命令执行都会有个状态码`0`表示成功，`1`表示失败。可以使用`$?`得到上一条命令的执行结果来决定是否执行后续命令，快速的用法是使用`&&`,`||`
+
+{% post_link shell-变量 %}
+
 ## 重定向符
 
-在`shell`中，每个进程都和三个系统文件 相关联：标准输入`stdin`，标准输出`stdout`、标准错误`stderr`，三个系统文件的文件描述符分别为`0，1、2`。所以这里`2>&1` 的意思就是将标准错误也输出到标准输出当中。
+对于内核而言，所有打开的文件都是通过文件描述符引用的
+
+文件描述符就是从 0 开始的小的非负整数，内核用以标识一个特定进程正在访问的文件。当打开一个文件或创建一个文件，内核向进程返回一个文件描述符。
+
+Linux 进程默认情况下会有三个缺省打开的文件描述符
+
+- 0（标准输入）`stdin`
+- 1（标准输出）`stdout`
+- 2（标准错误）`stderr`
+
+所以`2>&1` 的意思就是将标准错误也输出到标准输出当中。
 
 `shell`中可能经常能看到：`echo log > /dev/null 2>&1`,命令的结果可以通过`%>`的形式来定义输出,`/dev/null` ：代表空设备文件
 
@@ -23,54 +39,52 @@ _`cmd >a 2>a` 和 `cmd >a 2>&1` 为什么不同？_
 1. `cmd >a 2>a` ：`stdout`和`stderr`都直接送往文件 `a` ，`a`文件会被打开两遍，由此导致`stdout`和`stderr`互相覆盖。`cmd >a 2>a` 相当于使用了`FD1`、`FD2`两个互相竞争使用文件 `a` 的管道；
 2. `cmd >a 2>&1` ：`stdout`直接送往文件`a`，`stderr`是继承了`FD1`的管道之后，再被送往文件`a` 。`a`文件只被打开一遍，就是`FD1`将其打开。`cmd >a 2>&1` 只使用了一个管道`FD1`，但已经包括了`stdout`和`stderr`。从`IO`效率上来讲，`cmd >a 2>&1`的效率更高。
 
+### 使错误日志重定向到正常输出
+
+sh error.sh > messge.log 2>&1
+
 ## 组合命令
 
-可通过`&&`,让多个命令顺序执行，也可以通过`;`,不同的地方为`&&`当前一个命令执行成功后，才会执行后一个命令
+可通过`&&`,让多个命令顺序执行，也可以通过`;`,不同的地方为`&&`，当前一个命令的返回码为 0 时，才会执行后一个命令
 例如
 
 ```shell
 cd ~/Downloads/ && rm -rf temp`
 ```
 
-## `rm`
+`||`,与`&&`相反，当前一个命令的返回码大于 0 才执行第二条
 
-在使用`cd dir && rm -rf file`时需要注意，当`dir`不存在时，`rm`会直接删除当前目录的文件，因此`rm`后跟文件绝对路径
+## 函数
 
-## `ssh免密及执行远程命令`
-
-操作机上生成秘钥`ssh-keygen -t rsa`,将会生成一对秘钥，将公钥内容追加到服务器的`~/.ssh/authorized_keys`中，
-可通过**远程命令**`ssh user@example.com 'cat id_rsa.pub >> ~/.ssh/authorized_keys'`去执行,可以简单的使用`ssh-copy-id user@example.com`,这种方式
-采用的是默认的`22`端口，拷贝的公钥是默认的`id_rsa.pub`
-
-确保服务器的文件及目录权限
-
-1. 设置 authorized_keys 权限  
-   `chmod 600 authorized_keys`
-2. 设置.ssh 目录权限  
-   `chmod 700 -R .ssh`
-3. 设置用户目录权限  
-   `chomd go-w ~`
-
-后续再执行`ssh`操作，或者`scp`等操作，则不需要再输入密码
-
-通过系统日志文件我们可以查看无法登陆远程服务器的原因  
-`tail /var/log/secure -n 20`
-
-## 参数
-
-命令可以作为参数传入 shell 脚本中
+shell 中函数的定义格式如下：
 
 ```shell
-echo $1
-echo $2
-$1 $2
+[ function ] funname [()]
+
+{
+
+    action;
+
+    [return int;]
+
+}
+
 ```
 
-## `CURL`
+1. 参数返回，可以显示加：return 返回，如果不加，将以最后一条命令运行结果，作为返回值。 return 后跟数值 n(0-255
+2. 函数返回值在调用该函数后通过 \$? 来获得。
+3. 调用函数时可以向其传递参数。在函数体内部，通过 $n 的形式来获取参数的值，例如，$1 表示第一个参数，\$2 表示第二个参数
+
+示例
 
 ```shell
-response=$(curl --write-out %{http_code} --silent --output /dev/null servername)
-echo $response
+fun(){
+   echo $1
+   return 1
+}
+
+fun 'hello'
+echo $?
 
 ```
 
@@ -90,58 +104,185 @@ ls -a **/*.log
 grep -rn 'stream' . --include='*.cpp'
 ```
 
-## `XARGS`
+## 脚本参数
 
-传递参数
+在写脚本的一开始加上`set -xeuo pipefail`，一般用于调试脚本
 
-```shell
-ls *.jar|xargs -I {} jadx {} -d src
-```
-
-## `svn`
-
-通过 `svn info`判断服务器和本地的版本号是否相同，可使用`grep`和`awk`组合
-
-## 用`wget`递归下载
-
-`wget -r -np --reject=html www.download.example`
-或者可以把`reject`换做 `--accept`=`iso,c,h`，表示只接受以此结尾的文件，分隔符为逗号`（comma-separated）`
-
-## `AWK`
-
-默认情况下`awk`以空格进行分割字符串，`-F`，可以指定分割符  
-`‘{print $1}’`，输出第几个分割字符
-
-截取除第一位之后的所有元素
+示例
 
 ```shell
-echo  1 2 3 4 5|awk '{first = $1; $1 = ""; print $0 }'
+#!/bin/bash
+set -x
+
+...
 ```
 
-示例：
+> -x: 在执行每一个命令之前把经过变量展开之后的命令打印出来
+> -e: 在遇到一个命令失败时，立即退出
+> -u: 试图使用未经定义的变量，立即退出
+> -o pipefail: 只要管道中的一个子命令失败，整个管道命令就失败。
+
+## 读取用户输入
+
+while read line
+
+read 通过输入重定向，把 file 的第一行所有的内容赋值给变量 line，循环体内的命令一般包含对变量 line 的处理；然后循环处理 file 的第二行、第三行。。。一直到 file 的最后一行。还记得 while 根据其后的命令退出状态来判断是否执行循环体吗？是的，read 命令也有退出状态，当它从文件 file 中读到内容时，退出状态为 0，循环继续惊醒；当 read 从文件中读完最后一行后，下次便没有内容可读了，此时 read 的退出状态为非 0，所以循环才会退出。
 
 ```shell
-more 1.txt|awk -F ',' '{print $2}'
+# line 仅仅是个变量名
+while read line
+do
+   echo $line
+done < file
 ```
 
-## 其他
-
-命令查看当前目录下所有文件夹的大小 `-d` 指深度，后面加一个数值
+另一种也很常见的用法：
 
 ```shell
-du -d 1 -h
+command | while read line
+do
+   echo $line
+done
 ```
 
-将输出的每一行加上行号。例如：`'cat 1.txt | nl'`，输出`1.txt`的文件并加上行号
+如果你还记得管道的用法，这个结构应该不难理解吧。command 命令的输出作为 read 循环的输入，这种结构长用于处理超过一行的输出，当然 awk 也很擅长做这种事。
 
-排序`sort`
+## 判断文件属性
 
-去重`uniq`,`uniq`默认仅会比较相邻的字符串
+| 操作符 | 含义                                        |
+| -----: | :------------------------------------------ |
+|     -a | 检查文件是否存在                            |
+|     -b | 检查是否为块特殊文件[1]                     |
+|     -c | 检查是否为字符特殊文件[2]                   |
+|     -d | 检查是否为文件夹                            |
+|     -e | 检查文件是否存在                            |
+|     -f | 检查是否为常规文件[3]                       |
+|     -g | 检查 gid[4]是否被置位                       |
+|     -G | 检查是否有相同的组 ID                       |
+|     -k | 检查防删除位是否被置位                      |
+|     -L | 检查是否为符号链接[5]                       |
+|     -n | 判断字符串长度是否不为 0                    |
+|     -O | 检查文件是否被当前进程的 user ID 拥有       |
+|     -p | 检查文件是否为 FIFO[6]特殊文件或命名管道[7] |
+|     -r | 检查文件是否可读                            |
+|     -s | 检查文件大小是否大于 0                      |
+|     -S | 检查文件是否为 socket 文件                  |
+|     -t | 检查文件描述符是否打开                      |
+|     -u | 检查 uid[8]是否被置位                       |
+|     -w | 检查文件是否可写                            |
+|     -x | 检查文件是否可执行                          |
+|     -z | 判断字符串长度是否为 0                      |
 
-按文件大小顺序显示`ls -LS`
-
-快速删除大文件
+示例
 
 ```shell
-cat /dev/null > access.log
+if [  -e "$myPath"]; then
+   echo 'ok'
+fi
 ```
+
+## 逻辑判断
+
+在 linux 中 命令执行状态：0 为真，其他为假
+
+| 操作符 | 解释              |
+| -----: | :---------------- |
+|    -eq | 等于              |
+|    -ne | 不等于            |
+|    -gt | 大于 （greater ） |
+|    -lt | 小于 （less）     |
+|    -ge | 大于等于          |
+|    -le | 小于等于          |
+
+## switch
+
+```shell
+case 值 in
+模式1)
+    command1
+    command2
+    command3
+    ;;
+模式2）
+    command1
+    command2
+    command3
+    ;;
+*)
+    command1
+    command2
+    command3
+    ;;
+esac
+```
+
+在 shell 中设定`set -u`
+
+## 菜单
+
+select 命令只需要一条命令就可以创建出菜单，然后获取输入的答案并自动处理。
+命令格式如下：
+
+```shell
+select variable in list
+do
+commands
+done
+```
+
+list 参数是由空格分隔的文本选项列表，这些列表构成了整个菜单。select 命令会将每个列表项显示成一个带编号的选项，然后为选项显示一个由 PS3 环境变量定义的特殊提示符。
+
+例如：
+
+```shell
+#!/bin/bash
+# using select in the menu
+
+function diskspace {
+ clear
+ df -k
+}
+
+function whoseon {
+ clear
+ who
+}
+
+function memusage {
+ clear
+ cat /proc/meminfo
+}
+
+PS3="Enter an option: "
+select option in "Display disk space" "Display logged on users" "Display memory usage" "Exit program"
+do
+ case $option in
+ "Exit program")
+ break ;;
+ "Display disk space")
+ diskspace ;;
+ "Display logged on users")
+ memusage ;;
+ "Display memory usage"）
+ memusage ;;
+ *)
+ clear
+ echo "Sorry, wrong selection";;
+ esac
+done
+clear
+```
+
+> wsx@wsx:~/tmp\$ ./smenu1
+>
+> 1. Display disk space 3) Display memory usage
+> 2. Display logged on users 4) Exit program
+>    Enter an option:
+
+## 错误问题
+
+执行 sh 脚本时报错
+
+> '\r':command not found
+
+这是因为在 win 上的格式有问题，使用 dos2unix 命令转换一下脚本即可
