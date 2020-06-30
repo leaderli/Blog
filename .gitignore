@@ -1,7 +1,5 @@
 .DS_Store
 Thumbs.db
-db.json
-*.log
 _t.zip
 public/
 .deploy*/
