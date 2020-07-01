@@ -75,6 +75,7 @@ open recent file `⌃ R`
 
 ## 括号匹配色
 
+彩虹括号
 使用 [Bracket Pair Colorizer2](https://marketplace.visualstudio.com/items?itemName=CoenraadS.bracket-pair-colorizer-2)
 
 颜色方案(使用黑色主题)使用如下在`settings.json`中配置
