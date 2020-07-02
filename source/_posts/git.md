@@ -25,6 +25,16 @@ $ make && make install
 $ cp /usr/local/src/git-master/git /usr/bin
 ```
 
+## ls-files
+
+```bash
+git ls-files -c   --cached          show cached files in the output (default)
+git ls-files -s   --deleted         show deleted files in the output
+git ls-files -m   --modified        show modified files in the output
+git ls-files -d   --stage           show staged contents' object name in the output
+
+```
+
 ## `gitignore`
 
 ### 规则

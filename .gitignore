@@ -4,3 +4,4 @@ _t.zip
 public/
 .deploy*/
 .vscode
+/db.json

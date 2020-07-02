@@ -98,3 +98,188 @@ $ git ls-files --stage
 100644 83baae61804e65cc73a7201a7252750c76066a30 0 2.txt
 
 ```
+
+### tree
+
+Git 以一种类似于 UNIX 文件系统的方式存储内容，但作了些许简化。 所有内容均以树对象和数据对象的形式存储，其中树对象对应了 UNIX 中的目录项，数据对象则大致上对应了 inodes 或文件内容。 一个树对象包含了一条或多条树对象记录（tree entry），每条记录含有一个指向数据对象或者子树对象的 SHA-1 指针，以及相应的模式、类型、文件名信息。
+
+当我们使用`git commit`后，我们可以看到
+
+```shell
+
+$ git commit -m 'commit 1'
+[master (root-commit) 9f1224b] commit 1
+ 2 files changed, 2 insertions(+)
+ create mode 100644 1.txt
+ create mode 100644 2.txt
+
+# 查看.git目录
+$ find .git/ -type
+.git/refs/heads/master
+...
+.git/objects/d6/70460b4b4aece5915caf5c68d12f560a9fe3e4
+.git/objects/83/baae61804e65cc73a7201a7252750c76066a30
+.git/objects/1d/49be59d2805f145b66c15641a11e945a5d021a
+.git/objects/9f/1224bca340fb2e4235adfa3e42297033c26ec9
+.git/index
+.git/COMMIT_EDITMSG
+...
+
+# 我们可以看到生成了两个新的对象
+# tree
+$ git cat-file -p 1d49be
+100644 blob 83baae61804e65cc73a7201a7252750c76066a30 1.txt
+100644 blob 83baae61804e65cc73a7201a7252750c76066a30 2.txt
+
+# commit commit中包含了tree对象的sha1
+$ git cat-file -p 9f1224b
+tree 1d49be59d2805f145b66c15641a11e945a5d021a
+author leaderli <429243408@qq.com> 1593549136 +0800
+committer leaderli <429243408@qq.com> 1593549136 +0800
+
+commit 1
+
+# 查看所有对象
+$ git cat-file --batch-check --batch-all-objects
+1d49be59d2805f145b66c15641a11e945a5d021a tree 66
+83baae61804e65cc73a7201a7252750c76066a30 blob 10
+9f1224bca340fb2e4235adfa3e42297033c26ec9 commit 163
+d670460b4b4aece5915caf5c68d12f560a9fe3e4 blob 13
+
+```
+
+### git gc
+
+当使用`git gc`或者`git push`时，git 会自动将`.git/objects/`下文件进行压缩，在`.git/objects/pack/`下生成`.idx`和`.pack`文件。
+
+## 分支
+
+git 的 commit 是一个有向无环图
+查看.git 内的文件可以看到生成了.git/refs.heads/master，可以发现其指向 commit 1
+
+```shell
+$ more .git/refs/heads/master
+9f1224bca340fb2e4235adfa3e42297033c26ec9
+```
+
+我们新增子目录以及子文件，并添加到 stage 区
+
+```shell
+$ mkdir dir
+$ echo "version 3" > dir/3.txt
+$ git status
+On branch master
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+  dir/
+
+nothing added to commit but untracked files present (use "git add" to track)
+# 添加到缓存区
+
+$ git add dir/
+$ git status
+On branch master
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+  new file:   dir/3.txt
+```
+
+### git diff
+
+`git diff --cache`是比较 index 和 HEAD 的差异
+
+```shell
+# 我们查看HEAD的内容,发现HEAD指向master的commit 1
+$ more .git/HEAD
+ref: refs/heads/master
+$ more .git/refs/heads/master
+9f1224bca340fb2e4235adfa3e42297033c26ec9
+
+# commit 1指向的tree对象的内容为
+$ git cat-file  -p 9f1224bca340fb2e4235adfa3e42297033c26ec9
+tree 1d49be59d2805f145b66c15641a11e945a5d021a
+author leaderli <429243408@qq.com> 1593549136 +0800
+committer leaderli <429243408@qq.com> 1593549136 +0800
+
+commit 1
+$ git cat-file -p 1d49be59d2805f145b66c15641a11e945a5d021a
+100644 blob 83baae61804e65cc73a7201a7252750c76066a30 1.txt
+100644 blob 83baae61804e65cc73a7201a7252750c76066a30 2.txt
+
+# index
+$ git ls-files -s
+100644 83baae61804e65cc73a7201a7252750c76066a30 0 1.txt
+100644 83baae61804e65cc73a7201a7252750c76066a30 0 2.txt
+100644 7170a5278f42ea12d4b6de8ed1305af8c393e756 0 dir/3.txt
+
+# 使用diff查看差异内容
+$ git diff --cached
+diff --git a/dir/3.txt b/dir/3.txt
+new file mode 100644
+index 0000000..7170a52
+--- /dev/null
++++ b/dir/3.txt
+@@ -0,0 +1 @@
++version 3
+
+```
+
+提交 commit 2
+
+```shell
+$ git commit -m 'commit 2'
+[master 014901f] commit 2
+ 1 file changed, 1 insertion(+)
+ create mode 100644 dir/3.txt
+
+# HEAD当前执行commit 2
+$ more .git/HEAD
+ref: refs/heads/master
+$ more .git/refs/heads/master
+014901f4a370ec3d0db58fc7a4cf9950d2111fbe
+$ git cat-file -p 014901f4a370ec3d0db58fc7a4cf9950d2111fbe
+tree 162488e047cda08c69e932e81722f7ce191057ee
+# commit 2的父节点为commit 1
+parent 9f1224bca340fb2e4235adfa3e42297033c26ec9
+author leaderli <429243408@qq.com> 1593555980 +0800
+committer leaderli <429243408@qq.com> 1593555980 +0800
+
+commit 2
+
+# 查看commit 2 指向的tree
+$ git cat-file -p 162488e047cda08c69e932e81722f7ce191057ee
+100644 blob 83baae61804e65cc73a7201a7252750c76066a30 1.txt
+100644 blob 83baae61804e65cc73a7201a7252750c76066a30 2.txt
+040000 tree b57d4c5b3c1f31f87d0d5e7343db0b53f8f650c2 dir
+
+$ git cat-file -p b57d4c5b3c1f31f87d0d5e7343db0b53f8f650c2
+100644 blob 7170a5278f42ea12d4b6de8ed1305af8c393e756 3.txt
+
+# HEAD执行的tree和index的一致了
+$ git diff --cached
+```
+
+从概念上讲，此时 Git 内部存储的数据有点像这样：
+![深入git_内部数据存储结构.png](./images/深入git_内部数据存储结构.png)
+
+`git diff <commit1> <commit2>`的原理都是差不多的
+
+### 切换分支
+
+```shell
+$ git sw -b dev
+Switched to a new branch 'dev'
+$ find .git/ -type f
+.git/refs/heads/master
+.git/refs/heads/dev
+# HEAD 指向了dev分支
+$ more .git/HEAD
+ref: refs/heads/dev
+
+#dev分支指向commit2
+$ more .git/refs/heads/dev
+014901f4a370ec3d0db58fc7a4cf9950d2111fbe
+
+```
