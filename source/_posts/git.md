@@ -25,19 +25,9 @@ $ make && make install
 $ cp /usr/local/src/git-master/git /usr/bin
 ```
 
-## ls-files
+## 配置
 
-```bash
-git ls-files -c   --cached          show cached files in the output (default)
-git ls-files -s   --deleted         show deleted files in the output
-git ls-files -m   --modified        show modified files in the output
-git ls-files -d   --stage           show staged contents' object name in the output
-
-```
-
-## `gitignore`
-
-### 规则
+### `gitignore`
 
 1. `/mtk`过滤整个文件夹,但不过滤子文件夹
 2. `mtk/`过滤文件夹所有文件
@@ -47,7 +37,7 @@ git ls-files -d   --stage           show staged contents' object name in the out
 
 注意：如果你创建`.gitignore` 文件之前就`push`了某一文件，那么即使你在`.gitignore`文件中写入过滤该文件的规则，该规则也不会起作用，`git` 仍然会对该文件进行版本管理。
 
-### `gitignore`不生效
+#### `gitignore`不生效
 
 `.gitignore` 中已经标明忽略的文件目录下的文件，`git push` 的时候还会出现在 `push` 的目录中，原因是因为在 `git` 忽略目录中，新建的文件在 `git` 中会有缓存，如果某些文件已经被纳入了版本管理中，就算是在`.gitignore` 中已经声明了忽略路径也是不起作用的，这时候我们就应该先把本地缓存删除，然后再进行 `git` 的 `push`，这样就不会出现忽略的文件了。`git` 清除本地缓存命令如下：
 
@@ -57,8 +47,9 @@ git add .
 git commit -m 'update .gitignore'
 ```
 
-## 别名
+### 别名
 
+我们可通过配置 alias 来简化 git 命令
 `git config –-global --edit`来编辑`[alias]`下面的配置别名
 
 ```config
@@ -78,7 +69,9 @@ st = status -s
 sw = checkout
 ```
 
-## 查看状态
+## 查看
+
+### 查看状态
 
 `git show`默认查看当前`<commit>`提交的内容，可使用`git show <commit>`查看具体某个提交的信息
 `git status`查看当前工作区与暂存区状态，可使用`git status -s`简化输出信息。类似如下的信息`M`表示有改动,`D`表示删除,`??`表示未`add`,`A`表示新增但未提交
@@ -108,11 +101,9 @@ sw = checkout
 > -s, --stage
 > 显示暂存的条目的相关信息（模式位，文件哈希后的值，暂存号和文件名），
 
-## 日志
+### 日志
 
-### `git log`
-
-命令显示从最近到最远的提交日志,如果嫌输出信息太多，看得眼花缭乱的，可以试试加上`--pretty=oneline`参数
+`git log` 命令显示从最近到最远的提交日志,如果嫌输出信息太多，看得眼花缭乱的，可以试试加上`--pretty=oneline`参数
 
 ```shell
 git log --pretty=oneline
@@ -136,65 +127,7 @@ gitk --all
 git log -p <file>
 ```
 
-### `git reflog`
-
-用来记录你的每一次命令
-
-## 提交
-
-### 追加提交
-
-重写更改提交信息,执行后会把最近`add`的内容一并放入到此次`commit`
-
-```shell
-git commit --amend
-```
-
-## 回退,撤销
-
-`git`状态图
-![git_2020-01-06-23-54-52.png](./images/git_2020-01-06-23-54-52.png)
-`HEAD^`或`HEAD~`表示上一个版本，用`git log`可以查看提交历史，以便确定要回退到哪个版本。`git reflog`查看命令历史，以便确定要回到未来的哪个版本。
-
-### `checkout`
-
-1. 未`add`到`stage`时可用`git checkout -- file`,丢弃工作区的修改。
-
-2. 以`add`到`stage`先用`git reset HEAD <file>`可以把暂存区的修改撤销掉（`unstage`），重新放回工作区，然后再丢弃工作区修改
-
-3. 当我们需要在历史版本中，进行一些更改时，使用`git checkout <commit>`,此时仅将`HEAD`即指针移动到这个`commit`，但是分支并未移动，因此此时会处于一个`detached HEAD`状态。此时切换为原来的分支即可脱离`detached HEAD`状态。如果需要在这个`detached HEAD`上提交代码，则可使用`git checkout -b <branch>`在这个`commit`上新建一个分支进行提交。若是在切换到原来的分支的情况下，使用`git checkout -b <branch> <commit>`,这样就会直接在`commit`创建一个分支。分支建立好后就和普通的`git`操作一样了。
-
-### `reset`
-
-1. `--soft`撤销`stage`区的提交
-2. `--mixed`撤销`stage`和`workDir`区的提交,但不丢弃`workDir`
-3. `--hadr`撤销`stage`和`workDir`区的提交，并丢弃`workDir`
-   强制回退上一个版本，不会保留当前已修改文件
-
-```shell
-git reset --hard HEAD^
-git reset --hard  ID
-```
-
-`git reset –-soft`：回退到某个版本，只回退了`commit`的信息，不会恢复到`index file`一级。如果还要提交，直接`commit`即可；
-
-> 例如，我们有如下的历史：
-> HEAD → commit 5 → commit 4 → commit 3 → commit 2 → commit 1
-> 如果我们想要合并 commit 5, commit 4 和 commit 3，其中一种简单的方法就是使用 git reset --soft 如下：
-> $ git reset --soft [commit 2]
-> $ git commit -m "commit 6"
-> 这样会得到以下结果：
-> HEAD → commit 6 → commit 2 → commit 1
-> 原因就是，git reset --soft 只把 HEAD 移到了 commit 2，index 并没有变化，所以新执行的 commit 是基于 commit 2 的（因为 HEAD 指向 commit 2），但却会保留 commit 5 的内容。
-
-`git reset -–hard`：彻底回退到某个版本，本地的源码也会变为上一个版本的内容，撤销的`commit`中所包含的更改被冲掉；
-
-### `revert`
-
-> `git revert <commit>`，撤销提交。不同于`reset`，`revert`不是回退版本，而是通过一个新的反向的提交来实现。会进入交互模式，需要填写新的`commit`信息
-> `git revert -n <commit>`,撤销提交，需要手动`commit`
-
-### `diff`
+### 比较差异
 
 `git diff`比较工作区和缓存区，当修改工作区内容时且未`add`,缓存区的内容则与工作区有差异，此时缓存区与仓库同样是没有变动，所以使用`git diff --cached`,发现没有差异，当使用`add`后，缓存区则和工作区相同了。单因为没有`commit`,所以使用`git diff --cached`，可以看到差异的内容。当使用`commit`后，则变成一致的状态  
 用 `git diff HEAD -- readme.txt` 命令可以查看工作区和版本库里面最新版本的区别，`HEAD`可以使用`git log`或者`git reflog`查看的版本号替换
@@ -242,6 +175,44 @@ git diff --stat <commit1> <commit2> dir
 ```shell
 git diff --name-only --diff-filter=U
 ```
+
+### 命令历史记录
+
+`git reflog`用来记录你的每一次命令
+
+### 查找丢失记录
+
+`git fsck --full`检查数据库的完整性。 如果使用一个 --full 选项运行它，它会向你显示出所有没有被其他对象指向的对象：
+
+## 提交
+
+### 追加提交
+
+重写更改提交信息,执行后会把最近`add`的内容一并放入到此次`commit`
+
+```shell
+git commit --amend
+```
+
+## 回退,撤销
+
+`HEAD^`或`HEAD~`表示上一个版本，用`git log`可以查看提交历史，以便确定要回退到哪个版本。`git reflog`查看命令历史，以便确定要回到未来的哪个版本。
+
+### `checkout`
+
+1. 未`add`到`stage`时可用`git checkout -- file`,丢弃工作区的修改。
+2. 以`add`到`stage`先用`git reset HEAD <file>`可以把暂存区的修改撤销掉（`unstage`），重新放回工作区，然后再丢弃工作区修改
+3. `git checkout <branch>`切换分支
+4. `git checkout -b <branch> <commit>` 在`commit`创建一个分支
+
+### `reset`
+
+![深入git_reset细节.png](./images/深入git_reset细节.png)
+
+### `revert`
+
+> `git revert <commit>`，撤销提交。不同于`reset`，`revert`不是回退版本，而是通过一个新的反向的提交来实现。会进入交互模式，需要填写新的`commit`信息
+> `git revert -n <commit>`,撤销提交，需要手动`commit`
 
 ### `apply`
 
@@ -326,7 +297,7 @@ git  cherry-pick 7
 
 ### 挑选文件
 
-当我们需要用别的分支的文件覆盖本分支的文件时可以使用如下命令
+当我们需要用别的分支的文件覆盖本分支的文件时可以使用如下命令，该命令会同时覆盖工作区和缓存区的文件
 
 ```shell
 git checkout <branch> <file>
@@ -497,206 +468,6 @@ git push #推送前会校验是否在最新状态
 git push -f #强制推送
 ```
 
-## 数据模型
+## `Git`原理
 
-`git`作为一个内容管理器来管理三颗不同的树形结构
-
-- `HEAD`
-- `INDEX`
-- `Working Directory`
-
-### `HEAD`
-
-`HEAD`是当前分支引用的指针,它总是指向该分支上的最后一次提交。这表示`HEAD`将是下一次提交的父结点。通常,理解`HEAD`的最简方式,就是将它看做你的上一次提交的快照。可以使用`git cat-file -p HEAD`查看`HEAD`的内容
-
-### `INDEX`
-
-即你的预期的下一次的提交，我们也称之为暂存区域，也叫做`stage`。使用`git add`可以将工作区的修改提交的`index`区域。可以使用`git ls-files -stage`查看`index`区域的内容
-
-### `Working Directory`
-
-工具目录即未在添加的`index`的修改
-
-### `Git`是如何存储数据的
-
-`Git`是一个内容寻址文件系统,核心部分是一个简单的键值对数据库(key-value data store)。你可以向这个数据库插入任意类型的内容，它会返回一个`sha1`键值,通过该`key`值，可以在任意时刻再次检索该内容。
-`Git`中一共有三种主要的对象
-
-- `blob`
-  每个`blob`类型的对象对应的就是`repository`里面的一个文件。对象的内容就是该文件的内容
-
-- `tree`
-  `tree`类型的对象在 Git 里面代表的就是一个文件夹，而这个对象的内容就是面向它所包含的文件夹和文件的指针。
-- `commit`
-  `commit` 对象首先包含了一个面向根目录`tree`对象的指针，而且还包含了`committer`的个人信息还有`commit`的注释。非首次`commit`还包含上一次`commit`的`sha1`键
-
-![git_2020-01-17-15-56-49.png](./images/git_2020-01-17-15-56-49.png)
-
-### 示例
-
-我们通过一个示例来详细描述上述概念。为了方便使用定义了一下`git`的`alias`。
-
-> alias.cat cat-file -p
-> alias.cab cat-file --batch-check --batch-all-objects
-> alias.cm commit -m
-
-示例图为截取`progit`书籍上的，与实际的`sha1`不相同
-
-- 新建文件夹并初始化`git`仓库
-
-  ```bash
-  mkdir git
-  cd git
-  git init
-  ```
-
-- 新建`file.txt`，并写入 V1
-
-  ```bash
-  echo 'V1' > file.txt
-  ```
-
-  此时，只有工作目录有内容
-  ![git_2020-01-17-16-13-16.png](./images/git_2020-01-17-16-13-16.png)
-
-  ```bash
-  git cat HEAD
-  # [查看HEAD内容]  fatal: Not a valid object name HEAD
-  git ls-files -s
-  # [查看index区]
-  ```
-
-- 使用`git add`获取工作区的内容，并将其复制到`index`中
-
-  ```bash
-  git add file.txt
-
-  git cat HEAD
-  # [查看HEAD内容]  fatal: Not a valid object name HEAD
-  git ls-files -s
-  # [查看index区] 100644 998a6f80eb9feed5d5a7b2b56c41e91961807a52 0 file.txt
-  git cab
-  # [查看git数据库] 998a6f80eb9feed5d5a7b2b56c41e91961807a52 blob 3
-
-  git cat 998a6f80eb9feed5d5a7b2b56c41e91961807a52
-  # [根据sha1查看文件内容] V1
-  ```
-
-  此时工作区和缓存区都有内容
-  ![git_2020-01-17-16-28-36.png](./images/git_2020-01-17-16-28-36.png)
-
-- 使用`git commit`,它会取得索引中的内容并将它保存为一个永久的快照,然后创建一个指向该快照的提交对象
-
-  ```bash
-  git cm 'commit 1'
-  # [提交到HEAD]
-  # [master (root-commit) f48c0f8] commit 1
-  # 1 file changed, 1 insertion(+)
-  # create mode 100644 file.txt
-
-  git cat HEAD
-  # [查看HEAD内容]
-  # tree c23efe0ec1998d188b7c33380524f3c7d856f130
-  # author leaderli <429243408@qq.com> 1579249869 +0800
-  # committer leaderli <429243408@qq.com> 1579249869 +0800
-  # commit 1
-  git ls-files -s
-  # [查看index区] 100644 998a6f80eb9feed5d5a7b2b56c41e91961807a52 0 file.txt
-
-  git cab
-  # [查看git数据库]
-  # 998a6f80eb9feed5d5a7b2b56c41e91961807a52 blob 3
-  # c23efe0ec1998d188b7c33380524f3c7d856f130 tree 36
-  # f48c0f88b9f302bbf674bf7b54d499942a971fec commit 163
-
-  git cat c23efe0ec1998d188b7c33380524f3c7d856f130
-  # [根据sha1查看tree] 100644 blob 998a6f80eb9feed5d5a7b2b56c41e91961807a52 file.txt
-  git cat f48c0f88b9f302bbf674bf7b54d499942a971fec
-  #  [根据sha1查看commit]
-  # tree c23efe0ec1998d188b7c33380524f3c7d856f130
-  # author leaderli <429243408@qq.com> 1579249869 +0800
-  # committer leaderli <429243408@qq.com> 1579249869 +0800
-  #
-  # commit 1
-
-  ```
-
-  我们可以看到在`commit`后会生成`tree`,同时查看`tree`的内容发现其，是关于根目录下的文件，而`commit`对象指向`tree`
-  ![git_2020-01-17-16-38-00.png](./images/git_2020-01-17-16-38-00.png)
-  此时如果我们运行`git status`,会发现没有任何改动,因为现在三棵树完全相同。
-
-- 新建文件夹`lib`,并新增文件`inside.txt`，写入`V2`
-
-  ```bash
-  mkdir lib
-  echo 'V2' > lib/inside.txt
-
-  git status
-  # [查看git状态]
-  # On branch master
-  # Untracked files:
-  #     (use "git add <file>..." to include in what will be committed)
-  #
-  #         lib/
-  #
-  # nothing added to commit but untracked files present (use "git add" to track)
-
-  git add lib/
-  # [查看index区]
-  # 100644 998a6f80eb9feed5d5a7b2b56c41e91961807a52 0 file.txt
-  # 100644 beef424daef9c4eeedd52f6b12d46ee7e0fcf1da 0 lib/inside.txt
-
-  git cat beef424daef9c4eeedd52f6b12d46ee7e0fcf1da
-  # [根据sha1查看文件内容] V2
-
-  git cab
-  # [查看git数据库]
-  # 998a6f80eb9feed5d5a7b2b56c41e91961807a52 blob 3
-  # beef424daef9c4eeedd52f6b12d46ee7e0fcf1da blob 3
-  # c23efe0ec1998d188b7c33380524f3c7d856f130 tree 36
-  # f48c0f88b9f302bbf674bf7b54d499942a971fec commit 163
-
-  git cat c23efe0ec1998d188b7c33380524f3c7d856f130
-  # [根据sha1查看文件内容] V2
-
-  ```
-
-- 再次提交
-
-  ```bash
-   git cm 'commit 2'
-   # [提交到HEAD]
-   # [master 0795fe5] commit 2
-   # 1 file changed, 1 insertion(+)
-   # create mode 100644 lib/inside.txt
-
-  git cab
-  # [查看git数据库]
-  # 00ae1e6514ef4cc371997066c50a49640b018c6b tree 66
-  # 0795fe50da7f4b06c76a4fd2f65f7faab84096db commit 211
-  # 8bc62265130e7428b7e85632fde75b0aff8c1327 tree 38
-  # 998a6f80eb9feed5d5a7b2b56c41e91961807a52 blob 3
-  # beef424daef9c4eeedd52f6b12d46ee7e0fcf1da blob 3
-  # c23efe0ec1998d188b7c33380524f3c7d856f130 tree 36
-  # f48c0f88b9f302bbf674bf7b54d499942a971fec commit 163
-
-  git cat f48c0f88b9f302bbf674bf7b54d499942a971fec
-  # [查看第二次提交]
-  # tree 00ae1e6514ef4cc371997066c50a49640b018c6b
-  # parent f48c0f88b9f302bbf674bf7b54d499942a971fec
-  # author leaderli <429243408@qq.com> 1579251235 +0800
-  # committer leaderli <429243408@qq.com> 1579251235 +0800
-  #
-  # commit 2
-  # 我们可以发现，其中执行了一个新的tree，和第一次提交的sha1
-
-  git cat 00ae1e6514ef4cc371997066c50a49640b018c6b
-  # [查看新的根目录tree]
-  # 100644 blob 998a6f80eb9feed5d5a7b2b56c41e91961807a52 file.txt
-  # 040000 tree 8bc62265130e7428b7e85632fde75b0aff8c1327 lib
-  # 我们可以发现，file.txt因为没有改动，指向的还是同一个sha1
-
-  git cat  8bc62265130e7428b7e85632fde75b0aff8c1327
-  # [查看lib目录的tree] 100644 blob beef424daef9c4eeedd52f6b12d46ee7e0fcf1da inside.txt
-
-  ```
+参考{% post_link 深入git %}

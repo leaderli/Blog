@@ -442,3 +442,9 @@ var router = require("./router");
 
 server.start(router.route);
 ```
+
+### 错误问题
+
+> npm 安装软件时 报错 reason: getaddrinfo EAI_AGAIN
+
+关闭代理软件即可

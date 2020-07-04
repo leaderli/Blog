@@ -134,12 +134,16 @@ server {
 
 ### 映射静态资源
 
+root 指向静态资源的路径
+index 默认首页
+
 ```nginx
 server {
    listen 8888;
    server_name "test";
    location ~ \.(gif)$ {
          root /home/li/tomcat/webapps/manager;
+         index index.html;
    }
 }
 ```

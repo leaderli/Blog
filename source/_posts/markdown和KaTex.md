@@ -680,6 +680,29 @@ local_search:
   li: true
 ```
 
+### 后台进程启动 hexo server
+
+在博客根目录下面创建一个 hexo_run.js
+
+```javascript
+const { exec } = require("child_process");
+exec("hexo server", (error, stdout, stderr) => {
+  if (error) {
+    console.log("exec error: ${error}");
+    return;
+  }
+  console.log("stdout: ${stdout}");
+  console.log("stderr: ${stderr}");
+});
+```
+
+```shell
+#全局安装
+$ npm  install -g pm2
+#在根目录下运行
+$ pm2 start hexo_run.js
+```
+
 ### hexo 错误解决
 
 > Error: expected end of comment, got end of file

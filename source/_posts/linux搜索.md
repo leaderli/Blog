@@ -38,16 +38,23 @@ tags:
    - -maxdepth n ： 搜索指定的深度
    - -type ：搜索指定类型的文件
 
-     > d: 目录
-     > c: 字型装置文件
-     > b: 区块装置文件
-     > p: 具名贮列
-     > f: 一般文件
-     > l: 符号连结
-     > s: socket
+     1. d: 目录
+     2. c: 字型装置文件
+     3. b: 区块装置文件
+     4. p: 具名贮列
+     5. f: 一般文件
+     6. l: 符号连结
+     7. s: socket
 
    - -not 反向搜索
      例如: `find . -not -name 'he'`
+
+查找指定扩展名的文件
+
+```shell
+ find -type f -regex '.*\.(jpg|png)'
+ find -type f|egrep  '.*\.(jpg|png)'
+```
 
 ## grep
 
