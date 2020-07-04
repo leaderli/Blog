@@ -18,7 +18,7 @@
     "hexo-generator-sitemap": "^2.0.0",
     "hexo-generator-tag": "^0.2.0",
     "hexo-katex": "0.0.13",
-    "hexo-li-asset-image": "0.0.5",
+    "hexo-li-asset-image": "1.0.0",
     "hexo-li-copy-images": "0.0.5",
     "hexo-renderer-ejs": "^0.3.1",
     "hexo-renderer-marked": "^2.0.0",
