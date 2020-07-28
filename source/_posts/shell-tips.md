@@ -49,11 +49,13 @@ curl -v http://example.com
 服务器的返回头中，会有 redirect 的目标地址。
 若使用 curl，我们可以使用`curl -iL --max-redirs 1 http://example.com`,将返回头打印出来
 
-> HTTP/1.1 301 Moved Permanently
-> Date: Thu, 18 Apr 2019 02:39:59 GMT
-> Transfer-Encoding: chunked
-> Connection: keep-alive
-> Location: https://example.com/about
+```shell
+HTTP/1.1 301 Moved Permanently
+Date: Thu, 18 Apr 2019 02:39:59 GMT
+Transfer-Encoding: chunked
+Connection: keep-alive
+Location: https://example.com/about
+```
 
 返回头中的`Location`，即重定向的地址。我们再次请求重定向的地址，即可得到想要的结果
 
@@ -128,6 +130,15 @@ cat /dev/null > access.log
 
 通过系统日志文件我们可以查看无法登陆远程服务器的原因  
 `tail /var/log/secure -n 20`
+
+默认情况下，ssh 去`~/.ssh/`目录下去找私钥，有时候无法，可以使用`ssh-agent`将私钥加载到内存中
+
+```shell
+# 启动ssh代理
+$ eval `ssh-agent`
+# 将私钥注册到agent
+$ ssh-add  ~/.ssh/id_rsa
+```
 
 ## `XARGS`
 
@@ -246,4 +257,12 @@ ps -aux --sort=-rss|head 10
 
 ```shell
 content=`cat file.txt`
+```
+
+## echo
+
+不换行输出
+
+```shell
+`echo -n 'hello:'
 ```

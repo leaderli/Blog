@@ -13,12 +13,12 @@ tags:
 
 我们看下`RestTemplate`的基础成员变量
 
-`requestFactory: ClientHttpRequestFactory`
-`defaultUriVariables: Map<String, ?>`
-`uriTemplateHandler: UriTemplateHandler`
-`interceptors: List<ClientHttpRequestInterceptor>`
-`messageConverters: List<HttpMessageConverter<?>>`
-`errorHandler: ResponseErrorHandler`
+- `requestFactory: ClientHttpRequestFactory`
+- `defaultUriVariables: Map<String, ?>`
+- `uriTemplateHandler: UriTemplateHandler`
+- `interceptors: List<ClientHttpRequestInterceptor>`
+- `messageConverters: List<HttpMessageConverter<?>>`
+- `errorHandler: ResponseErrorHandler`
 
 下面我们主要针对这些属性做一些分析
 

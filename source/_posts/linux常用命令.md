@@ -49,20 +49,20 @@ ls *.jar|xargs -I {} echo {}
 
 ```
 
-## awk
+### awk
 
 `awk`可以用来快速切割文本，默认使用空格分隔符。`'{}'`中对每行都进行操作
 `$0`表示当前行，`$1`表示切割的数组的第一个元素，`'{print $1}'`表示打印第一个元素
 
 `-F ’-‘` 增加切割符
 
-## 查看内存信息
+### 查看内存信息
 
 ```shell
 cat /proc/meminfo | grep MemTotal
 ```
 
-## `apt-get`国内镜像
+### `apt-get`国内镜像
 
 修改配置文件
 `vim /etc/apt/sources.list`
@@ -83,7 +83,7 @@ deb-src http://mirrors.ustc.edu.cn/ubuntu/ xenial-backports main restricted univ
 
 然后执行`apt-get update`
 
-## 查看`java`安装目录
+### 查看`java`安装目录
 
 ```shell
 han@ubuntu:/etc$ whereis java
@@ -94,7 +94,7 @@ han@ubuntu:/etc$ ls -lrt /etc/alternatives/java
 lrwxrwxrwx 1 root root 46 4月   2 15:54 /etc/alternatives/java -> /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java
 ```
 
-## 离线安装 git
+### 离线安装 git
 
 ```shell
 rpm2cpio git-1.7.9.6-1.e16.rfx.x86_64.rpm|cpio -idmv
@@ -102,7 +102,7 @@ rpm2cpio git-1.7.9.6-1.e16.rfx.x86_64.rpm|cpio -idmv
 
 然后在`~/.bash_profile`中配置一个`alias`即可，或者在`PATH`更新`git`的`/usr/bin`路径
 
-## 定时任务
+### 定时任务
 
 为当前用户创建 cron 服务
 
@@ -156,30 +156,30 @@ rpm2cpio git-1.7.9.6-1.e16.rfx.x86_64.rpm|cpio -idmv
    “,”分开几个离散的数字
    ```
 
-## 合并上下行
+### 合并上下行
 
 ```shell
 sed 'N;s/\n/ /' file.txt
 ```
 
-## 清屏
+### 清屏
 
 clear 或者使用`ctrl + l`
 
-## 查看当前是否 root
+### 查看当前是否 root
 
 ```shell
 # 0既是root
 echo $UID
 ```
 
-## 合并多行
+### 合并多行
 
 ```shell
 ls -1 | paste -sd "," -
 ```
 
-## 显示当前 IP 的 hostname
+### 显示当前 IP 的 hostname
 
 ```shell
 echo $HOSTNAME
@@ -188,7 +188,7 @@ echo $HOSTNAME
 hostname -i
 ```
 
-## 比较文件差异
+### 比较文件差异
 
 ```shell
 # -y 左右对比
@@ -196,8 +196,24 @@ hostname -i
 diff -y alpha1.txt alpha2.txt --suppress-common-lines
 ```
 
-## 显示 ASCII 表
+### 显示 ASCII 表
 
 ```shell
 man ascii
 ```
+
+### watch
+
+watch 指令可以间歇性的执行程序，将输出结果以全屏的方式显示，默认是 2s 执行一次。watch 将一直运行，直到被中断。
+
+- -d | --differences 高亮显示差异部分
+- --cumulative 高亮显示“sticky”
+- -n  指定时间间隔
+- -t | --no-title 不显示日期时间以及间隔秒数
+
+### 重复执行上次命令
+
+1. 使用上方向键，并回车执行。
+2. 按 !! 并回车执行。
+3. 输入 !-1 并回车执行。
+4. 按 Ctrl+P 并回车执行。

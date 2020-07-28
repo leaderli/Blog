@@ -47,12 +47,26 @@ tags:
 
 下载`https://zlib.net/zlib-1.2.11.tar.gz`软件
 
-```shell
-#下载
-$ wget https://zlib.net/zlib-1.2.11.tar.gz
-$ tar -xvf  lib-1.2.11.tar.gz
-$ cd zlib-1.2.11
-$ ./configure
-$ make  -j4
-$ make install
-```
+    ```shell
+    #下载
+    wget https://zlib.net/zlib-1.2.11.tar.gz
+    tar -xvf  lib-1.2.11.tar.gz
+    cd zlib-1.2.11
+    ./configure
+    make  -j4
+    make install
+    ```
+
+## `./`执行脚本头文件不存在
+
+> !#/usr/bin/python3: No such file or directory
+
+因为复制粘贴`!#/usr/bin/python3`时带上了不可见的换行或其他字符
+
+通过命令`$ head -1 yourscript | od -c`文件的头文件的
+
+- `0000000 # ! / b i n / b a s h \r \n`
+- `0000000 357 273 277 # ! / b i n / b a s h \n`
+- `0000000 # ! / b i n / b a s h \n`（这样的才是正确的输出）
+
+> od 指令会读取所给予的文件的内容，并将其内容以八进制字码呈现出来

@@ -43,3 +43,9 @@ mvn dependency:resolve -Dclassifier=sources
 ### eclipse 中 maven 项目不自动编译
 
 执行`clean`，再`compile`即可。
+
+### 跳过测试
+
+```shell
+mvn package -DskipTests=true
+```

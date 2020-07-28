@@ -176,3 +176,18 @@ scope 不是文件扩展名
 ## 快捷键
 
 `ctrl + tab`切换窗口
+
+## css 颜色选择器
+
+鼠标悬停在颜色代码块上即可
+
+## 修改 statusbar 颜色
+
+```json
+
+"workbench.colorCustomizations": {
+    "statusBar.background" : "#1A1A1A",
+    "statusBar.noFolderBackground" : "#0A0A0D",
+    "statusBar.debuggingBackground": "#511f1f"
+}
+```

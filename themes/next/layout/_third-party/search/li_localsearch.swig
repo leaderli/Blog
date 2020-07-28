@@ -98,6 +98,10 @@
                         var searchTextCount = 0;
                         var title = data.title.trim();
                         var titleInLowerCase = title.toLowerCase();
+                        if (!data.content){
+                            console.log(title,'内容为空')
+                            return
+                        }
                         var content = data.content.trim();
                         var contentInLowerCase = content.toLowerCase();
                         var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
@@ -112,10 +116,7 @@
                                 keywords = []
                             }
                             keywords.forEach(function (keyword) {
-                                if(keyword === 'test' && titleInLowerCase.indexOf('bash')>-1){
-
-                                  console.log(contentInLowerCase)
-                                }
+                            
                                 function getIndexByWord(word, text, caseSensitive) {
                                     var wordLen = word.length;
                                     if (wordLen === 0) {
@@ -234,7 +235,6 @@
                             });
 
                             // select top N slices in content
-
                             var upperBound = parseInt('{{ theme.local_search.top_n_per_article }}');
                             if (upperBound >= 0) {
                                 slicesOfContent = slicesOfContent.slice(0, upperBound);
@@ -252,6 +252,7 @@
                                     prevEnd = end;
                                 });
                                 result += text.substring(prevEnd, slice.end);
+                                
                                 return result;
                             }
 

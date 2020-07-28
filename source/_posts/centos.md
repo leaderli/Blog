@@ -45,6 +45,3 @@ $ sudo yum clean all
 #需要以root用户执行
 $ dhclient -v
 ```
-
-测试
-![centos_测试.png](./images/centos_测试.png)

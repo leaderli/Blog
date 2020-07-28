@@ -286,3 +286,12 @@ clear
 > '\r':command not found
 
 这是因为在 win 上的格式有问题，使用 dos2unix 命令转换一下脚本即可
+
+## sudo 执行不输密码
+
+在`/etc/sudoers`最后一行新增规则
+
+```shell
+# li 为登陆用户
+li ALL=(root) NOPASSWD: /root/dhclient.sh
+```

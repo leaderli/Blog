@@ -81,3 +81,7 @@ System.out.println("join= " + join);
 List<String> list = new ArrayList<>();
 list.removeIf(Predicate<? super E> filter)
 ```
+
+### `Collectors.toMap()`问题
+
+`Collectors.toMap()`要求生成的 map 的 value 不能为 null，否则会报 nullPoint 异常。且 key 不能重复，否则会报 duplicate key 异常

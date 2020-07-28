@@ -160,6 +160,7 @@ mac 上使用 command 键替代 alt
 | ALT 5     | debug view             |
 | ALT F3    | show bookmark          |
 | ALT b     | goto to declration     |
+| ALT e     | recent files           |
 | ALT n     | generate ,new file     |
 | ALT w     | close active tab       |
 | ALT up    | jump to navigation bar |

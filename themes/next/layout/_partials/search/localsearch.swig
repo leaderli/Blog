@@ -19,6 +19,5 @@
      	search_path = "search.json";
      }
      var path = "<%= config.root %>" + search_path;
-     searchFunc(path, 'local-search-input', 'local-search-result');
  </script>
 </div>

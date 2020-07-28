@@ -44,3 +44,15 @@ while True:
     time.sleep(1)
 
 ```
+
+## 替换字符串
+
+类似 java 的 replace
+
+```python
+import re
+
+origin='/1/2'
+re.sub('^/','',origin)
+# 1/2
+```

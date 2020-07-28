@@ -64,3 +64,7 @@ vim -b XXX.class
 ## 虚拟机 ip 固定
 
 在虚拟机/etc/hosts 配置 ip
+
+## alfred
+
+模糊搜索时使用空格

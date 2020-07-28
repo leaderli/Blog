@@ -146,6 +146,15 @@ console.log(fn.getYear());
 
 ![js-tips_2020-04-25-13-18-14.png](./images/js-tips_2020-04-25-13-18-14.png)
 
+## this
+
+this 到底取何值，是在函数真正被调用执行的时候确定的，函数定义的时候确定不了
+
+1. 在全局环境下，this 永远是 window
+2. 函数作为构造函数用，那么其中的 this 就代表它即将 new 出来的对象
+3. 如果函数作为对象的一个属性时，并且作为对象的一个属性被调用时，函数中的 this 指向该对象
+4. 一个函数被 call 和 apply 调用时，this 的值就取传入的对象的值
+
 ## 执行上下文
 
 函数表达式”和“函数声明”。虽然两者都很常用，但是这两者在“准备工作”时，却是两种待遇。
@@ -211,4 +220,49 @@ console.log(str.trim().split(/\s+/));
 var a = 0b10;
 var b = 070;
 var c = 0x36;
+```
+
+## 属性依赖赋值
+
+js 对象的属性值延迟加载
+
+```javascript
+app = {};
+Object.defineProperty(app, "config", {
+  get: (function () {
+    var inner = {};
+    inner.get = function () {
+      return inner.config || (inner.config = 1234);
+    };
+    return inner.get;
+  })(),
+});
+```
+
+### console
+
+```javascript
+var obj = [
+  {
+    name: 1,
+    age: 1,
+  },
+  {
+    name: 2,
+    age: 2,
+  },
+];
+
+console.table(obj);
+```
+
+![js-tips_table.png](./images/js-tips_table.png)
+
+### object
+
+查看 obj 的所有 key 以及 values
+
+```javascript
+Object.keys(obj);
+Object.values(obj);
 ```
