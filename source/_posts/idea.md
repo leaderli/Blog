@@ -1,5 +1,5 @@
 ---
-title: idea技巧
+title: idea
 date: 2019-07-21 19:57:47
 categories: tips
 tags:
@@ -8,11 +8,60 @@ tags:
   - tips
 ---
 
+## 为了方便在各个平台使用，统一定义快捷键
+
+mac 上使用 command 键替代 alt
+
+可以自定义一组快捷命令，`Quick List`
+
+| 快捷键    | 解释                   |
+| :-------- | :--------------------- |
+| F1        | quick list             |
+| F2        | next highlight error   |
+| F3        | toggle bookmark        |
+| F4        | run                    |
+| F5        | debug                  |
+| ALT 1     | project view           |
+| ALT 2     | structure view         |
+| ALT 3     | favorite view          |
+| ALT 4     | run view               |
+| ALT 5     | debug view             |
+| ALT F3    | show bookmark          |
+| ALT b     | goto to declration     |
+| ALT e     | recent files           |
+| ALT n     | generate ,new file     |
+| ALT w     | close active tab       |
+| ALT up    | jump to navigation bar |
+| ALT down  | jump to source         |
+| ALT left  | goto previous splitter |
+| ALT right | goto next splitter     |
+| SHIFT F6  | rename                 |
+
+其他快捷方式
+
+1. 窗口视图回车键进入代码
+
 ## 调试
 
-1. `Evaluate Expression`,在`Debug`模式下使用，可以动态编写代码进行调试
+IDEA 开发 web 项目时，建议使用`debug`启动模式，这样可以随时打断点调试项目
 
-2. 右键`BreakPoint`可设置`condition`，即在指定条件下断点生效
+1. 使用异常类型断点，在抛出异常时快速进入报错点
+
+2. 断点设置`condition`，仅当满足条件时触发断点
+
+3. 断点可设置依赖关系，仅在前置断点触发后再触发
+
+4. `evaluate Expression`可编写代码进行测试
+
+5. 使用`watches`监听属性的变化
+
+6. `variables`直接修改属性值，进行调试
+
+7. 指定线程下触发断点
+
+8. 移动到下个断点
+
+9. option + 左键 查看变量
 
 ## 输入
 
@@ -139,36 +188,3 @@ idea 若使用某种方式打开文件后，`file type`中的编辑器类型下�
 ## 标记当前段落不格式化
 
 code style|enable formatter markers in comments
-
-## 为了方便在各个平台使用，统一定义快捷键
-
-mac 上使用 command 键替代 alt
-
-可以自定义一组快捷命令，`Quick List`
-
-| 快捷键    | 解释                   |
-| :-------- | :--------------------- |
-| F1        | quick list             |
-| F2        | next highlight error   |
-| F3        | toggle bookmark        |
-| F4        | run                    |
-| F5        | debug                  |
-| ALT 1     | project view           |
-| ALT 2     | structure view         |
-| ALT 3     | favorite view          |
-| ALT 4     | run view               |
-| ALT 5     | debug view             |
-| ALT F3    | show bookmark          |
-| ALT b     | goto to declration     |
-| ALT e     | recent files           |
-| ALT n     | generate ,new file     |
-| ALT w     | close active tab       |
-| ALT up    | jump to navigation bar |
-| ALT down  | jump to source         |
-| ALT left  | goto previous splitter |
-| ALT right | goto next splitter     |
-| SHIFT F6  | rename                 |
-
-其他快捷方式
-
-1. 窗口视图回车键进入代码
