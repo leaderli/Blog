@@ -128,5 +128,10 @@ nrm test
 
    ```
 
+   发布不成功，尝试使用最简格式`package.json`
+
    例如
    ![node模块_私有仓库.png](./images/node模块_私有仓库.png)
+
+4. verdaccio 存储 nodejs 包的地址
+   `~/.local/share/verdaccio/storage`

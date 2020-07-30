@@ -1,9 +1,11 @@
 {% if theme.mermaid.enable %}
+<link rel="stylesheet" href="/css/li.css">
 <script>
 if ($('body').find('pre.mermaid').length) {
   $.ajax({
     type: 'GET',
-    url: '{{ theme.mermaid.cdn }}',
+    //url: '{{ theme.mermaid.cdn }}',
+    url: '/js/mermaid.min.js',
     dataType: 'script',
     cache: true,
     success: function() {
