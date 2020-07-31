@@ -115,5 +115,5 @@ MDC.put("session", "xxxx");
 ```
 
 ```properties
-log4j.appender.consoleAppender.layout.ConversionPattern=%X{session}}%m%n
+log4j.appender.consoleAppender.layout.ConversionPattern= %X{session} %m%n
 ```
