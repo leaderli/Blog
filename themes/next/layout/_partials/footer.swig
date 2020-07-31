@@ -61,3 +61,85 @@
 #}</div>
 {% endif %}
 
+{% if theme.li_echarts %}
+
+<script src="/js/echarts.min.js"></script>
+
+<script>
+    function recursion_tree(dom, tree) {
+        tree = tree || {}
+        if (dom.tagName === 'UL') {
+            tree.children = []
+            Array.prototype.forEach.call(dom.children, child => {
+                tree.children.push(recursion_tree(child))
+            })
+            return tree;
+        } else if (dom.tagName === 'LI') {
+            html = dom.innerHTML
+            tree.name = html;
+            var ulIndex = html.indexOf('<')
+            if (ulIndex > 0) {
+                tree.name = html.substring(0, ulIndex).trim()
+                Array.prototype.forEach.call(dom.children, child => {
+                    console.log(child)
+                    console.log(recursion_tree(child, tree))
+
+                })
+            }
+            return tree
+        } else {
+
+        }
+    }
+    var title = document.querySelector('.post-title').innerText.trim()
+
+    Array.prototype.forEach.call(document.getElementsByClassName("li-echarts-tree"), function (dom) {
+        dom = dom.children[0]
+        data = recursion_tree(dom, { "name": title })
+        var div = document.createElement('div')
+        div.setAttribute('style', 'width: 600px;height:400px;')
+        dom.innerHTML=''
+        dom.appendChild(div);
+        var myChart = echarts.init(div);
+        myChart.setOption(option = {
+            tooltip: {
+                trigger: 'item',
+                triggerOn: 'mousemove'
+            },
+            series: [
+                {
+                    type: 'tree',
+
+                    data: [data],
+
+                    top: '1%',
+                    left: '7%',
+                    bottom: '1%',
+                    right: '20%',
+
+                    symbolSize: 7,
+
+                    label: {
+                        position: 'left',
+                        verticalAlign: 'middle',
+                        align: 'right',
+                        fontSize: 9
+                    },
+
+                    leaves: {
+                        label: {
+                            position: 'right',
+                            verticalAlign: 'middle',
+                            align: 'left'
+                        }
+                    },
+
+                    expandAndCollapse: false,
+                    animationDuration: 350,
+                    animationDurationUpdate: 450
+                }
+            ]
+        });
+    })
+</script>
+{% endif %}

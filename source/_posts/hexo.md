@@ -632,3 +632,141 @@ $ pm2 start hexo_run.js
 > Error: expected end of comment, got end of file
 
 ![markdown和KaTex_注释.png](./images/markdown和KaTex_注释.png)
+
+### 增加 echarts 树图
+
+例如
+
+```markdown
+hexo 中 在 `{% %}`中包含的内容，会被 hexo 视为一个 tag
+
+例如
+
+{% pullquote li-echarts-tree %}
+
+- 前言
+  - 使用方法
+    - 使用方法
+    - 1
+  - 二
+  - 一
+  - 二
+- 太长不看
+- 参考资料
+
+{% endpullquote %}
+```
+
+hexo 插件`node_modules/hexo/lib/plugins/tag/index.js`中会注册相关 tag 的处理器
+例如
+
+```javascript
+tag.register("pullquote", require("./pullquote")(ctx), true);
+```
+
+`node_modules/hexo/lib/plugins/tag/pullquote.js`的内容如下
+
+```javascript
+"use strict";
+
+/**
+ * Pullquote tag
+ *
+ * Syntax:
+ *   {% pullquote [class] %}
+ *   Quote string
+ *   {% endpullquote %}
+ */
+module.exports = (ctx) =>
+  function pullquoteTag(args, content) {
+    args.unshift("pullquote");
+
+    const result = ctx.render.renderSync({ text: content, engine: "markdown" });
+
+    return `<blockquote class="${args.join(" ")}">${result}</blockquote>`;
+  };
+```
+
+`pullquote`最终生成一个`<blockquote>`标签，并且其 `class`为`pullquote`以及其后定义的值，我们在`theme`下的`footer.swig`中，新增关于对`li-echarts-tree`的元素进行 echarts 渲染。我们定义无序列表的来实现 echarts 中的树图。无序列表会被渲染成`ul`，`li`元素。那么我们可以这样实现
+
+```javascript
+<script src="/js/echarts.min.js"></script>
+
+<script>
+    function recursion_tree(dom, tree) {
+        tree = tree || {}
+        if (dom.tagName === 'UL') {
+            tree.children = []
+            Array.prototype.forEach.call(dom.children, child => {
+                tree.children.push(recursion_tree(child))
+            })
+            return tree;
+        } else if (dom.tagName === 'LI') {
+            html = dom.innerHTML
+            tree.name = html;
+            var ulIndex = html.indexOf('<')
+            if (ulIndex > 0) {
+                tree.name = html.substring(0, ulIndex).trim()
+                Array.prototype.forEach.call(dom.children, child => {
+                    console.log(child)
+                    console.log(recursion_tree(child, tree))
+
+                })
+            }
+            return tree
+        } else {
+
+        }
+    }
+    var title = document.querySelector('.post-title').innerText.trim()
+
+    Array.prototype.forEach.call(document.getElementsByClassName("li-echarts-tree"), function (dom) {
+        dom = dom.children[0]
+        data = recursion_tree(dom, { "name": title })
+        var div = document.createElement('div')
+        div.setAttribute('style', 'width: 600px;height:400px;')
+        dom.innerHTML=''
+        dom.appendChild(div);
+        var myChart = echarts.init(div);
+        myChart.setOption(option = {
+            tooltip: {
+                trigger: 'item',
+                triggerOn: 'mousemove'
+            },
+            series: [
+                {
+                    type: 'tree',
+
+                    data: [data],
+
+                    top: '1%',
+                    left: '7%',
+                    bottom: '1%',
+                    right: '20%',
+
+                    symbolSize: 7,
+
+                    label: {
+                        position: 'left',
+                        verticalAlign: 'middle',
+                        align: 'right',
+                        fontSize: 9
+                    },
+
+                    leaves: {
+                        label: {
+                            position: 'right',
+                            verticalAlign: 'middle',
+                            align: 'left'
+                        }
+                    },
+
+                    expandAndCollapse: false,
+                    animationDuration: 350,
+                    animationDurationUpdate: 450
+                }
+            ]
+        });
+    })
+</script>
+```

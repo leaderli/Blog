@@ -266,3 +266,17 @@ console.table(obj);
 Object.keys(obj);
 Object.values(obj);
 ```
+
+### 递归 dom
+
+```javascript
+var els = document.getElementsByClassName("myclass");
+
+Array.prototype.forEach.call(els, function(el) {
+    // Do stuff here
+    console.log(el.tagName);
+});
+
+// Or
+[].forEach.call(els, function (el) {...});
+```

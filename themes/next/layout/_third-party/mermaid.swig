@@ -1,5 +1,4 @@
 {% if theme.mermaid.enable %}
-<link rel="stylesheet" href="/css/li.css">
 <script>
 if ($('body').find('pre.mermaid').length) {
   $.ajax({
