@@ -23,17 +23,31 @@ yum search freeswitch-sounds-
 # 根据需要安装
 # yum  install - y freeswitch-lang-*
 # yum  install - y freeswitch-sounds-*
-systemctl enable freeswitch
-systemctl start freeswitch
-# 进入freeswtich
-fs_cli -rRS
 ```
 
-如果报错，说明没有启动成功，尝试使用 root 启动
+## 启动
 
 ```shell
-[ERROR] fs_cli.c:1691 main() Error Connecting []
-[info] fs_cli.c:1697 main() Retrying
+
+# 以系统服务启动freeswitch
+systemctl enable freeswitch
+systemctl start freeswitch
+
+# 直接启动
+# -nc 后台启动
+# -nonat 关闭uPnP
+freeswitch -nc -nonat
+
+# 查看freeswitch进程
+ps -ef|grep freeswitch
+# 查看相关端口是否被占用，默认使用的是5060端口
+# -p 能直接得到freeswitch的进程号（需root权限)
+netstat -anp|grep 5060
+
+
+# 进入freeswtich
+# 如果报错，说明没有启动成功，尝试使用 root 启动
+fs_cli -rRS
 ```
 
 ## 安装一个 sip 软电话
@@ -49,6 +63,8 @@ Password: 1234
 Authorization user name: 1000
 Domain: freeswitch的IP地址（默认使用5060端口）
 ```
+
+<em class="grey">密码默认为 1234，可在 var.xml 中更改</em>
 
 ## 开始测试
 
@@ -77,7 +93,31 @@ freeswitch 默认测试号码
 
 ## freeswitch cli
 
-在 freeswitch 客户端，我们将日志级别设置到合适的级别
+### 参数
+
+1. `-x` 执行一条命令后退出
+   `fs_cli -x "version"`
+   > FreeSWITCH Version 1.10.3-release.5~64bit (-release.5 64bit)
+
+### 连接其他服务器
+
+在用户根目录下编辑配置文件`.fs_cli_conf`
+
+```conf
+[server1]
+host      => 192.168.0.1
+port      => 8081
+password  => password
+debug     => 7
+```
+
+配置好后即可使用`fs_cli sever1`连接
+
+### 客户端命令
+
+fs_cli 中，有几个特殊命令，以`/`开头,这些命令并不直接发送到服务端，而由`fs_cli`直接处理
+
+例如 fs_cli 中，我们将日志级别设置到合适的级别
 
 ```shell
 freeswitch@CentOS7> /help
@@ -94,11 +134,30 @@ Command                     Description
 
 ```
 
-### 重新加载配置文件
+### 快捷键
 
-reloadxml
+在`fs_cli`中，我们可以使用`F1-F12`的快捷键，快捷键的功能定义在配置文件`autoload_configs/switch.conf.xml`中
+
+```xml
+<cli-keybindings>
+    <key name="1" value="help"/>
+    <key name="2" value="status"/>
+    <key name="3" value="show channels"/>
+    <key name="4" value="show calls"/>
+    <key name="5" value="sofia status"/>
+    <key name="6" value="reloadxml"/>
+    <key name="7" value="console loglevel 0"/>
+    <key name="8" value="console loglevel 7"/>
+    <key name="9" value="sofia status profile internal"/>
+    <key name="10" value="sofia profile internal siptrace on"/>
+    <key name="11" value="sofia profile internal siptrace off"/>
+    <key name="12" value="version"/>
+  </cli-keybindings>
+```
 
 ## 配置简介
+
+我安装的 freeswitch 的配置文件在`/etc/freeswitch`目录下
 
 ```shell
 文件                               |    说明
@@ -110,6 +169,10 @@ sip_profiles/internal.xml         | 一个SIP profile，或称作一个SIP-UA，
 sip_profiles/externa.xml          | 另一个SIP-UA，用作外部连接，端口5080
 autoload_configs/modules.conf.xml | 配置当FreeSWITCH启动时自动装载哪些模块
 ```
+
+### 重新加载配置文件
+
+fs_cli> `reloadxml`
 
 ## 问题
 
@@ -129,7 +192,7 @@ yum install -y freeswitch-sounds-en-us-callie-8000.noarch
 
 ### freeswitch 反应迟钝
 
-测试中发现呼叫请求服务器处理的特别慢，后来跟踪发现在`/etc/freeswitch/conf/dialplan/default.xml` 中有个 sleep 10s 的处理，
+测试中发现呼叫请求服务器处理的特别慢，后来跟踪发现在`/etc/freeswitch/dialplan/default.xml` 中有个 sleep 10s 的处理，
 
 ```xml
 <condition field="${default_password}" expression="^1234$" break="never">
@@ -141,4 +204,8 @@ yum install -y freeswitch-sounds-en-us-callie-8000.noarch
 </condition>
 ```
 
-我们可以注释掉这个`sleep`，或者修改默认密码，`/etc/freeswitch/conf`，编译 vars.xml，把默认的密码 1234 改成其他。
+我们可以注释掉这个`sleep`，或者修改默认密码，`/etc/freeswitch/`，编译 vars.xml，把默认的密码 1234 改成其他。
+
+```xml
+<X-PRE-PROCESS cmd="set" data="default_password=10086"/>
+```

@@ -124,3 +124,18 @@ value.set(str, "notfuck".toCharArray());
 //修改成功后重新加上final修饰符
 modifier.set(value, value.getModifiers() | Modifier.FINAL);}
 ```
+
+## 子类继承时不使用泛型
+
+```java
+public interface Father<T> {
+  void func(T t);
+}
+
+public Son implements Father<String> {
+
+  public void func(String t){
+    ...
+  }
+}
+```

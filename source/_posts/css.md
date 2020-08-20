@@ -570,7 +570,9 @@ footer {
 ```css
 overflow: hidden;
 text-overflow: ellipsis;
-white-space: nowrap;
+white-space: nowrap; #省略显示
+# white-space: wrap; #换行显示
+
 ```
 
 ```html

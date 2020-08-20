@@ -80,7 +80,7 @@ tags:
   <em class="red">aa</em>
   ```
 
-  自定义样式，在主题`next`下的`main.styl`引入自定义配置文件`@import '_custom/li.styl';`，为了让 vscode 中也可以正常显示，在 vscode 中增加配置项`"markdown.styles": ["http://localhost:4000/css/main.css?v=7.2.0"],`(vscode 因为安全原因不支持直接加载本地文件)
+  自定义样式，在主题`next`下的`main.styl`引入自定义配置文件`@import '_custom/li.styl';`，为了让 vscode 中也可以正常显示，在 vscode 中增加配置项`"markdown.styles": ["main.css"],需要将`main.css`放到 markdown 同级目录
 
   例如: <em class="red">aa</em>
 

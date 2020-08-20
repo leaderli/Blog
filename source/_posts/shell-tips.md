@@ -97,12 +97,6 @@ nohup ./program >/dev/null 2>&1 &
 
 `ls -LS`
 
-## 快速删除大文件
-
-```shell
-cat /dev/null > access.log
-```
-
 ## nl
 
 将输出的每一行加上行号。例如：`'cat 1.txt | nl'`，输出`1.txt`的文件并加上行号

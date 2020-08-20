@@ -608,6 +608,7 @@ Maven 采用“最近获胜策略（nearest wins strategy）”的方式处理�
 
 说明：
 使用 dependencyManagement 可以统一管理项目的版本号，确保应用的各个项目的依赖和版本一致，不用每个模块项目都弄一个版本号，不利于管理，当需要变更版本号的时候只需要在父类容器里更新，不需要任何一个子项目的修改；如果某个子项目需要另外一个特殊的版本号时，只需要在自己的模块 dependencies 中声明一个版本号即可。子类就会使用子类声明的版本号，不继承于父类版本号。
+**_dependencyManagement 不会引入包，仅控制版本_**
 
 #### 与 dependencies 区别
 
@@ -688,3 +689,28 @@ maven 的模块是在父类 pom 中定义聚合关系，其本质仅仅是一次
 ## 强制刷新本地缓存
 
 `mvn dependency:purge-local-repository`
+
+## 打包源码
+
+```xml
+<plugin>
+<groupId>org.apache.maven.plugins</groupId>
+<artifactId>maven-source-plugin</artifactId>
+<version>3.0.0</version>
+<!-- 绑定source插件到Maven的生命周期,并在生命周期后执行绑定的source的goal -->
+<executions>
+  <execution>
+    <!-- 绑定source插件到Maven的生命周期 -->
+    <phase>compile</phase>
+    <!--在生命周期后执行绑定的source插件的goals -->
+    <goals>
+      <goal>jar-no-fork</goal>
+    </goals>
+  </execution>
+</executions>
+</plugin>
+```
+
+执行 mvn install，maven 会自动将 source install 到 repository 。
+执行 mvn deploy，maven 会自动将 source deploy 到 remote-repository 。
+执行 mvn source:jar，单独打包源码。

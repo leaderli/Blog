@@ -221,3 +221,12 @@ vim 的配置在`~/.vimrc`中。
 ```properties
 hi Search term=reverse ctermfg=0 ctermbg=3 guifg=#000000 guibg=#FFE792
 ```
+
+## 查看字节
+
+使用 16 进制查看文件的 byte
+
+```shell
+vim -b XXX.class
+:%!xxd
+```

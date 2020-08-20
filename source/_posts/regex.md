@@ -53,3 +53,11 @@ tags: regex
 
 - 默认情况下使用贪婪模式
 - 非贪婪 限定符后加 `?`
+
+## java 匹配换行符
+
+java 正则匹配时，行尾占有字符`$`是不包括换行符`\n`的，java8 支持使用`\R`来表示换行
+
+```java
+string = string.replaceAll("\\R", " --linebreak-- ");
+```

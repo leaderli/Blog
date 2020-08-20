@@ -135,3 +135,34 @@ nrm test
 
 4. verdaccio 存储 nodejs 包的地址
    `~/.local/share/verdaccio/storage`
+
+## http
+
+http post 请求
+
+默认情况下请求报文格式为 json`Content-type: application/json`
+
+```js
+var request = require('request')
+request(
+  {
+    url: url,
+    method: "POST",
+    json: requestData,
+  },
+  function (error, response, body) {
+     ...
+  }
+);
+```
+
+## fs
+
+读取文件为 base64
+
+```js
+const fs = require("fs");
+
+let buff = fs.readFileSync("stack-abuse-logo.png");
+let base64data = buff.toString("base64");
+```

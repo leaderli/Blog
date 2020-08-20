@@ -280,3 +280,67 @@ Array.prototype.forEach.call(els, function(el) {
 // Or
 [].forEach.call(els, function (el) {...});
 ```
+
+### 递归检测属性是否存在
+
+查看 obj 内的 obj 的属性的值，避免 undefined 异常
+
+```javascript
+var object = {
+  innerObject: {
+    deepObject: {
+      value: "Here am I",
+    },
+  },
+};
+
+if (
+  object &&
+  object.innerObject &&
+  object.innerObject.deepObject &&
+  object.innerObject.deepObject.value
+) {
+  console.log("We found it!");
+}
+```
+
+### replaceALl
+
+js 原生没有 replaceAll 方法，可以通过
+
+```js
+str = "Test abc test test abc test...".split("abc").join("");
+str.split(search).join(replacement);
+```
+
+### 事件冒泡
+
+阻止事件冒泡
+
+1. 给子级加 event.stopPropagation( )
+
+   ```javascript
+   $("#div1").mousedown(function (e) {
+     var e = event || window.event;
+     event.stopPropagation();
+   });
+   ```
+
+2. 在事件处理函数中返回 false
+
+   ```javascript
+   $("#div1").mousedown(function (event) {
+     var e = e || window.event;
+     return false;
+   });
+   ```
+
+3. event.target==event.currentTarget，让触发事件的元素等于绑定事件的元素，也可以阻止事件冒泡；
+
+   ```javascript
+   $("#div1").mousedown(function (event) {
+     if (event.target == event.currentTarget) {
+       console.log(event);
+     }
+   });
+   ```

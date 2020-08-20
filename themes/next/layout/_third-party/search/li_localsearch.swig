@@ -96,6 +96,9 @@
                         var isMatch = false;
                         var hitCount = 0;
                         var searchTextCount = 0;
+                        if(!data.title){
+                            return
+                        }
                         var title = data.title.trim();
                         var titleInLowerCase = title.toLowerCase();
                         if (!data.content){

@@ -721,14 +721,14 @@ needmoreshare2:
 # ---------------------------------------------------------------
 
 # Baidu Analytics ID
-baidu_analytics: eQr4ptzetx
+# baidu_analytics: eQr4ptzetx
 
 # Growingio Analytics ID
 # Copyright 2015-2018 GrowingIO, Inc. More info available at https://www.growingio.com
 #growingio_analytics: #your projectId
 
 # Google Analytics
-google_analytics: 9-iuFTrWxG-NMbBqeS359Y491i0G0HcZ44NiICCEs7s
+# google_analytics: 9-iuFTrWxG-NMbBqeS359Y491i0G0HcZ44NiICCEs7s
 
 #  tracking_id:
 #  localhost_ignored: true

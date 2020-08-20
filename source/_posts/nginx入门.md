@@ -299,3 +299,18 @@ http {
     access_log  /var/log/nginx/access.log  main;
 }
 ```
+
+## 禁用浏览器缓存
+
+通过添加返回头
+
+```nginx
+server {
+    listen      80;
+    server_name example.org www.example.org;
+
+    # 设置禁用浏览器缓存
+    add_header Cache-Control no-cache;
+    ...
+}
+```
