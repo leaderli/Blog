@@ -182,7 +182,7 @@ proto[x:y] = z      : proto[x:y]等于z
 报文内容以 16 进制展示，一个字节即为 2 位 16 进制数字，我们可以看到第 40 个字节后的`4745 5420`即为内容<code>GET&emsp;</code>
 
 ```shell
-tcpdump -i any 'ip[40:4] = 0x47455420' -A -nn -f
+sudo tcpdump -i any 'ip[40:4] = 0x47455420' -A -nn -f
 ```
 
 来抓取数据报文中中请求方法为<code>GET&emsp;</code>的请求

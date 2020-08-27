@@ -87,7 +87,7 @@ deploy:
   repo:
     github: https://github.com/leaderli/leaderli.github.io.git
     # coding: https://git.dev.tencent.com/leaderli/leaderli.coding.me.git
-    # gitee: https://gitee.com/leaderli/hexo.git
+    gitee: https://gitee.com/leaderli/hexo.git
   branch: master
 # pandoc
 pandoc:
@@ -108,9 +108,5 @@ baidushare:
 sitemap:
   path: sitemap.xml
   # hexo-admin authentification
-admin:
-  username: root
-  password_hash: $2a$10$aQTxYNEOpe50QgpLa2vUFONI4eU.WLp.3dRznnIggiU/wozIhzlY2
-  secret: 123alksjdlkajpo123jlksdalksdjalksjdalksjdlkasjdlakjsdkjhaslkdj
 li:
   path: /Users/li/Documents/Blog/

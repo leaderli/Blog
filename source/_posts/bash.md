@@ -289,7 +289,7 @@ clear
 
 ## sudo 执行不输密码
 
-在`/etc/sudoers`最后一行新增规则
+在`/etc/sudoers`最后一行新增规则，即可达到免密执行
 
 ```shell
 # li 为登陆用户

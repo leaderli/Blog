@@ -344,3 +344,21 @@ str.split(search).join(replacement);
      }
    });
    ```
+
+### 触发事件与自定义事件
+
+```javascript
+const event = new Event("build");
+
+// Listen for the event.
+elem.addEventListener(
+  "build",
+  function (e) {
+    /* ... */
+  },
+  false
+);
+
+// Dispatch the event.
+elem.dispatchEvent(event);
+```

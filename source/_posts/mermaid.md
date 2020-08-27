@@ -11,11 +11,11 @@ mermaid 是一个流程图插件的语法，可定义多种类型的流程图，
 
 基本的语法
 ![mermaid_基本的语法.png](./images/mermaid_基本的语法.png)
-不要使用`;`结尾，否则 hexo 渲染会失败
+不要使用`;`结尾，否则 hexo 可能会渲染会失败，有些关键词不能作为 id，比如`end`
 
 ```mermaid
 graph LR;
-    Start --> Stop;
+    Start --> Stop
 ```
 
 graph 标明当前为流程图，LR 标明方向
@@ -34,21 +34,11 @@ graph 标明当前为流程图，LR 标明方向
 
 1. `id1[text1]`
 2. `id2(text2)`
-3. `id3([text3])`
-4. `id4[[text4]]`
-5. `id5((text5))`
-6. `id6>text6]`
-7. `id7{text7}`
 
 ```mermaid
 graph LR
-   id1[text1];
-   id2(text2);
-   id3([text3]);
-   id4[[text4]];
-   id5((text5));
-   id6>text6];
-   id7{text7};
+   id1[text1]
+   id2(text2)
 ```
 
 ### 线条

@@ -108,7 +108,7 @@ nohup ./program >/dev/null 2>&1 &
 ## `ssh免密及执行远程命令`
 
 操作机上生成秘钥`ssh-keygen -t rsa`,将会生成一对秘钥，将公钥内容追加到服务器的`~/.ssh/authorized_keys`中，
-可通过**远程命令**`ssh user@example.com 'cat id_rsa.pub >> ~/.ssh/authorized_keys'`去执行,可以简单的使用`ssh-copy-id user@example.com`,这种方式
+可通过**远程命令**`ssh user@example.com 'cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys'`去执行,可以简单的使用`ssh-copy-id user@example.com`,这种方式
 采用的是默认的`22`端口，拷贝的公钥是默认的`id_rsa.pub`
 
 确保服务器的文件及目录权限
