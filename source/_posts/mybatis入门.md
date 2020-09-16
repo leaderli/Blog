@@ -420,6 +420,8 @@ public class ExampleTypeHandler extends BaseTypeHandler<String> {
 </typeHandlers>
 ```
 
+<hi>上述配置实际上是调用 org.mybatis.spring.SqlSessionFactoryBean:setTypeHandlers 方法</hi>
+
 也可临时指定
 
 ```xml

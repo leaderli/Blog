@@ -20,6 +20,8 @@ wget https://raw.githubusercontent.com/apache/incubator-echarts/4.8.0/dist/echar
 echarts 的使用者，使用 option 来描述其对图表的各种需求，包括：有什么数据、要画什么图表、图表长什么样子、含有什么组件、组件能操作什么事情等等。简而言之，option 表述了：数据、数据如何映射成图形、交互行为。详情可见[option 详细配置](https://echarts.apache.org/zh/option.html#title)
 echarts.setOption(option)可重复调用，仅覆盖更新，而不是整个替换 option。因此我们可以异步加载数据
 
+> setOption(option,true)覆盖更新，而不是 merge
+
 ```javascript
 var myChart = echarts.init(document.getElementById("main"));
 
@@ -163,16 +165,31 @@ ECharts 4 开始支持了 dataset 组件用于单独的数据集声明，从而�
 
 维度类型（dimension type）可以取这些值：
 
-'number': 默认，表示普通数据。
-'ordinal': 对于类目、文本这些 string 类型的数据，如果需要能在数轴上使用，须是 'ordinal' 类型。ECharts 默认会自动判断这个类型。但是自动判断也是不可能很完备的，所以使用者也可以手动强制指定。
-'time': 表示时间数据。设置成 'time' 则能支持自动解析数据成时间戳（timestamp），比如该维度的数据是 '2017-05-10'，会自动被解析。如果这个维度被用在时间数轴（axis.type 为 'time'）上，那么会被自动设置为 'time' 类型。时间类型的支持参见 data。
-'float': 如果设置成 'float'，在存储时候会使用 TypedArray，对性能优化有好处。
+- `number`: 默认，表示普通数据。
+- `ordinal`: 对于类目、文本这些 string 类型的数据，如果需要能在数轴上使用，须是 'ordinal' 类型。ECharts 默认会自动判断这个类型。但是自动判断也是不可能很完备的，所以使用者也可以手动强制指定。
+- `time`: 表示时间数据。设置成 'time' 则能支持自动解析数据成时间戳（timestamp），比如该维度的数据是 '2017-05-10'，会自动被解析。如果这个维度被用在时间数轴（axis.type 为 'time'）上，那么会被自动设置为 'time' 类型。时间类型的支持参见 data。
+- `float`: 如果设置成 'float'，在存储时候会使用 TypedArray，对性能优化有好处。
 
-'int': 如果设置成 'int'，在存储时候会使用 TypedArray，对性能优化有好处。
+- `int`: 如果设置成 'int'，在存储时候会使用 TypedArray，对性能优化有好处。
+
+示例：
+
+```js
+series: {
+    type: 'xxx',
+    dimensions: [
+        null,                // 如果此维度不想给出定义，则使用 null 即可
+        {type: 'ordinal'},   // 只定义此维度的类型。'ordinal' 表示离散型，一般文本使用这种类型。
+                             // 如果类型没有被定义，会自动猜测类型。
+        {name: 'good', type: 'number'},
+        'bad'                // 等同于 {name: 'bad'}
+    ]
+}
+```
 
 #### 数据到图形的映射（encode）
 
-encode 声明的基本结构如下，其中冒号左边是坐标系、标签等特定名称，如 'x', 'y', 'tooltip' 等，冒号右边是数据中的维度名（string 格式）或者维度的序号（number 格式，从 0 开始计数），可以指定一个或多个维度（使用数组）。通常情况下，下面各种信息不需要所有的都写，按需写即可。
+encode 声明的基本结构如下，其中冒号左边是坐标系、标签等特定名称，如 'x', 'y', 'tooltip' 等，冒号右边是数据中的维度名（string 格式）或者维度的序号（number 格式，从 0 开始计数），可以指定一个或多个维度（使用数组）。通常情况下，下面各种信息不需要所有的都写，按需写即可。各种类型的图表具体格式有所不同。
 
 ```javascript
 // 在任何坐标系和系列中，都支持：
@@ -194,7 +211,27 @@ encode: {
     // 把“维度0”映射到 Y 轴。
     y: 0
 }
+// 单轴（singleAxis）特有的属性：
+encode: {
+    single: 3
+}
 
+// 极坐标系（polar）特有的属性：
+encode: {
+    radius: 3,
+    angle: 2
+}
+
+// 地理坐标系（geo）特有的属性：
+encode: {
+    lng: 3,
+    lat: 2
+}
+
+// 对于一些没有坐标系的图表，例如饼图、漏斗图等，可以是：
+encode: {
+    value: 3
+}
 ```
 
 ### series
@@ -226,9 +263,7 @@ encode: {
 
 一些其他常用参数
 
-1. xAxisIndex 表示使用那个 x 轴坐标，默认指定第一个
-2. yAxisIndex 表示使用那个 y 轴坐标，默认指定第一个
-3. data 系列中的数据内容数组。数组项通常为具体的数据项。通常来说，数据用一个二维数组表示。如下，每一列被称为一个『维度』。
+1. data 系列中的数据内容数组。数组项通常为具体的数据项。通常来说，数据用一个二维数组表示。如下，每一列被称为一个『维度』。
 
    ```javascript
    series: [
@@ -246,6 +281,8 @@ encode: {
 
    在 直角坐标系 (grid) 中『维度 X』和『维度 Y』会默认对应于 xAxis 和 yAxis。
 
+2. xAxisIndex 表示使用那个 x 轴坐标，默认指定第一个
+3. yAxisIndex 表示使用那个 y 轴坐标，默认指定第一个
 4. seriesLayoutBy 默认为'column'，可指定为'row'，则 dataset 中的二维数组每一行称为一个维度，对 data 无效
 5. encode 指定相关组件使用哪个维度
    - x 表示维度\*映射到 x 轴。

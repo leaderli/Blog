@@ -1,11 +1,72 @@
 ---
-title: kafka简述
+title: kafka
 date: 2020-06-03 22:04:57
 categories: code
 tags:
   - kafka
   - 中间件
 ---
+
+## 安装
+
+```shell
+wget https://downloads.apache.org/kafka/2.6.0/kafka_2.13-2.6.0.tgz
+tar -xvf kafka_2.13-2.6.0.tgz
+```
+
+## 启动
+
+```shell
+#启动zookeeper
+$ bin/zookeeper-server-start.sh config/zookeeper.properties
+#启动kafka
+$ bin/kafka-server-start.sh config/server.properties
+```
+
+## 相关命令
+
+```shell
+
+#创建topic --partitions 20 使用20个分区 --replication-factor 3 备份服务器
+$ bin/kafka-topics.sh --create --topic quickstart-events --partitions 20 --replication-factor 3 --bootstrap-server localhost:9092
+Created topic quickstart-events.
+
+#查看topic
+$ bin/kafka-topics.sh --describe --topic --bootstrap-server localhost:9092
+Topic: quickstart-events    PartitionCount: 1   ReplicationFactor: 1    Configs: segment.bytes=1073741824
+    Topic: quickstart-events    Partition: 0    Leader: 0   Replicas: 0 Isr: 0
+
+#可以筛选，quicks既可以看到
+$ bin/kafka-topics.sh --describe --topic quicks --bootstrap-server localhost:9092
+Topic: quickstart-events    PartitionCount: 1   ReplicationFactor: 1    Configs: segment.bytes=1073741824
+    Topic: quickstart-events    Partition: 0    Leader: 0   Replicas: 0 Isr: 0
+
+## 删除topic
+$ bin/kafka-topics.sh --delete --topic quickstart-events --bootstrap-server localhost:9092
+
+#进入交行界面发送消息,ctrl+c退出
+$ bin/kafka-console-producer.sh --topic quickstart-events --bootstrap-server localhost:9092
+> This is my first event
+> This is my second event
+
+
+#进入交行界面读取消息,ctrl+c退出，--from-beginning表示从头开始读取消息
+#--consumer-property group.id=group1 表示已组group1进行消费
+$ bin/kafka-console-consumer.sh --topic quickstart-events --from-beginning --bootstrap-server localhost:9092 --consumer-property group.id=group1
+
+This is my first event
+This is my second event
+
+# 查看消费组
+$ bin/kafka-consumer-groups.sh --bootstrap-server localhost:9092 --list
+
+# 查看消费组消费情况
+# --members 显示组成员
+$ bin/kafka-consumer-groups.sh --bootstrap-server localhost:9092 --describe --group my-group --members
+
+```
+
+## 简介
 
 kafka 是一个分布式数据流处理系统。
 
@@ -15,8 +76,7 @@ kafka 是一个分布式数据流处理系统。
 
 ## partition
 
-topic 是发布消息的一个通道，topic 可被多个客户端订阅，topic 可向多个客户端发送订阅信息。对于每一个 topic，
-kafka 包含一个被 partition 的日志记录如下
+topic 是发布消息的一个通道，topic 可被多个客户端订阅，topic 可向多个客户端发送订阅信息。对于每一个 topic，可能包含多个 partition
 ![kafka简述_2020-06-03-22-18-02.png](./images/kafka简述_2020-06-03-22-18-02.png)
 
 ### partition 的规则

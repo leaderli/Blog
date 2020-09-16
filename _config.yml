@@ -85,9 +85,10 @@ menu:
 deploy:
   type: git
   repo:
-    github: https://github.com/leaderli/leaderli.github.io.git
+    #github: https://github.com/leaderli/leaderli.github.io.git
+    github: git@github.com:leaderli/leaderli.github.io.git
     # coding: https://git.dev.tencent.com/leaderli/leaderli.coding.me.git
-    gitee: https://gitee.com/leaderli/hexo.git
+    gitee: git@gitee.com:leaderli/leaderli.git
   branch: master
 # pandoc
 pandoc:

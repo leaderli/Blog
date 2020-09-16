@@ -105,10 +105,25 @@ nohup ./program >/dev/null 2>&1 &
 
 在使用`cd dir && rm -rf file`时需要注意，当`dir`不存在时，`rm`会直接删除当前目录的文件，因此`rm`后跟文件绝对路径
 
+## 向远程服务器文件写入
+
+使用管道符基本用法如
+
+```shell
+<command> | ssh user@remote-server "cat > output.txt"
+```
+
+例如
+
+```shell
+echo "qwerty" | ssh user@Server-2 "cat > output.txt"
+ssh user@Server-1 "<command>" | ssh user@Server-2 "cat > output.txt"
+```
+
 ## `ssh免密及执行远程命令`
 
 操作机上生成秘钥`ssh-keygen -t rsa`,将会生成一对秘钥，将公钥内容追加到服务器的`~/.ssh/authorized_keys`中，
-可通过**远程命令**`ssh user@example.com 'cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys'`去执行,可以简单的使用`ssh-copy-id user@example.com`,这种方式
+可通过**远程命令**`cat ~/.ssh/id_rsa.pub |ssh user@example.com 'cat >> ~/.ssh/authorized_keys'`去执行,可以简单的使用`ssh-copy-id user@example.com`,这种方式
 采用的是默认的`22`端口，拷贝的公钥是默认的`id_rsa.pub`
 
 确保服务器的文件及目录权限
@@ -119,11 +134,28 @@ nohup ./program >/dev/null 2>&1 &
    `chmod 700 -R .ssh`
 3. 设置用户目录权限  
    `chmod go-w ~`
+4. 检查 AuthorizedKeysFile 配置是否启用 authorized_keys
+
+   ```shell
+   $ cat /etc/ssh/sshd_config |egrep AuthorizedKeysFile
+   #AuthorizedKeysFile    .ssh/authorized_keys
+   ```
+
+   把下面几个选项打开
+
+   ```conf
+   AuthorizedKeysFile  .ssh/authorized_keys
+   ```
 
 后续再执行`ssh`操作，或者`scp`等操作，则不需要再输入密码
 
-通过系统日志文件我们可以查看无法登陆远程服务器的原因  
-`tail /var/log/secure -n 20`
+通过系统日志文件我们可以查看无法登陆远程服务器的原因
+
+```shell
+tail /var/log/secure -n 20
+#也可以在使用ssh时将详情打印出来
+ssh -vvv root@192.168.0.1
+```
 
 默认情况下，ssh 去`~/.ssh/`目录下去找私钥，有时候无法，可以使用`ssh-agent`将私钥加载到内存中
 
@@ -259,4 +291,14 @@ content=`cat file.txt`
 
 ```shell
 `echo -n 'hello:'
+```
+
+## 判断当前是否为 root 用户执行
+
+```shell
+#!/bin/bash
+if [[ $EUID -eq 0 ]]; then
+   echo "this is root"
+   exit 1
+fi
 ```

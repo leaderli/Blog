@@ -106,6 +106,12 @@ lrwxrwxrwx 1 root root 46 4月   2 15:54 /etc/alternatives/java -> /usr/lib/jvm/
 rpm2cpio git-1.7.9.6-1.e16.rfx.x86_64.rpm|cpio -idmv
 ```
 
+### 离线安装 rpm 忽略依赖
+
+```shell
+rpm -ivu *.rpm --nodeps --force
+```
+
 然后在`~/.bash_profile`中配置一个`alias`即可，或者在`PATH`更新`git`的`/usr/bin`路径
 
 ### 定时任务
@@ -227,3 +233,155 @@ watch 指令可以间歇性的执行程序，将输出结果以全屏的方式�
 可以使用`sudo`，以 root 用户执行上条命令
 `sudo !!`
 `sudo !-1`
+
+### expr
+
+expr 命令是一个手工命令行计数器，用于在 UNIX/LINUX 下求表达式变量的值，一般用于整数值，也可用于字符串。
+
+1、计算字串长度
+
+```shell
+$ expr length “this is a test”
+14
+```
+
+2、抓取字串
+
+```shell
+$ expr substr “this is a test” 3 5
+is is
+```
+
+3、抓取第一个字符数字串出现的位置
+
+```shell
+$ expr index "sarasara" a
+2
+```
+
+4、整数运算
+
+```shell
+$ expr 14 % 9
+5
+$ expr 10 + 10
+20
+$ expr 1000 + 900
+1900
+$ expr 30 / 3 / 2
+5
+$ expr 30 \* 3 #使用乘号时，必须用反斜线屏蔽其特定含义。因为 shell 可能会误解显示星号的意义
+90
+$ expr 30 \* 3
+$ expr: Syntax error
+```
+
+### 更新系统时间
+
+```shell
+# 同步上海的时间
+ntpdate  ntp.api.bz
+# 查看时区
+date -R
+```
+
+### 查看文件格式
+
+```shell
+file xxx.txt
+```
+
+### 显示所有端口
+
+```shell
+netstat -tulpn
+```
+
+### 统计
+
+```shell
+$ wc freeswitch.md
+#   行数     单词数  byte字节数
+    1081    2968   41953 freeswitch.md
+$ wc -m freeswitch.md
+#   char字数
+   30744 freeswitch.md
+```
+
+### sed
+
+sed 命令是利用脚本来处理文本文件。sed 可依照脚本的指令来处理、编辑文本文件。
+语法
+
+```shell
+sed [-hnV][-e<script>][-f<script 文件>][文本文件]
+```
+
+参数说明：
+
+- -e 指定脚本的表达式，不会修改源文件，仅将修改后的内容输出到控制台
+- -f 指定脚本的文件
+- -i 指定脚本的表示式，会直接修改源文件
+- -n 仅显示脚本所包含模板的行
+
+其中脚本的指令支持
+
+- a ：新增， a 的后面可以接字串，而这些字串会在新的一行出现(目前的下一行)～
+- c ：取代， c 的后面可以接字串，这些字串可以取代 n1,n2 之间的行！
+- d ：删除，因为是删除啊，所以 d 后面通常不接任何咚咚；
+- i ：插入， i 的后面可以接字串，而这些字串会在新的一行出现(目前的上一行)；
+- p ：打印，亦即将某个选择的数据印出。通常 p 会与参数 sed -n 一起运行～
+- s ：取代，可以直接进行取代的工作哩！通常这个 s 的动作可以搭配正规表示法！例如 1,20s/old/new/g 就是啦！
+- g ： 在行内进行全局替换
+- w 将所选的行写入文件
+- ! 对所选行以外的行执行
+- l 列出非打印字符
+
+脚本的指令可以在指定行范围内执行，例如
+
+```shell
+# 第四行行尾  新行+newline
+sed -e  4a\newline testfile
+# 第一到第四行行尾  新行+newline
+sed -e  1，4a\newline testfile
+# 最后一行 新行+newline
+sed -e  $a\newline testfile
+
+
+# 使用shell变量
+var=hello
+sed -e  '1a'${var} testfile
+```
+
+与 grep 一样，sed 也支持特殊元字符，来进行模式查找、替换。不同的是，sed 使用的正则表达式是括在斜杠线"/"之间的模式。
+如果要把正则表达式分隔符"/"改为另一个字符，比如 o，只要在这个字符前加一个反斜线，在字符后跟上正则表达式，再跟上这个字符即可。例如：sed -n '\o^Myop' datafile
+sed 的正则表达式语法支持功能比较少
+| 元字符| 功能|
+| :---- | :---- |
+|^ |行首定位符|
+|\$ |行尾定位符|
+|. |匹配除换行符以外的单个字符 |
+|\* |匹配零个或多个前导字符 |
+|[] | 匹配指定字符组内的任一字符|
+|[^]| 匹配不在指定字符组内的任一字符|
+|& |`保存查找串以便在替换串中引用 s/my/**&**/ 符号&代表查找串。my 将被替换为**my**`|
+|\< | 词首定位符 /\<my/ 匹配包含以 my 开头的单词的行|
+|\> | 词尾定位符 /my\>/ 匹配包含以 my 结尾的单词的行|
+|x\{m\} | 连续 m 个 x|
+|x\{m,\}| 至少 m 个 x|
+|x\{m,n\}| 至少 m 个，但不超过 n 个 x|
+
+特殊字符
+
+- `\` 新行
+
+示例
+
+```shell
+# nl 输出行号 搜索包含root的行并打印
+nl  testfile|sed -n '/root/p'
+# nl 输出行号 搜索包含root的行并删除
+nl  testfile|sed -n '/root/d'
+# 使用正则替换
+sed 's/pattern/replace/g'
+```

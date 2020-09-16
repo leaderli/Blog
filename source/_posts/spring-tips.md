@@ -130,3 +130,7 @@ public void log() {
 x-y  代表从x到y
 ,  分开几个离散的数字
 ```
+
+### @Primary
+
+`@Primary`：自动装配时当出现多个 Bean 候选者时，被注解为@Primary 的 Bean 将作为首选者，否则将抛出异常
