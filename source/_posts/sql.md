@@ -5,7 +5,7 @@ categories:
 tags:
 ---
 
-合并多行表记录
+## 合并多行表记录
 
 ```sql
 select code,sum(nums) as counts from table group by code
@@ -39,3 +39,5 @@ from
 group by
     thecode
 ```
+
+## db2

@@ -5,6 +5,130 @@ categories: linux
 tags:
 ---
 
+### echo
+
+- -e 对输出内容进行格式调整，命令格式`echo -e "\033[字背景颜色;文字颜色m字符串\033[0m"`
+  示例
+
+  ```shell
+  echo -e "\033[30m 黑色字 \033[0m"
+  echo -e "\033[31m 红色字 \033[0m"
+  echo -e "\033[32m 绿色字 \033[0m"
+  echo -e "\033[33m 黄色字 \033[0m"
+  echo -e "\033[34m 蓝色字 \033[0m"
+  echo -e "\033[35m 紫色字 \033[0m"
+  echo -e "\033[36m 天蓝字 \033[0m"
+  echo -e "\033[37m 白色字 \033[0m"
+
+  echo -e "\033[40;37m 黑底白字 \033[0m"
+  echo -e "\033[41;37m 红底白字 \033[0m"
+  echo -e "\033[42;37m 绿底白字 \033[0m"
+  echo -e "\033[43;37m 黄底白字 \033[0m"
+  echo -e "\033[44;37m 蓝底白字 \033[0m"
+  echo -e "\033[45;37m 紫底白字 \033[0m"
+  echo -e "\033[46;37m 天蓝底白字 \033[0m"
+  echo -e "\033[47;30m 白底黑字 \033[0m"
+  ```
+
+### `sort`
+
+对输出内容进行排序，默认情况下`sort`仅比较`ASCII`字符。
+
+- -n 以数组大小来排序
+- -k, --key=KEYDEF 指定使用第几个字段进行排序
+- -t，--field-separator=SEP 使用 SEP 替换默认的空格作为间隔符
+- -r 反向排序
+
+```shell
+~$ cat 1.txt
+2   c
+10  a
+300 b
+
+~$ sort 1.txt
+10  a
+2   c
+300 b
+
+~$ sort -n 1.txt
+2   c
+10  a
+300 b
+
+~$ sort -k 2 1.txt
+10  a
+300 b
+2   c
+
+~$ cat 2.txt
+2:c
+10:a
+300:b
+
+~$ sort  -t ':' -k 2  2.txt
+10:a
+300:b
+2:c
+
+```
+
+### read
+
+read 命令用于从标准输入读取数值。
+
+```shell
+#!/bin/bash
+
+#这里默认会换行
+echo "输入网站名: "
+#读取从键盘的输入
+read website
+echo "你输入的网站名是 $website"
+exit 0  #退出
+```
+
+- -p 参数，允许在 read 命令行中直接指定一个提示
+- -s 选项能够使 read 命令中输入的数据不显示在命令终端上
+- -t 参数指定 read 命令等待输入的秒数，当计时满时，read 命令返回一个非零退出状态。
+- -n 参数设置 read 命令计数输入的字符。当输入的字符数目达到预定数目时，
+- -e 参数，以下实例输入字符 a 后按下 Tab 键就会输出相关的文件名(该目录存在的)：
+
+  ```shell
+  $ read -e -p "输入文件名:" str
+  输入文件名:a
+  a.out a.py a.pyc abc.txt
+  输入文件名:a
+  ```
+
+<hi>read 不能单独用在管道命令上</hi>
+
+读取命令的输出，当指定多个变量时根据 IFS 规则分割变量
+
+配合 while 使用
+
+例如 while read line
+
+read 通过输入重定向，把 file 的第一行所有的内容赋值给变量 line，循环体内的命令一般包含对变量 line 的处理；然后循环处理 file 的第二行、第三行。。。一直到 file 的最后一行。还记得 while 根据其后的命令退出状态来判断是否执行循环体吗？是的，read 命令也有退出状态，当它从文件 file 中读到内容时，退出状态为 0，循环继续惊醒；当 read 从文件中读完最后一行后，下次便没有内容可读了，此时 read 的退出状态为非 0，所以循环才会退出。
+
+```shell
+# line 仅仅是个变量名
+while read line
+do
+   echo $line
+done < file
+```
+
+另一种也很常见的用法：
+
+```shell
+command | while read line
+do
+   echo $line
+done
+```
+
+如果你还记得管道的用法，这个结构应该不难理解吧。command 命令的输出作为 read 循环的输入，这种结构长用于处理超过一行的输出，当然 awk 也很擅长做这种事。
+
 ### wall
 
 向系统的全部在线用户发送信息 `wall [n] [messege]`
@@ -51,7 +175,11 @@ cp  demo.{txt,sh}
 ### xargs 引用参数
 
 ```shell
+
+ls *.jar|xargs -i  echo {}
+#或
 ls *.jar|xargs -I {} echo {}
+
 
 ```
 
@@ -167,6 +295,12 @@ rpm -ivu *.rpm --nodeps --force
    “-”代表从某个数字到某个数字,
    “,”分开几个离散的数字
    ```
+
+示例
+
+```shell
+0,1,2 * * * * sh ~/demo.sh
+```
 
 ### 合并上下行
 
@@ -384,4 +518,47 @@ nl  testfile|sed -n '/root/p'
 nl  testfile|sed -n '/root/d'
 # 使用正则替换
 sed 's/pattern/replace/g'
+```
+
+### 关闭自动退出
+
+```shell
+# vi /etc/profile
+
+unset TMOUT
+# 或者
+TMOUT=0
+
+```
+
+### 当前用户
+
+```shell
+# 当前登录终端字符设备号
+tty
+# 当前所有登录的用户
+w
+
+
+```
+
+### tee
+
+同时向某个文件写入内容
+
+```shell
+$ echo 123|tee 1.txt
+123
+$ cat 1.txt
+123
+```
+
+- -a 追加
+
+### iconv
+
+转换文件编码
+
+```shell
+iconv -f gbk -t utf8  1.txt >  2.txt
 ```

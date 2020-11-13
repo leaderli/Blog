@@ -5,6 +5,10 @@ categories: linux
 tags:
 ---
 
+## 多命令
+
+多个命令用`;`分割，可以一起执行
+
 ## curl
 
 ### 显示请求详情
@@ -215,19 +219,6 @@ awk 'length($2) ==12 && $2 > 20190101 && $2 <= 20191212 {print $0}'
 
 ```
 
-## `sort`
-
-对输出内容进行排序，默认情况下`sort`仅比较`ASCII`字符。可使用 `sort -n`指定用数字大小来排序。
-类似`awk`，可以指定使用第几个单词进行排序。例如使用第二个单词`sort -k 2`
-
-## `du`
-
-命令查看当前目录下所有文件夹的大小 `-d` 指深度，后面加一个数值
-
-```shell
-du -d 1 -h
-```
-
 ## `history`
 
 设置历史记录不重复
@@ -300,5 +291,53 @@ content=`cat file.txt`
 if [[ $EUID -eq 0 ]]; then
    echo "this is root"
    exit 1
+fi
+```
+
+## 获取时间戳
+
+使用`date --help`查看具体语法
+
+节选部分
+
+```shell
+  %p   locale's equivalent of either AM or PM; blank if not known
+  %P   like %p, but lower case
+  %r   locale's 12-hour clock time (e.g., 11:11:04 PM)
+  %R   24-hour hour and minute; same as %H:%M
+  %s   seconds since 1970-01-01 00:00:00 UTC
+  %S   second (00..60)
+
+```
+
+```shell
+timestamp() {
+  date +"%s" # seconds since 1970-01-01 00:00:00 UTC
+
+}
+```
+
+## mktemp
+
+可以使用 mktemp 命令创建临时文件，文件名会自动生成
+
+```shell
+#根据后面的X个数随机生成n个字符的名称
+tempfile=`mktemp -t tmp.XXXXXX`
+echo $tempfile
+tempdir=`mktemp -d tmp.XXXXXX`
+cd $tempdir
+#/tmp/tmp.dOH3ir
+
+```
+
+## 判断是否连接网络
+
+```shell
+ping -o -t 2 www.baidu.com >&/dev/null;
+if ((  $? == 0 )) ;then #判断ping命令执行结果 为0表示ping通
+echo ok
+else
+echo no
 fi
 ```

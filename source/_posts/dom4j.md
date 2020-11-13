@@ -63,6 +63,9 @@ doc.selectObject("substring(/root/name/text(),2)");
 doc.selectObject("/root/@id")
 //获取第一个匹配标签的id属性的值
 doc.selectObject("string(/root/@id)")
+
+//搜索当前dom的子节点
+dom.selectNodes("child/name/text()")
 ```
 
 ### 获取`tomcat`运行端口

@@ -1,14 +1,16 @@
 .red {
+  color: red;
   font-size: 16px;
-  color: #f00;
 }
+
 .grey {
-  color: #8a8f8a;
+  color: rgb(138, 143, 138);
 }
 
 .mermaid {
-  background-color: #fff !important;
+  background-color: white !important;
 }
+
 code {
   font-family: "PT Mono", consolas, Menlo, "PingFang SC", "Microsoft YaHei",
     monospace;
@@ -21,6 +23,10 @@ code {
   font-size: 14px;
 }
 
+grey {
+  color: rgb(138, 143, 138);
+}
+
 hi {
   font-family: "PT Mono", consolas, Menlo, "PingFang SC", "Microsoft YaHei",
     monospace;
@@ -28,6 +34,29 @@ hi {
   word-wrap: break-word;
   padding: 2px 4px;
   background: rgb(255, 232, 25);
+  border-radius: 3px;
+  font-size: 14px;
+}
+hi3 {
+  font-size: 14px;
+  line-height: 20px;
+  color: #333;
+  margin: 200px 0;
+  font-weight: bold;
+}
+
+red {
+  color: red;
+  padding: 2px 4px;
+}
+trs {
+  font-family: "PT Mono", consolas, Menlo, "PingFang SC", "Microsoft YaHei",
+    monospace;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  /* padding: 2px 4px; */
+  color: #555;
+  background: #eee;
   border-radius: 3px;
   font-size: 14px;
 }

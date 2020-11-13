@@ -85,6 +85,13 @@ tags:
 
   例如: <em class="red">aa</em>
 
+  现在实现的自定义标签有
+
+  1. code
+  2. hi
+  3. grey
+  4. red
+
 详细语法可参考[markdown 参考](https://www.markdownguide.org/basic-syntax/)
 
 ## KaTex
@@ -107,3 +114,7 @@ tags:
 块状使用`$$`包含
 
 不支持中文
+
+## 其他
+
+`F8`快速定位格式错误处

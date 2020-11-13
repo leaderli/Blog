@@ -390,6 +390,10 @@ git rebase -i ID #-i交互模式，来觉得哪些分支的记录会被保留
 
 当然我们可以使用更简单的命令`git rebase -i --root`
 
+```shell
+git pull --rebase
+```
+
 ### 合并策略
 
 基本使用命令如下，仅介绍两个策略

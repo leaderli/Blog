@@ -166,3 +166,17 @@ const fs = require("fs");
 let buff = fs.readFileSync("stack-abuse-logo.png");
 let base64data = buff.toString("base64");
 ```
+
+## moment
+
+时间格式化模块
+
+```shell
+npm install -S -D moment
+```
+
+```javascript
+import moment form 'moment'
+
+moment().format('YYYY-MM-DD HH:mm:ss')
+```

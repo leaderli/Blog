@@ -68,3 +68,77 @@ vim -b XXX.class
 ## alfred
 
 模糊搜索时使用空格
+
+[workflow 插件地址](http://alfredworkflow.com/)
+
+### 自定义插件
+
+file types 指的是文件的 metadata 信息中的 kMDItemContentTypeTree
+
+```shell
+$ mdls vim.md
+_kMDItemOwnerUserID            = 501
+kMDItemContentCreationDate     = 2020-09-16 07:06:53 +0000
+kMDItemContentModificationDate = 2020-09-16 07:06:53 +0000
+kMDItemContentType             = "net.daringfireball.markdown"
+kMDItemContentTypeTree         = (
+    "net.daringfireball.markdown",
+    "public.plain-text",
+    "public.text",
+    "public.data",
+    "public.item",
+    "public.content"
+)
+kMDItemDateAdded               = 2020-09-16 07:06:53 +0000
+kMDItemDisplayName             = "vim.md"
+kMDItemFSContentChangeDate     = 2020-09-16 07:06:53 +0000
+kMDItemFSCreationDate          = 2020-09-16 07:06:53 +0000
+kMDItemFSCreatorCode           = ""
+kMDItemFSFinderFlags           = 0
+kMDItemFSHasCustomIcon         = (null)
+kMDItemFSInvisible             = 0
+kMDItemFSIsExtensionHidden     = 0
+kMDItemFSIsStationery          = (null)
+kMDItemFSLabel                 = 0
+kMDItemFSName                  = "vim.md"
+kMDItemFSNodeCount             = (null)
+kMDItemFSOwnerGroupID          = 20
+kMDItemFSOwnerUserID           = 501
+kMDItemFSSize                  = 6093
+kMDItemFSTypeCode              = ""
+kMDItemKind                    = "Visual Studio Code document"
+kMDItemLastUsedDate            = 2020-11-03 01:50:05 +0000
+kMDItemLogicalSize             = 6093
+kMDItemPhysicalSize            = 8192
+kMDItemUseCount                = 6
+kMDItemUsedDates               = (
+    "2020-09-17 16:00:00 +0000",
+    "2020-09-20 16:00:00 +0000",
+    "2020-10-26 16:00:00 +0000",
+    "2020-10-28 16:00:00 +0000",
+    "2020-10-29 16:00:00 +0000",
+    "2020-11-02 16:00:00 +0000"
+)
+
+```
+
+## 命令行连接 wifi 脚本
+
+```shell
+wifi(){
+   networksetup -setairportpower en0 off
+   networksetup -setairportpower en0 on
+   status=`networksetup -setairportnetwork en0 semaphore asdfv123456`
+
+   if [ ! -n "$status" ];then
+      eixt
+   fi
+
+}
+
+for (( a=1;a<4;a++))
+do
+   wifi
+   sleep 1s
+done
+```

@@ -15,6 +15,10 @@ shell 是系统内核和用户沟通的桥梁，它作为系统的命令解释�
 cat /etc/shells
 #查看用户登录后默认使用的shell(当前用户时li)
 cat /etc/passwd|grep ^li:
+# 查看所有shell
+chsh -l
+# 切换shell
+chsh
 ```
 
 linux 的用户分为以下几类

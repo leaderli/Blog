@@ -45,3 +45,10 @@ tags: english prefix subfix
 | factor           | 系数         |
 | tutorial         | 指导         |
 | Escape character | 转义字符     |
+
+## 单词表
+
+| 英文                       | 中文   |
+| :------------------------- | :----- |
+| fine-grained               | 细粒度 |
+| a repertoire of characters | 字符集 |

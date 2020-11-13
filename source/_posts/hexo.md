@@ -6,9 +6,7 @@ tags:
   - hexo
 ---
 
-## hexo
-
-### 快捷方式
+## 快捷方式
 
 站内引用，引用自己的博客
 {% post_link 文章文件名（不要后缀） %}
@@ -17,11 +15,11 @@ tags:
 
 插入的图片上面需要有一行文字，否则生成的网页图片显示会有瑕疵
 
-### 调试
+## 调试
 
 运行命令时带上参数`--debug`,则会输出`console.log()`所打印的日志
 
-### 本地搜索
+## 本地搜索
 
 安装插件
 
@@ -100,7 +98,7 @@ module.exports = function (locals) {
 };
 ```
 
-### vscode 中图片无法预览
+## vscode 中图片无法预览
 
 vscode 中的 markdown 图片仅能预览当前 md 文件下或其子文件中的图片，但是若是图片在这儿，渲染后的 html 文件中将无法查看图片。我们自定义两个插件来解决这个问题。
 
@@ -177,7 +175,7 @@ hexo.on("generateAfter", function (post) {
 });
 ```
 
-### 本地搜索增加正则模式
+## 本地搜索增加正则模式
 
 当我们开始搜索时，若以`/`开始，当输入的是有效的 js 正则表达式(`/reg/`)时，才会开始搜索所有文章，开始搜索时会将正则表达式的的最后一个`/`截掉
 
@@ -604,7 +602,7 @@ local_search:
   li: true
 ```
 
-### 后台进程启动 hexo server
+## 后台进程启动 hexo server
 
 在博客根目录下面创建一个 hexo_run.js
 
@@ -627,13 +625,7 @@ $ npm  install -g pm2
 $ pm2 start hexo_run.js
 ```
 
-### hexo 错误解决
-
-> Error: expected end of comment, got end of file
-
-![markdown和KaTex_注释.png](./images/markdown和KaTex_注释.png)
-
-### 增加 echarts 树图
+## 增加 echarts 树图
 
 例如
 
@@ -769,4 +761,16 @@ module.exports = (ctx) =>
         });
     })
 </script>
+```
+
+## hexo 错误解决
+
+> Error: expected end of comment, got end of file
+
+![markdown和KaTex_注释.png](./images/markdown和KaTex_注释.png)
+
+不支持写双大括号，使用下述方式来替代
+
+```html
+<span>{</span><span>{</span><span>}</span><span>}</span>
 ```

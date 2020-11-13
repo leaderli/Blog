@@ -5,6 +5,11 @@ categories: ivr
 tags:
 ---
 
+<%- toc(page.content, {
+class: 'post-toc',
+list_number: true
+}) %>
+
 [官方文档](https://freeswitch.org/confluence/display/FREESWITCH/FreeSWITCH+First+Steps)
 
 ## 安装 freeswtich
@@ -34,17 +39,51 @@ yum search freeswitch-sounds-
 ```shell
 # 添加freeswtich镜像
 yum install -y https://files.freeswitch.org/repo/yum/centos-release/freeswitch-release-repo-0-1.noarch.rpm epel-release
-# 安装freeswitch的依赖库
+# 安装freeswitch的依赖库，有些依赖可能默认镜像上没有，可以使用阿里云镜像
 yum-builddep -y freeswitch
 yum install -y yum-plugin-ovl centos-release-scl rpmdevtools yum-utils git
+# centos7默认的gcc版本过低，安装一个高版本的gcc 实际情况可能devtoolset-4-gcc系列，可以安装更高版本的例如devtoolset-7-gcc
 yum install -y devtoolset-4-gcc*
+# 使用高版本gcc环境
 scl enable devtoolset-4 'bash'
 
+./bootstrap.sh -j
 ./configure --enable-portable-binary \
             --prefix=/usr --localstatedir=/var --sysconfdir=/etc \
             --with-gnu-ld --with-python --with-erlang --with-openssl \
             --enable-core-odbc-support --enable-zrtp
 
+make
+make -j install
+
+#下面两个是下载8000 16000 32000 48000hz的语音文件，并且将其解压拷贝至/usr/share/freeswitch/sounds/目录下
+
+#分别下载的是freeswitch-sounds-en-us-callie和freeswitch-sounds-music
+make -j cd-sounds-install
+make -j cd-moh-install
+```
+
+默认安装的是英文语言文件，[其他语言链接](https://freeswitch.org/confluence/display/FREESWITCH/Language+Files)
+
+以下是部分语音文件的下载地址，下载后我们将其拷贝至 freeswitch 的安装目录的 sounds 下即可
+
+1. [freeswitch-sounds-en-us-callie-8000-1.0.51.tar](http://files.freeswitch.org/releases/sounds/freeswitch-sounds-en-us-callie-8000-1.0.51.tar.gz)
+2. [freeswitch-sounds-music-8000-1.0.52.tar.gz](http://files.freeswitch.org/releases/sounds/freeswitch-sounds-music-8000-1.0.52.tar.gz)
+
+### 新增模块
+
+修改在源码目录下 build/modules.conf.in 文件，将需要安装的模块的#去掉
+
+```txt
+formats/mod_sndfile
+formats/mod_shout    <--- NEW
+#languages/mod_perl
+```
+
+执行
+
+```shell
+./configure && make install
 ```
 
 ### 源码编译一些问题
@@ -55,12 +94,11 @@ scl enable devtoolset-4 'bash'
 #或者在libs/libvpx下手动编译
 ./configure --enable-pic --enable-static --enable-shared --as=yasm --target=generic-gnu && make clean && make
 
-make
-make -j install
-make -j cd-sounds-install
-make -j cd-moh-install
+
 
 ```
+
+最新版本将 sofia-sip 依赖从 freeswitch 的依赖树中移除了，先按照 [1.6 版本](https://files.freeswitch.org/releases/freeswitch/freeswitch-1.6.20.zip)
 
 ## 启动
 
@@ -89,7 +127,7 @@ fs_cli -rRS
 
 ## 安装一个 sip 软电话
 
-[telephone mac](https://apps.apple.com/us/app/telephone/id406825478?mt=12)
+[telephone mac](https://apps.apple.com/us/app/telephone/id406825478?mt=12)，也可安装[其他软件](https://www.voip-info.org/open-source-voip-software/#Linuxclients)
 
 安装完成后配置账号，FreeSWITCH 默认配置了 1000 ~ 1019 共 20 个用户，你可以随便选择一个用户进行配置：
 
@@ -195,6 +233,42 @@ Command                     Description
 ## 配置简介
 
 我安装的 freeswitch 的配置文件在`/etc/freeswitch`目录下
+
+我们可以在 fs_cli 中通过命令`eval $${variable}` 查看变量的值
+
+```shell
+fs_cli> eval $${log_dir}
+/usr/local/freeswitch/log
+```
+
+这里是一些场景的变量
+
+- hostname
+- local_ip_v4
+- local_mask_v4
+- local_ip_v6
+- switch_serial
+- base_dir
+- recordings_dir
+- sound_prefix
+- sounds_dir
+- conf_dir
+- log_dir
+- run_dir
+- db_dir
+- mod_dir
+- htdocs_dir
+- script_dir
+- temp_dir
+- grammar_dir
+- certs_dir
+- storage_dir
+- cache_dir
+- core_uuid
+- zrtp_enabled
+- nat_public_addr
+- nat_private_addr
+- nat_type
 
 ### 配置文件概述
 
@@ -349,6 +423,9 @@ bridge 相当于一座桥，它的作用是将两条腿 1000 和 1001 给桥接�
 - STUN（Session Traversal Utilities for NAT，NAT 会话穿越应用程序）是一种网络协议，它允许位于 NAT（或多重 NAT）后的客户端找出自己的公网地址，查出自己位于哪种类型的 NAT 之后以及 NAT 为某一个本地端口所绑定的 Internet 端端口。这些信息被用来在两个同时处于 NAT 路由器之后的主机之间建立 UDP 通信
 - PSTN ( Public Switched Telephone Network )定义：公共交换电话网络，一种常用旧式电话系统。即我们日常生活中常用的电话网。工作原理 公共交换电话网络是一种全球语音通信电路交换网络，包括商业的和政府拥有的。
 - Early Media 呼叫话机或软电话时，对方回复 180 或 183 SIP 指令时，通常会返回 Early Media，也就是前期的振铃音或彩铃，在呼叫失败时也可能会返回 Early Media
+- PBX 交换机
+- MRCP 是交换机与 ASR 或 TTS 引擎传输数据的一种协议。V2 版本使用 SIP 进行会话的初始化，传输媒体流数据使用的是 RTP 协议
+- ACD automatic call distribution 自动电话分配
 
 ## 常用命令
 
@@ -675,14 +752,115 @@ playback 的参数是一些音频源，这些音频源大部分是由 Format 定
 
 #### TTS
 
+mod_flite 是 FreeSwitch 基于 Flite 语音合成引擎的一个 TTS 模块。目前该模块仅支持英文。首先，我们需要在 FreeSwitch 源码目录中编译安装该模块。然后在 FreeSwitch 中加载该 TTS 模块。
+然后我们就可以直接使用了
+
+```shell
+# flite 引擎名称 kal 嗓音  目前仅支持 kal,awb,rms,slt
+freeswitch> originate user/1001 &speak('flite|kal|welcome to FreeSwitch')
+```
+
+```xml
+  <action application="speak" data="flite|kal|welcome to FreeSwtich"/>
+
+  <!-- tts的参数可以通过通道变量指定 -->
+  <action application="set" data="tts_engine=flite"/>
+  <action application="set" data="tts_voice=kal"/>
+  <action application="speak" data="welcome to FreeSwtich"/>
+```
+
 [TTS](https://freeswitch.org/confluence/display/FREESWITCH/TTS)
 
 #### 使用录音替换 tts 播报
 
-使用[Say](https://freeswitch.org/confluence/display/FREESWITCH/mod_dptools%3A+say)```xml
+使用[Say](https://freeswitch.org/confluence/display/FREESWITCH/mod_dptools%3A+say)
 
+```xml
 <!-- en表示语种 number 表示我们要播放的数据的类型 iterated表示播放的方式，这里指代数字要逐个读出 1234表示要读的内容 -->
 <action application="say" data="en number iterated 1234">
+```
+
+#### 使用 macro
+
+我们定义一个宏
+
+```xml
+<include>
+   <macro name="USER_BUSY">
+      <input pattern="(.*)">
+         <match>
+            <action function="speak-text" data="分机 $1 正在通话，请稍后再拨"/>
+         </match>
+      </input>
+   </marco>
+</include>
+```
+
+我们在 Dialplan 中就可以使用,这样我们就可以在用户忙的时候播放相应的提示音
+
+```xml
+<action application="playback" data="phrase:${originate_disposition}:$1"/>
+```
+
+#### mrcp
+
+[mod_unimrcp](https://freeswitch.org/confluence/display/FREESWITCH/mod_unimrcp) 是在 UniMRCP 基础上在 FreeSwitch 中实现的一个模块。它同时支持 TTS 和 ASR。如果使用 unimrcp，在 Dialplan 中的 tts 引擎写法是`unimrcp:server`,server 是 mrcp 服务器的配置项的名称
+
+配置项内容如下
+
+主配置文件在`autoload_configs/modules.conf.xml`，各个 mrcp 服务器的配置在 mrcp_profiles 目录下
+
+```xml
+<configuration name="unimrcp.conf" description="UniMRCP Client">
+ <settings>
+   <param name="default-tts-profile" value="voxeo-prophecy8.0-mrcp1"/>
+   <param name="default-asr-profile" value="voxeo-prophecy8.0-mrcp1"/>
+   <param name="log-level" value="DEBUG"/>
+   <param name="max-connection-count" value="100"/>
+   <param name="offer-new-connection" value="1"/>
+ </settings>
+ <profiles>
+   <X-PRE-PROCESS cmd="include" data="../mrcp_profiles/*.xml"/>
+ </profiles>
+</configuration>
+```
+
+其中一个 profile 的示例，其服务器的配置项名称为 mrcpserver01，不同 mrcp 服务需要的报文格式可能有所不同，具体参考对应 mrcp 服务相关的文档。修改 mrcp 的配置需要重启服务器。
+
+```xml
+<include>
+ <profile name="mrcpserver01" version="1">
+   <param name="server-ip" value="10.10.5.1"/>
+   <param name="server-port" value="554"/>
+   <param name="resource-location" value=""/>
+   <param name="speechsynth" value="synthesizer"/>
+   <param name="speechrecog" value="recognizer"/>
+   <param name="rtp-ip" value="10.10.5.2"/>
+   <param name="rtp-port-min" value="4000"/>
+   <param name="rtp-port-max" value="5000"/>
+   <param name="codecs" value="PCMU PCMA L16/96/8000"/>
+   <synthparams>
+   </synthparams>
+   <recogparams>
+       <param name="start-input-timers" value="false"/>
+   </recogparams>
+ </profile>
+</include>
+```
+
+示例
+
+```shell
+
+# nana tts嗓音
+originate user/1000 &speak(unimrcp:mrcpserver01|nana|hello freeswitch)
+
+```
+
+### 使用脚本
+
+```xml
+  <action application="lua" data="/tmp/xxx.lua"/>
 ```
 
 ### 其它常用命令
@@ -829,14 +1007,15 @@ callgroup: techsupport
 
 ## 变量
 
+[变量详情说明文档](https://freeswitch.org/confluence/display/FREESWITCH/Variables)
+
+[通道变量列表](https://freeswitch.org/confluence/display/FREESWITCH/Channel+Variables)
 可通过如下命令查看变量值
 
 ```shell
 freeswitch@lofa> eval ${variable_name}
 $ fs_cli -x '${variable_name}'
 ```
-
-[变量详情](https://freeswitch.org/confluence/display/FREESWITCH/Variables)
 
 在 Dialplan 中可以取消某些 Variable 的定义
 
@@ -1338,6 +1517,88 @@ dialplan,inline,mod_dptools
 dialplan,signalwire,mod_signalwire
 
 ```
+
+## 呼叫队列
+
+使用 mod_fifo 模块实现了一些简单的 ACD 功能
+
+FreeSwitch 默认的 Dialplan 中提供了使用这种方式进行电话分配的例子。
+
+当我们拨打 5900，就可以将电话停在一个泊位（5900@\${domain_name}）上，并播报 hold_music
+
+```xml
+<extension name="park">
+   <condition field="destination_number" expression="^5900$">
+      <action application="set" data="fifo_music=$${hold_music}"/>
+      <action application="fifo" data="5900@${domain_name} in"/>
+   </condition>
+</extension>
+```
+
+使用命令`fifo list`显示当前队列的状态
+
+```shell
+fs_cli> fifo list
+<fifo_report>
+  <fifo name="cool_fifo@10.211.55.6" consumer_count="0" caller_count="0" waiting_count="0" importance="0" outbound_per_cycle="1" outbound_per_cycle_min="1" ring_timeout="60" default_lag="30" outbound_priority="5" outbound_strategy="ringall">
+    <outbound></outbound>
+    <callers></callers>
+    <consumers></consumers>
+    <bridges></bridges>
+  </fifo>
+  <fifo name="manual_calls" consumer_count="0" caller_count="0" waiting_count="0" importance="0" outbound_per_cycle="0" outbound_per_cycle_min="0" ring_timeout="0" default_lag="0" outbound_priority="5" outbound_strategy="ringall">
+    <outbound></outbound>
+    <callers></callers>
+    <consumers></consumers>
+    <bridges></bridges>
+  </fifo>
+  <fifo name="5900@10.211.55.6" consumer_count="0" caller_count="1" waiting_count="1" importance="0" outbound_per_cycle="0" outbound_per_cycle_min="0" ring_timeout="0" default_lag="0" outbound_priority="5" outbound_strategy="ringall">
+    <outbound></outbound>
+    <callers>
+      <caller uuid="acd3434e-5759-403d-96e9-42668930bb1a" status="WAITING" caller_id_name="centos7" caller_id_number="1001" timestamp="2020-11-13 10:35:49" position="1" slot="0"></caller>
+    </callers>
+    <consumers></consumers>
+    <bridges></bridges>
+  </fifo>
+</fifo_report>
+```
+
+播报 5901，将来电从队列中取出来，nowait，它表示如果队列中没有电话在等待，坐席端的电话就没必要在这里等待了。如果使用`wait`（默认值为 wait），或不加参数，那么坐席端就会在这里继续等待，知道队列里来了一路通话，它便可以立即得到服务。
+
+使用 nowait 的坐席又被称为 onhook（挂机）坐席，使用 wait 的坐席被称为 offhook（摘机）坐席。摘机坐席省去了呼叫坐席的时间，因而能够更迅速的为客户提供服务。
+
+```xml
+<extension name="unpark">
+  <condition field="destination_number" expression="^5901$">
+<action application="answer"/>
+<action application="fifo" data="5900@${domain_name} out nowait"/>
+  </condition>
+</extension>
+```
+
+签入与迁出
+
+book 为 fifo 的队列名，添加成功后可以通过`fifo list`查看名为 book 的队列。
+
+当来电停在 book 队列上时，FreeSwitch 会轮询呼叫 book 队列签入的坐席。
+
+```shell
+fs_cli> fifo_member add book user/1007
+fs_cli> fifo_member del book user/1007
+```
+
+```xml
+<action application="set" data="result=${fifo_member(add book user/1001)}">
+```
+
+### 呼叫队列相关通道变量
+
+- fifo_priority 呼叫优先级，默认为 5，共有 10 个优先级，高优先级的将被排在队列前面。
+- fifo_bridge_uuid
+
+### 相关事件
+
+一通来话从入队到挂机，大致经过以下几个事件。
 
 ## 相关数据索引
 

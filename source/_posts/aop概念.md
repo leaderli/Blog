@@ -3,13 +3,13 @@ title: aop概念
 date: 2019-09-04 22:58:38
 categories: java
 tags:
-- spring
-- aop
+  - spring
+  - aop
 ---
 
 ## 术语
 
-1. 连接点 `Join Point` java运行过程中的位置，对于`Spring`来说，表示允许使用切面的位置，它一般是指方法运行的过程，比如运行前，运行后，抛出异常等。
+1. 连接点 `Join Point` java 运行过程中的位置，对于`Spring`来说，表示允许使用切面的位置，它一般是指方法运行的过程，比如运行前，运行后，抛出异常等。
 2. 通知 `Advice` 在某连接点上执行的特殊操作
 3. 切入点 `PointCut` 切入点通过表达式来连接通知和连接点，确定连接点是否符合切入点表达式
 4. 目标类 `Target` 被切面切入的类
@@ -18,7 +18,7 @@ tags:
 
 ## `JDK`动态代理
 
-`JDK`动态代理仅支持代理接口(因为代理类继承`Proxy`，而`java`不支持多继承)。由`JDK`动态生成继承接口的子类，子类的所有方法调用都由创建代理类时使用的参数`java.lang.reflect.InvocationHandler`的`invoke`方法去完成。
+`JDK`动态代理仅支持代理接口(因为代理类继承`Proxy`，而`java`不支持多继承)。 由`JDK`动态生成继承接口的子类，子类的所有方法调用都由创建代理类时使用的参数`java.lang.reflect.InvocationHandler`的`invoke`方法去完成。
 
 ```java
 package com.li.springboot.aop;
@@ -536,6 +536,42 @@ private void addProxyMethod(Method m, Class<?> fromClass) {
     sigmethods.add(new ProxyMethod(name, parameterTypes, returnType, exceptionTypes, fromClass));
 }
 ```
+
+### 为接口实现一个默认类
+
+```java
+static <T> T beanInstance(Class<T> _interface, Object ... args) {
+    //...
+    return null;
+}
+
+static <T> T plugin(Class<T> _interface, Object ... args) {
+
+    if (_interface.isInterface()) {
+        T target = beanInstance(_interface, args);
+
+        InvocationHandler invocationHandler = null;
+        if (target == null) {
+            invocationHandler = (proxy, method, params) -> null;
+        } else {
+            invocationHandler = (proxy, method, params) -> method.invoke(target, params);
+
+        }
+        return _interface.cast(Proxy.newProxyInstance(ClassLoader.getSystemClassLoader(), new Class[]{_interface}, invocationHandler));
+    }
+    throw new IllegalArgumentException("only support interface plugin");
+
+}
+
+
+public static void main(String[] args) {
+    // 即使没有实现类，也不影响接口调用
+    InterfaceClass plugin = plugin(InterfaceClass.class);
+    plugin.test("hello");
+}
+```
+
+> InvocationHandler 针对 void 方法，可以直接返回 null
 
 ## `CGLIB`字节码代理
 

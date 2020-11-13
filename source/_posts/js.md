@@ -84,7 +84,7 @@ MYAPP.foo = function () {
 
 ## 作用域
 
-1. 在 object 内的 function this 指向 object，而属于 function 内部的闭包函数 this 指向 window 对象,纯 function this 也指向 window 对象
+1. 在 object 内的 function this 指向 object，而属于 function 内部的闭包函数 this 指向 window 对象,纯 function this 也指向 window 对象。
 
 2. “自由变量”。在 A 作用域中使用的变量 x，却没有在 A 作用域中声明（即在其他作用域中声明的），对于 A 作用域来说，x 就是一个自由变量。如下
 
@@ -169,6 +169,7 @@ this 到底取何值，是在函数真正被调用执行的时候确定的，函
 2. 函数作为构造函数用，那么其中的 this 就代表它即将 new 出来的对象
 3. 如果函数作为对象的一个属性时，并且作为对象的一个属性被调用时，函数中的 this 指向该对象
 4. 一个函数被 call 和 apply 调用时，this 的值就取传入的对象的值
+5. 箭头函数体内的 this 对象就是定义时所在的对象，而不是使用时的对象
 
 ## 执行上下文
 
@@ -227,3 +228,36 @@ hi();
 !比()节省一个字符，或者说比()好看些
 我们都知道分号是为了和前面的代码隔开，js 可以用换行分隔代码，但是合并压缩多个 js 文件之后，换行符一般会被删掉，所以连在一起可能会出错，加上分号就保险了。
 一元操作符会对 func 的返回值进行实际运算
+
+### 语法糖
+
+1. 一般对象格式如下
+
+   ```javascript
+   obj = {
+     a: "a",
+     b: "b",
+   };
+   ```
+
+   当值为一个对象的时候，我们可以使用简写方式
+
+   ```javascript
+   c = {};
+   obj = {
+     c,
+   };
+   ```
+
+2. 变量声明
+
+   ```javascript
+   obj = {
+     a: "a",
+     b: "b",
+   };
+
+   var { a, b } = obj;
+   console.log(a);
+   console.log(b);
+   ```

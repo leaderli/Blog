@@ -97,3 +97,19 @@ end"  numkeys [KEYS...] [ARGV...]
 
 redis 在执行 lua 时，将会对上送的`kEYS`进行计算，计算其是否属于同一个节点，如果属于同一节点，那么就会将 lua 请求转发到该节点去执行。若你在 lua 中手动写死 key，而不是通过参数上送的话，那么 redis 就可能随机选定一个节点去执行，实际执行过程中，就有一定几率发现当前节点是不正确的。
 这是因为 redis 仅允许在单个节点执行 lua ，所以需要确保 key 在同一个节点上，为了确保 key 在同一个节点，我们可以使用`hash tag`，即用`{}`将 key 的一部分包裹起来，比如说`{dbconfig}_c1`,`{dbconfig}_c2`,这样在计算`hash槽`时只会计算`{}`内，从而确保 key 在同一个节点。
+
+## 执行脚本文件
+
+```lua
+-- print输出在redis-server服务器的日志上
+-- 删除大于hello1的key
+print('--------------->')
+local l=redis.call("keys","*")
+for i=1,#l,1 do
+    if('hello1'< l[i]) then
+        redis.call('del',l[i])
+    end
+
+end
+return l
+```

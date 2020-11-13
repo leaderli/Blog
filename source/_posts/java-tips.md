@@ -145,3 +145,17 @@ Comparator<Player> byAge = Comparator
 ```shell
 ls *.jar|xargs -I {} jadx {} -d src
 ```
+
+### 问题
+
+`NoSuchMethodError`一般是由版本冲突造成的
+
+### 进制
+
+```java
+int x = 0b11;// 二进制
+int x = 0B11;// 二进制
+int x = 0x11;// 十六进制
+int x = 0X11;// 十六进制
+int x = 011; //  八进制
+```

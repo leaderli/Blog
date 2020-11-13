@@ -9,8 +9,17 @@ tags:
 ### 导出表结构
 
 ```shell
-db2look -d dbname -e -a -x -i username -w password -o ddlfile.sql
 #该语句会导出所有表结构
+db2look -d <db> -e -a -x -i <username> -w <password> -o <file>
+
+#导出指定表结构
+db2look -d <db> -e -t <table> -o  <file>
+
+```
+
+```sql
+#重设自动自动起始值
+alter table <table> alter column <column> restart with <num>
 ```
 
 ### 执行 sql 文件

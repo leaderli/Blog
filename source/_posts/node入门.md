@@ -64,6 +64,13 @@ package.json 位于模块的目录下，用于定义包的属性
 1. `-S` `-s` `--save` 将安装包信息加入到`dependencies`
 2. `-D` `-d` `--save --dev` 将安装包信息加入`devDependencies`
 
+### 配置
+
+```shell
+# 显示所有配置
+npm config ls -l
+```
+
 ## 事件驱动
 
 Node.js 基本上所有的事件机制都是用设计模式中观察者模式实现。
@@ -322,6 +329,104 @@ module.exports = function () {
 ```
 
 模块接口的唯一变化是使用 module.exports = Hello 代替了 exports.world = function(){}。 在外部引用该模块时，其接口对象就是要输出的 Hello 对象本身，而不是原先的 exports
+
+### export 和 import
+
+export 与 import 是 JavaScript 用来进行模块化管理的两个关键词
+
+export 可以标记在任何变量、方法、类的声明前
+例如
+
+```javascript
+// 📁 say.js
+export let months = ["Jan", "Feb"];
+
+export const MODULES_BECAME_STANDARD_YEAR = 2015;
+
+export function sayHi(user) {
+  alert(`Hello, ${user}!`);
+}
+
+export class User {
+  constructor(name) {
+    this.name = name;
+  }
+}
+
+function sayHi(user) {
+  alert(`Hello, ${user}!`);
+}
+
+function sayBye(user) {
+  alert(`Bye, ${user}!`);
+}
+//也可单独export变量
+export { sayHi, sayBye };
+
+//export 可重命名
+export { sayHi as hi, sayBye as bye };
+```
+
+我们可以通过 import 导入其他模块的变量，语法为`import {...}`
+
+```javascript
+// 📁 main.js
+import { sayHi, sayBye } from "./say.js";
+
+sayHi("John"); // Hello, John!
+sayBye("John"); // Bye, John!
+```
+
+也可以给 import 的对象命名
+
+```javascript
+// 📁 main.js
+import * as say from "./say.js";
+
+say.sayHi("John");
+say.sayBye("John");
+
+//可以为具体成员变量重新命名
+// 📁 main.js
+import { sayHi as hi, sayBye as bye } from "./say.js";
+
+hi("John"); // Hello, John!
+bye("John"); // Bye, John!
+```
+
+当使用`export default`时
+
+```javascript
+// 📁 user.js
+export default class User {
+  // just add "default"
+  constructor(name) {
+    this.name = name;
+  }
+}
+
+//export default 可以导出匿名函数或类，一个模块只能有一个default
+export default class {
+  constructor() { ... }
+}
+export default function(){
+}
+
+
+// 📁 main.js
+import User from "./user.js"; // not {User}, just User
+
+new User("John");
+
+// 也可以使用非default的方式导入，默认将其视为名为default的变量
+
+import {default as User,sayHi} from './user.js'
+```
+
+| export                  | default export                  |
+| :---------------------- | :------------------------------ |
+| export class User {...} | export default class User {...} |
+| import {User} from ...  | import User from ...            |
 
 ### 模块的加载过程
 

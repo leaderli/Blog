@@ -552,3 +552,21 @@ _Note that any referenced "value" refers to a 32-bit int as per the Java instruc
 |      swap       |        5f         |     0101 1111      |                                                                                                                                                                                       |                              value2, value1 → value1, value2                              | swaps two top words on the stack (note that value1 and value2 must not be double or long)                                                                                                                                                                              |
 |   tableswitch   |        aa         |     1010 1010      | 16+: [0–3 bytes padding], defaultbyte1, defaultbyte2, defaultbyte3, defaultbyte4, lowbyte1, lowbyte2, lowbyte3, lowbyte4, highbyte1, highbyte2, highbyte3, highbyte4, jump offsets... |                                          index →                                          | continue execution from an address in the table at offset _index_                                                                                                                                                                                                      |
 |      wide       |        c4         |     1100 0100      |                                              3/5: opcode, indexbyte1, indexbyte2 or iinc, indexbyte1, indexbyte2, countbyte1, countbyte2                                              |                         [same as for corresponding instructions]                          | execute _opcode_, where _opcode_ is either iload, fload, aload, lload, dload, istore, fstore, astore, lstore, dstore, or ret, but assume the *index*is 16 bit; or execute iinc, where the _index_ is 16 bits and the constant to increment by is a signed 16 bit short |
+
+## 描述符
+
+描述符的作用是用来描述字段的数据类型、方法的参数列表（包括数量、类型以及顺序）和返回值。根据描述符规则，基本数据类型（byte、char、double、float、int、long、short、boolean）以及代表无返回值的 void 类型都用一个大写字符来表示，而对象类型则用字符 L 加对象的全限定名来表示，详见下表:
+
+| 标志符 | 含义                           |
+| :----- | :----------------------------- |
+| B      | 基本数据类型 byte              |
+| C      | 基本数据类型 char              |
+| D      | 基本数据类型 double            |
+| F      | 基本数据类型 float             |
+| I      | 基本数据类型 int               |
+| J      | 基本数据类型 long              |
+| S      | 基本数据类型 short             |
+| Z      | 基本数据类型 boolean           |
+| V      | 基本数据类型 void              |
+| L      | 对象类型,如 Ljava/lang/Object  |
+| [\*    | 数组类型,如 [Ljava/lang/Object |

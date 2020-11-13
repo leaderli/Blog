@@ -142,6 +142,7 @@ CSS 究竟是怎么工作的
    - `:visited` 向已被访问的链接添加样式。
    - `:first-child` 向元素的第一个子元素添加样式。
    - `:lang`向带有指定 lang 属性的元素添加样式。
+   - `nth-of-type(2)`相对于父类元素的第几个该标签
 
 10. 属性选择器，选择具有某属性的节点
 
@@ -224,9 +225,7 @@ css 根据选择器的优先级呈现一种瀑布流层级重叠关系，优先�
   <body>
     <div class="c1">c1</div>
     <div class="c2">c2</div>
-    <div class="c1 c2">
-      c1 and c2
-    </div>
+    <div class="c1 c2">c1 and c2</div>
     <div class="c1">
       <div class="c2">c2 in c1</div>
     </div>
@@ -238,6 +237,7 @@ css 根据选择器的优先级呈现一种瀑布流层级重叠关系，优先�
 </html>
 ```
 
+显示效果
 ![css_显示效果.png](./images/css_显示效果.png)
 
 ### 继承
@@ -282,25 +282,34 @@ CSS 为控制继承提供了四个特殊的通用属性值。每个 css 属性�
 2. `initial` 设置属性值和浏览器默认样式相同。如果浏览器默认样式中未设置且该属性是自然继承的，那么会设置为 inherit 。
 3. `unset` 将属性重置为自然值，也就是如果属性是自然继承那么就是 inherit，否则和 initial 一样
 
-```css
-body {
-  color: green;
-}
-
-.my-class-1 a {
-  color: inherit;
-}
-
-.my-class-2 a {
-  color: initial;
-}
-
-.my-class-3 a {
-  color: unset;
-}
+```html
+<html>
+  <style>
+    body {
+      color: green;
+    }
+    .inherit a {
+      color: inherit;
+    }
+    .initial a {
+      color: initial;
+    }
+    .unset a {
+      color: unset;
+    }
+  </style>
+  <body>
+    <div>link:<a href="#">default</a></div>
+    <div class="inherit">link:<a href="#">inherit</a></div>
+    <div class="initial">link: <a href="#">initial</a></div>
+    <div class="unset">link:<a href="#">unset</a></div>
+  </body>
+</html>
 ```
 
-![css_control.png](./images/css_control.png)
+显示效果如下
+
+![css_css_control.png](./images/css_css_control.png)
 
 ## 属性和值
 
@@ -351,18 +360,127 @@ position 属性用于指定一个元素在文档中的定位方式。top，right
 2. `relative`
    relative 表示，相对于默认位置（即 static 时的位置）进行偏移，即定位基点是元素的默认位置
 3. `absolute`
-   相对于上级元素（一般是父元素）进行偏移，即定位基点是父元素。它有一个重要的限制条件：定位基点（一般是父元素）不能是 static 定位，否则定位基点就会变成整个网页的根元素 html。
-4. `fixed` 表示，相对于视口（viewport，浏览器窗口）进行偏移，即定位基点是浏览器窗口。这会导致元素的位置不随页面滚动而变化，好像固定在网页上一样。
+   相对于上级元素（一般是父元素）进行偏移，即定位基点是父元素。它有一个重要的限制条件：定位基点（一般是父元素）不能是 static 定位，否则定位基点就会变成整个网页的根元素 html。`absolute`不会占据当前的位置，当未设定 top，right，bottom 和 left 时会处于当前的位置，但不会排挤其他元素
+4. `fixed` 表示，相对于视口（viewport，浏览器窗口）进行偏移，即定位基点是浏览器窗口。这会导致元素的位置不随页面滚动而变化，好像固定在网页上一样。需要设置 top，right，bottom 和 left 至少一个参数
 5. `sticky`
    sticky 跟前面四个属性值都不一样，它会产生动态效果，很像 relative 和 fixed 的结合：一些时候是 relative 定位（定位基点是自身默认位置），另一些时候自动变成 fixed 定位（定位基点是视口）。
 
-   ```css
-   nav {
-     background: yellow;
-     top: 50px;
-     position: sticky;
-   }
-   ```
+示例
+
+```html
+<html>
+  <style>
+    body {
+      margin: 8px;
+      padding: 0px;
+    }
+    div {
+      width: 100px;
+      height: 100px;
+    }
+    .static {
+      border: 1px solid orange;
+      color: orange;
+    }
+    .relative {
+      border: 1px solid green;
+      border-color: green;
+      position: relative;
+      top: 10px;
+    }
+    .absolute {
+      position: absolute;
+      border: 1px solid paleturquoise;
+      color: paleturquoise;
+    }
+    .absolute_top {
+      position: absolute;
+      border: 2px solid pink;
+      color: pink;
+      top: 20px;
+    }
+    .absolute_relative {
+      position: absolute;
+      border: 2px solid blueviolet;
+      color: blueviolet;
+    }
+    .absolute_relative_top {
+      position: absolute;
+      top: 30px;
+      border: 2px solid red;
+      color: red;
+    }
+  </style>
+  <body>
+    <div class="static">static_1</div>
+    <div class="relative">relative_top_10_2</div>
+    <div class="static">static_3</div>
+    <div class="absolute">____________________absolute_4</div>
+    <div class="absolute_top">____________________absolute_5</div>
+    <div class="static">static_6</div>
+    <div style="position:relative">
+      <div class="absolute_relative">
+        ____________________absolute_relative_7
+      </div>
+    </div>
+    <div style="position:relative">
+      <div class="absolute_relative_top">
+        ____________________absolute_relative_top_30_8
+      </div>
+    </div>
+  </body>
+</html>
+```
+
+效果如下
+![css_absolute.png](./images/css_absolute.png)
+
+sticky 的示例，当 relative 的元素任意部分处于相对于视口`top=50px`的位置时，sticky 的元素则处于 fixed 的状态。否则，和 relative 一起移动
+
+```html
+<html>
+  <style>
+    body {
+      margin: 8px;
+    }
+
+    div {
+      width: 400px;
+      height: 400px;
+      border: 1px solid green;
+      border-top-color: red;
+    }
+
+    .relative {
+      border: 1px solid green;
+      border-color: green;
+      position: relative;
+      top: 10px;
+    }
+
+    .sticky {
+      background: green;
+      top: 50px;
+      position: sticky;
+      width: 600px;
+      height: 10px;
+    }
+  </style>
+
+  <body>
+    <div></div>
+    <div class="relative">
+      <div class="sticky"></div>
+    </div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+  </body>
+</html>
+```
 
 ### 叠放
 
@@ -371,6 +489,7 @@ position 属性用于指定一个元素在文档中的定位方式。top，right
 ## 盒子模型
 
 所谓盒子模型（Box Model）就是把 HTML 页面中的元素看作是一个矩形的盒子，也就是一个盛装内容的容器。所有的文档元素（标签）都会生成一个矩形框，我们成为元素框（element box），它描述了一个文档元素再网页布局汇总所占的位置大小。因此，每个盒子除了有自己大小和位置外，还影响着其他盒子的大小和位置。
+![css_标准盒子模型.png](./images/css_标准盒子模型.png)
 
 CSS 中组成一个块级盒子需要:
 
@@ -379,9 +498,9 @@ CSS 中组成一个块级盒子需要:
 - Border box: 边框盒包裹内容和内边距。大小通过 border 相关属性设置。
 - Margin box: 这是最外面的区域，是盒子和其他元素之间的空白区域。大小通过 margin 相关属性设置。
 
-![css_标准盒子模型.png](./images/css_标准盒子模型.png)
-
 在 chrome 中当选中某个节点时，chrome dev 控制台会显示其盒子模型，且其盒子模型的中各个组件的颜色会体现在你选中的节点上
+
+<grey>控制台的盒子模型的数值是可以编辑的</grey>
 ![css_盒子模型.png](./images/css_盒子模型.png)
 
 ### 布局
@@ -395,7 +514,11 @@ CSS 中组成一个块级盒子需要:
    - width 和 height 属性可以发挥作用
    - 内边距（padding）, 外边距（margin） 和 边框（border） 会将其他元素从当前盒子周围“推开”
 
-   除非特殊指定，诸如标题(`<h1>`等)和段落(`<p>`)默认情况下都是块级的盒子。
+   默认为 block 的标签
+
+   - `<h1>` ~ `<h6>`
+   - `<p>`
+   - `<div>`
 
 2. inline
 
@@ -403,7 +526,45 @@ CSS 中组成一个块级盒子需要:
    - 垂直方向的内边距、外边距以及边框会被应用但是不会把其他处于 inline 状态的盒子推开。
    - 水平方向的内边距、外边距以及边框会被应用而且也会把其他处于 inline 状态的盒子推开。
 
-   用做链接的 `<a>` 元素、 `<span>`、 `<em>` 以及 `<strong>` 都是默认处于 inline 状态的。
+   ```html
+   <html>
+     <style>
+       body {
+         margin: 8px;
+       }
+
+       div {
+         display: inline;
+         width: 100px;
+         height: 80px;
+         border: 1px solid green;
+         border-top-color: red;
+         margin: 10px;
+       }
+     </style>
+
+     <body>
+       <div>1</div>
+       <div>2</div>
+       <div>3</div>
+       <div>4</div>
+       <div>5</div>
+       <div>6</div>
+     </body>
+   </html>
+   ```
+
+   显示效果如下
+   ![css_inline.png](./images/css_inline.png)
+   当`display:block`时
+   ![css_block.png](./images/css_block.png)
+
+   默认为 inline 的标签
+
+   - `<a>`
+   - `<span>`
+   - `<em>`
+   - `<strong>`
 
 3. flex
    我们可以通过使用类似 flex 的 display 属性值来更改内部显示类型。 如果设置 display: flex，在一个元素上，外部显示类型是 block，但是内部显示类型修改为 flex。 该盒子的所有直接子元素都会成为 flex 元素
@@ -445,9 +606,13 @@ CSS 中组成一个块级盒子需要:
 
 4. inline-block
    它在内联和块之间提供了一个中间状态，实现我们需要的块级的部分效果：
+
    - 不会跳转到新行，如果显式添加 width 和 height 属性，它只会变得比其内容更大。
    - 设置 width 和 height 属性会生效。
    - padding, margin, 以及 border 会推开其他元素。
+
+   inline 中的示例，当`display:inline-block`时显示效果如下
+   ![css_inline-block.png](./images/css_inline-block.png)
 
 ### flex 盒子
 
@@ -483,7 +648,12 @@ CSS 中组成一个块级盒子需要:
    > `flex-direction`和`flex-wrap`可以缩写为`flex-flow`，例如`flex-flow:row wrap`
 
 4. 控制 flex 项占用空间的比例
-   例如：这表示“每个 flex 项将首先给出 200px 的可用空间，然后，剩余的可用空间将根据分配的比例共享
+
+   - flex-basis 指定 flex 元素在主轴上占用 flex 容器的尺寸，默认为 auto，即以 flex 元素的尺寸作为其占用的尺寸。
+   - flex-grow 指定各个元素的弹性增长因数，默认为 0
+   - flex-shrink 指定各个元素的弹性收缩因数，默认为 0，元素不能无限缩写，不能小于`min-width`和`min-height`
+   - flex flex-grow flex-shrink flex-basic 的缩写
+     例如：这表示“每个 flex 项将首先给出 200px 的可用空间，然后，剩余的可用空间将根据分配的比例共享
 
    ```css
    article {
@@ -509,6 +679,11 @@ CSS 中组成一个块级盒子需要:
 
 6. flex 嵌套
    弹性盒子也能创建一些颇为复杂的布局。设置一个元素为 flex 项目，那么他同样成为一个 flex 容器，它的孩子(直接子节点)也表现为 flexible box
+
+7. flex 相关的一些 css
+
+   - align-items 纵向对齐方式，例如`align-items:center`表现为纵向居中对齐
+   - justify-content 横向对齐方式，例如`justify-items:center`表现为横向居中对齐
 
 ### 外边距折叠
 
@@ -547,9 +722,8 @@ img {
 }
 ```
 
-![css_float.png](./images/css_float.png)
-
 浮动元素会脱离正常的文档布局流，并吸附到其父容器的左边 。在正常布局中位于该浮动元素之下的内容，此时会围绕着浮动元素，填满其右侧的空间。
+![css_float.png](./images/css_float.png)
 
 现在你已经知道了关于 float 属性的一些有趣事实，不过你很快就能够碰到一个问题——所有在浮动下面的自身不浮动的内容都将围绕浮动元素进行包装。
 
@@ -640,3 +814,51 @@ white-space: nowrap; #省略显示
 
 ![css_2019-12-04-00-38-34.png](./images/css_2019-12-04-00-38-34.png)
 当一个`div`指定多个`class`时，和指定`css`样式的顺序无关，只和加载`css`的顺序有关
+
+## 各种示例
+
+图片和文字水平居中对齐
+
+```html
+<div>
+  <img src="https://placehold.it/60x60" />
+  <span style="">Works.</span>
+</div>
+<style>
+  span {
+    vertical-aligin: top;
+    line-height: 50px;
+  }
+</style>
+```
+
+两个元素一行居中对齐
+![css_aligin-items.png](./images/css_aligin-items.png)
+
+```html
+<style>
+  .parent {
+    display: flex;
+    float: left;
+    align-items: center;
+    /* justify-content: center; 横向居中*/
+    border: 1px solid green;
+    width: 100%;
+  }
+</style>
+
+<div class="parent">
+  <audio src="#" controls></audio>
+  aaa
+</div>
+<div class="parent">
+  <audio src="#" controls></audio>
+  aaa
+</div>
+```
+
+## css 属性解释
+
+### list-style
+
+`<ul>`下的`<li>`列的头的标记
