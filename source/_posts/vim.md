@@ -233,3 +233,13 @@ hi Search term=reverse ctermfg=0 ctermbg=3 guifg=#000000 guibg=#FFE792
 vim -b XXX.class
 :%!xxd
 ```
+
+## 显示特殊字符
+
+在 vi 中
+
+```shell
+:set list
+```
+
+但是不会显示 dos 中的特殊符号`^M`,我们可使用`dos2unix`命令快速转换为 unix 格式，会自动移除掉`^M`

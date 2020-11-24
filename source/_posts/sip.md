@@ -263,9 +263,10 @@ a=* (zero or more session attribute lines)
 ```
 
 支持的 codec 类型，在 SDP 中使用[数字表示](https://en.wikipedia.org/wiki/RTP_payload_formats)，常见的如下
-| 数字| 编码|
-| :---- | :---- |
-|8| PCMA|
+
+| 数字 | 编码 |
+| :--- | :--- |
+| 8    | PCMA |
 
 示例
 

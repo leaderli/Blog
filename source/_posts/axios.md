@@ -5,6 +5,75 @@ categories: front-end
 tags:
 ---
 
+## 安装
+
+```shell
+npm install --save axios
+```
+
+## 示例
+
+[官方文档](https://github.com/axios/axios)
+
+基础示例
+
+```javascript
+const axios = require("axios");
+axios({
+  url: "http://localhost:5000",
+  method: "post",
+  data: "{}",
+  headers: { "Content-tyle": "application/json" },
+}).then((res) => {
+  console.log(res);
+});
+```
+
+其参数值可以为
+
+- data 请求数据
+- method 请求访问
+- url 请求地址
+
+post 请求
+
+```javascript
+const axios = require("axios");
+
+axios
+  .post("http://localhost:5000", {
+    name: 1,
+  })
+  .then((res) => {
+    console.log(res);
+  });
+  .catch((err)=>{
+    console.log(err)
+  })
+```
+
+我们可以为请求设定一个具有指定配置项的实例
+
+```javascript
+const instance = axios.create({
+  url: "http://localhost:5000",
+  timeout: 1000,
+  headers: { "Content-tyle": "application/json" },
+});
+```
+
+然后这个 instance 就可以直接调用下述方法
+
+- `axios#request(config)`
+- `axios#get(url[, config])`
+- `axios#delete(url[, config])`
+- `axios#head(url[, config])`
+- `axios#options(url[, config])`
+- `axios#post(url[, data[, config]])`
+- `axios#put(url[, data[, config]])`
+- `axios#patch(url[, data[, config]])`
+- `axios#getUri([config])`
+
 ## vue-cli2 中 axios 全局配置
 
 ```javascript

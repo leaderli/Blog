@@ -180,3 +180,71 @@ import moment form 'moment'
 
 moment().format('YYYY-MM-DD HH:mm:ss')
 ```
+
+## [js-beautify](https://github.com/beautify-web/js-beautify)
+
+格式化 js、html、css 代码片段用的插件
+
+## express
+
+拦截`/`请求，并打印请求报文
+
+```shell
+npm install --save express
+npm install --save body-parser
+```
+
+```javascript
+const express = require("express");
+const bodyParser = require("body-parser");
+const app = express();
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.post("/", (req, res) => {
+  console.log(req.body);
+  res.send("ok");
+});
+app.listen(5000, () => {
+  console.log("start server at 5000");
+});
+```
+
+## child_process
+
+调用 shell 命令
+
+```shell
+npm install --save child_process
+```
+
+exec 的回调函数在命令执行后才会返回。
+
+```javascript
+const { exec } = require("child_process");
+exec("cat *.js missing_file | wc -l", (error, stdout, stderr) => {
+  if (error) {
+    console.error(`执行出错: ${error}`);
+    return;
+  }
+  console.log(`stdout: ${stdout}`);
+  console.log(`stderr: ${stderr}`);
+});
+```
+
+我们也可以通过`on`监听 shell 命令的管道来实时输出返回结果
+
+```javascript
+const { exec } = require("child_process");
+let tail = exec("tail -f 1.log");
+//data为byte数组
+tail.stdout.on("data", (data) => {
+  console.log(`${data}`);
+});
+tail.stderr.on("data", (data) => {
+  console.log(`${data}`);
+});
+
+tail.on("close", (code) => {
+  console.log(`子进程退出码：${code}`);
+});
+```

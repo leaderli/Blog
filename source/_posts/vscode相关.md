@@ -191,3 +191,7 @@ scope 不是文件扩展名
     "statusBar.debuggingBackground": "#511f1f"
 }
 ```
+
+## 列出所有搜索内容
+
+`search : find in files`

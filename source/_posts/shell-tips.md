@@ -11,6 +11,12 @@ tags:
 
 ## curl
 
+参数
+
+- `-X` 请求方法 `-X POST`
+- `-d` 请求报文 `-d '{"name":"li"}'`
+- `-H` 请求头 `-H "Content-type:application/json"`
+
 ### 显示请求详情
 
 ```shell

@@ -477,7 +477,7 @@ Vue.use(MyPlugin, { someOption: true });
 ```javascript
 MyPlugin.install = function (Vue, options) {
   // 1. 注册Vue全局函数
-  Vue.myGlobalMethod = function () {
+  Vue.prototype.myGlobalMethod = function () {
   }
 
   // 2. 添加全局指令

@@ -5,11 +5,6 @@ categories: ivr
 tags:
 ---
 
-<%- toc(page.content, {
-class: 'post-toc',
-list_number: true
-}) %>
-
 [官方文档](https://freeswitch.org/confluence/display/FREESWITCH/FreeSWITCH+First+Steps)
 
 ## 安装 freeswtich
@@ -253,9 +248,9 @@ fs_cli> eval $${log_dir}
 - sound_prefix
 - sounds_dir
 - conf_dir
-- log_dir
+- log_dir 日志目录
 - run_dir
-- db_dir
+- db_dir sqllite 数据文件目录
 - mod_dir
 - htdocs_dir
 - script_dir
@@ -376,6 +371,13 @@ group/1000
   freeswitch> originate user/1000|user/10001 &echo
   ```
 
+呼叫字符串可以携带通道变量
+
+```shell
+#更改主叫名为li，主叫号为888888
+freeswitch> originate  {origination_caller_id_name=li,origination_caller_id_number=888888}user/1001 &park
+```
+
 ### Channel
 
 对于每一次呼叫，FreeSwitch 都会启动一个 Session，用于控制整个呼叫，他会一直持续到通话结束。其中，每个 Session 都控制这一个 Channel（通道，又称信道），是一对 UA 间通信的实体，相当于 FreeSwitch 的一条腿。每个 channel 都用一个唯一的 UUID 来标示，称为 channel UUID。。Channel 上可以绑定一些呼叫参数，称为 Channel Variable（通道变量）。Channel 也可用来传输媒体流。通话时 FreeSwitch 的作用是将两个 Channel 桥接（bridge）到一起，使双方可以通话。这两路桥接的通话（两条腿）在逻辑上组成一个通话，称为一个 Call
@@ -412,6 +414,10 @@ bridge 相当于一座桥，它的作用是将两条腿 1000 和 1001 给桥接�
 
 更多的值参考[SIP 挂机原因](https://freeswitch.org/confluence/display/FREESWITCH/Hangup+Cause+Code+Table)
 也可以给 continue_on_fail 设置为 true，表示无论什么原因导致 bridge 失败，都执行接下来的 Action
+
+### 网关
+
+网关(Gateway)又称网间连接器、协议转换器。网关在网络层以上实现网络互连，是最复杂的网络互连设备，仅用于两个高层协议不同的网络互连。网关既可以用于广域网互连，也可以用于局域网互连。 网关是一种充当转换重任的计算机系统或设备。使用在不同的通信协议、数据格式或语言，甚至体系结构完全不同的两种系统之间，网关是一个翻译器。与网桥只是简单地传达信息不同，网关对收到的信息要重新打包，以适应目的系统的需求。
 
 ### 其他
 
@@ -865,7 +871,34 @@ originate user/1000 &speak(unimrcp:mrcpserver01|nana|hello freeswitch)
 
 ### 其它常用命令
 
-1. show channels 显示通道信息
+1. show 显示运行时的各种信息
+
+   - codec
+   - endpoint
+   - application 显示所有 app 命令
+   - api 显示所有 api 命令
+   - dialplan
+   - file
+   - timer
+   - calls
+   - channels 当前通道的通话
+   - calls
+   - detailed_calls
+   - bridged_calls
+   - detailed_bridged_calls
+   - aliases
+   - complete
+   - chat
+   - management
+   - modules 显示加载的模块
+   - nat_map
+   - say
+   - interfaces
+   - interface_types
+   - tasks
+   - limits
+   - status
+
 2. `<uuid> <read|write|both|vread|vwrite|vboth|all> <on|off>` 调试媒体传输是否正常
 3. bgapi 使用后台进程启动命令，配合其他阻塞的命令使用
 
@@ -1596,9 +1629,64 @@ fs_cli> fifo_member del book user/1007
 - fifo_priority 呼叫优先级，默认为 5，共有 10 个优先级，高优先级的将被排在队列前面。
 - fifo_bridge_uuid
 
-### 相关事件
+在 fifo 应用中，通话中的两条腿都是独立建立的，只有这样才能进行桥接。因而，在普通的通话中靠 a-leg 上的变量去影响 b-leg 的做法在这里就不适用了。那么，为了在 b-leg 上设置我们想要的通道变量。可以在想 b-leg 发起呼叫的呼叫字符串上设置。例如
 
-一通来话从入队到挂机，大致经过以下几个事件。
+将主叫号改为 7777
+
+```xml
+<member>{origination_call_id_name=7777}</member>
+```
+
+### 呼叫队列相关事件
+
+通过事件消息，有一个 FIFO-Action 消息头事件标志了事件实际的动作，一通来话从入队到挂机，大致经过以下几个事件。
+
+1. push 来话入队时产生
+2. pre-dial 呼叫坐席之前产生
+3. post-dial 呼叫坐席之后产生
+4. consumer_start 消费者（即坐席）开始
+5. caller_pop 主叫出队
+6. consumer_pop 消费者出队
+7. bridge-consumer-start 消费者 Channel 开始 bridge
+8. bridge-caller-start 主叫 Channel 开始 bridge
+9. bridge-consumer-stop 消费者 Channel 停止 bridge
+10. bridge-caller-stop 主叫 Channel 停止 bridge
+11. consumer_stop 消费者停止
+12. Channel-consumer-start 消费者 Channel 开始
+13. Channel-consumer-stop 消费者 Channel 停止
+
+## 呼叫中心模块
+
+mod_callcenter
+
+## 会议
+
+[mod_conference](https://freeswitch.org/confluence/display/FREESWITCH/mod_conference) 提供了一个 conference APP，因此我们可以直接在 Dialplan 中使用它
+
+下面是 FreeSwitch 提供的默认的 Dialplan
+
+```xml
+ <extension name="nb_conferences">
+   <condition field="destination_number" expression="^(30\d{2})$">
+      <action application="answer"/>
+      <action application="conference" data="$1-${domain_name}@default"/>
+   </condition>
+</extension>
+```
+
+用户可以呼叫 3000~3099 之间的号码进入该 Dialplan，电话进入该 Dialplan，首先执行 answer 动作对来话应答（可以省略），然后就可以执行到 conference 进入会议了。
+
+conference 的语法规则`<conference_name>@<profile>+<pin>+flags{<flag1>|<flag2>}`
+
+例如
+
+- `3000`: 3000 是一个会议名称
+- `3000+1234`：3000 是会议名称，使用默认的 Profile default ，1234 是密码。所有成员在进入会议时都会提示输入密码。
+- `3000@default+1234`: 同上，只是明确指定了 Profile
+- `3000@default+1234+flags{ute|waste}`:在上面的基础上，又增加了 mute 和 waste 参数。
+- `3000@default+flags{endcomf|moderator}`:与上面的类似，只是参数换成了 endconf 和 moderator
+
+FreeSwitch 也提供了一个 conference API 命令用于对会议进行各种控制
 
 ## 相关数据索引
 

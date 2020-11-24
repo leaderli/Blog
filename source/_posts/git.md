@@ -74,7 +74,13 @@ sw = checkout
 ### 查看状态
 
 `git show`默认查看当前`<commit>`提交的内容，可使用`git show <commit>`查看具体某个提交的信息
-`git status`查看当前工作区与暂存区状态，可使用`git status -s`简化输出信息。类似如下的信息`M`表示有改动,`D`表示删除,`??`表示未`add`,`A`表示新增但未提交
+
+`git status`查看当前工作区与暂存区状态，可使用`git status -s`简化输出信息。类似如下的信息
+
+- `M`表示有改动
+- `D`表示删除,
+- `??`表示未`add`,
+- `A`表示新增但未提交
 
 > M 1.txt
 > D 2.txt
@@ -233,7 +239,7 @@ git checkout -b dev`
 查看当前分支，当前分支前面会标一个`*`号。
 
 ```shell
-git branch`
+git branch
 ```
 
 ### 重命名分支

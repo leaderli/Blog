@@ -291,6 +291,16 @@ console.log(
 );
 ```
 
+变量占位符，使用`` ` ``包裹字符串
+
+```javascript
+var a = { name: "li" };
+
+// 占位符也可以用来直接打印处二进制bytes数组
+console.log(person:`${a}`);
+
+```
+
 ## cookik
 
 ```javascript
@@ -324,4 +334,48 @@ var d = new Date();
 d.setHours(0, 0, 0, 0);
 //当天午夜的时间戳 23:59:59
 d.setHours(24, 0, 0, 0);
+```
+
+## 正则
+
+匹配组（仅匹配到第一个满足的）
+
+```javascript
+let str = "<h1>Hello, world!</h1>";
+
+let tag = str.match(/<(.*?)>/);
+
+alert(tag[0]); // <h1>
+alert(tag[1]); // h1
+```
+
+多个匹配组
+![js-tips_多层级.png](./images/js-tips_多层级.png)
+
+```javascript
+let str = '<span class="my">';
+
+let regexp = /<(([a-z]+)\s*([^>]*))>/;
+
+let result = str.match(regexp);
+alert(result[0]); // <span class="my">
+alert(result[1]); // span class="my"
+alert(result[2]); // span
+alert(result[3]); // class="my"
+```
+
+匹配所有满足的组
+
+```javascript
+let results = "<h1> <h2>".matchAll(/<(.*?)>/gi);
+
+// results - is not an array, but an iterable object
+alert(results); // [object RegExp String Iterator]
+
+alert(results[0]); // undefined (*)
+
+results = Array.from(results); // let's turn it into array
+
+alert(results[0]); // <h1>,h1 (1st tag)
+alert(results[1]); // <h2>,h2 (2nd tag)
 ```
