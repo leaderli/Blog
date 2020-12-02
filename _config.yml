@@ -102,9 +102,9 @@ search:
   format: raw
 
 #分享链接
-baidushare:
-  type: button
-  baidushare: true
+# baidushare:
+# type: button
+# baidushare: false
 
 sitemap:
   path: sitemap.xml
