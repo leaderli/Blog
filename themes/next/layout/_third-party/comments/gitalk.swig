@@ -1,4 +1,3 @@
-// gitalk
 {% if page.comments && theme.gitalk.enable %}
   {% if theme.vendors.gitalk_js %}
     {% set gitalk_js_url = '//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js' %}
