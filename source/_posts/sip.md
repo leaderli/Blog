@@ -26,7 +26,7 @@ SIP 协议采用 Client/Server 模型，每一个请求（request），Server �
 
 ## SIP URI
 
-假设 Bob 在服务器 192.168.1.100，Alice 在 192.168.1.200 上，FreeSwitch 在 192.168.1.9 上，Alice 注册到 FreeSwitch 上，Bob 呼叫 Alice 时，使用 Alice 的服务器地址（Bob 只知道服务器地址），即 sip:Alice@192.168.1.9，FreeSwitch 接受到请求后，查找本地数据库，发现 Alice 的实际地址（Contact 地址，又叫联系地址）是 sip:Alice@192.168.1.100，便可以建立呼叫。Bob 作为主叫方，它已经知道服务器地址，可以直接发送 INVITE 请求，是不需要注册的，而 Alice 作为被叫的一方，为了让服务器能找到它，它必须事先通过 REGISTER 消息注册到服务器上。
+假设 Bob 在服务器 192.168.1.100，Alice 在 192.168.1.200 上，FreeSwitch 在 192.168.1.9 上，Alice 注册到 FreeSwitch 上，Bob 呼叫 Alice 时，使用 Alice 的服务器地(又称逻辑地址)（Bob 只知道服务器地址），即 sip:Alice@192.168.1.9，FreeSwitch 接受到请求后，查找本地数据库，发现 Alice 的实际地址（Contact 地址，又叫联系地址，亦称物理地址）是 sip:Alice@192.168.1.100，便可以建立呼叫。Bob 作为主叫方，它已经知道服务器地址，可以直接发送 INVITE 请求，是不需要注册的，而 Alice 作为被叫的一方，为了让服务器能找到它，它必须事先通过 REGISTER 消息注册到服务器上。
 
 ## 媒体
 
@@ -563,7 +563,45 @@ Content-Length: 0
 
 ### OPTIONS
 
-查询服务器和能力，也可以用作 ping 测试
+可以用来查询服务器支持的信令，codes 等，也可以用作 ping 测试。
+
+```http
+OPTIONS sip:bob@gauss.com SIP/2.0
+Via: SIP/2.0/UDP pc10.newton.com;branch=z9hG4bK1ea Max-Forwards: 70
+To: Bob <sip:bob@gauss.com>
+From: Alice <sip:alice@newton.com>;tag=14124
+Call-ID: a8a931aa@pc10.newton.com
+CSeq: 1000 OPTIONS
+Contact: <sip:alice@pc10.newton.com>
+Content-Length: 0
+```
+
+```http
+SIP/2.0 200 OK
+Via: SIP/2.0/UDP pc10.newton.com;branch=z9hG4bK1ea;received=10.0.0.1
+Max-Forwards: 70
+To: Bob <sip:bob@gauss.com>;tag=3843
+From: Alice <sip:alice@newton.com>;tag=14124
+Call-ID: a8a931aa@pc10.newton.com
+CSeq: 1000 OPTIONS
+Contact: <sip:bob@host2.gauss.com>
+Allow: INVITE, ACK, CANCEL, OPTIONS, BYE
+Accept: application/sdp
+Supported: 100rel
+Content-Type: application/sdp
+Content-Length: 146
+v=0
+o=bob 3812844327 3812844327 IN IP4 host2.gauss.com s=-
+t=0 0
+c=IN IP4 host2.gauss.com
+m=audio 0 RTP/AVP 0 8
+a=rtpmap:0 PCMU/8000
+a=rtpmap:8 PCMA/8000
+```
+
+- Allow 表示服务端可处理的 sip 信令
+- Accept 表示服务端可处理 SDP
+- SDP 消息中的 m 行，数字 0 用来防止媒体流初始化。后面的`0 8`，表示支持的 audio 的 codecs。下面的两个 a 行，是对其具体描述
 
 ## SIP 报文头域
 
@@ -575,6 +613,13 @@ Content-Length: 0
 4. To 说明请求接受方
 5. Max-Forwars 限制跳跃点数和最大转发次数
 6. Via 描述请求消息经过的路径
+
+request 和 response 报文的 From 和 To 是完全一致的，尽管他们的方向是相反的。From 和 To 的值是根据 request 来定义的。
+Via 中的 branch 标记腿的 id
+当有使用 proxy 代理时，请求转发时用的还是同一个 branch，From 和 To 中的 tag 可以作为 id 标记是否为原始请求。
+
+Via 的一个示例
+![sip_Via.png](./images/sip_Via.png)
 
 更多的请参考[SIP 参数](https://www.iana.org/assignments/sip-parameters/sip-parameters.xhtml)
 

@@ -195,3 +195,13 @@ scope 不是文件扩展名
 ## 列出所有搜索内容
 
 `search : find in files`
+
+## 编译 markdown 频繁跳动
+
+修改配置
+
+```json
+"markdown.preview.scrollEditorWithPreview": false
+```
+
+感觉像每次保存时，预览窗口重新渲染，然后编辑区同步更新位置，然后就跳一下。关闭这个就不跳动了

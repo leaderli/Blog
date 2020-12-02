@@ -102,14 +102,33 @@ tags:
 
 常用
 
-|     表达式     |      示例      |
-| :------------: | :------------: |
-|     `\{\}`     |     $\{\}$     |
-|     `\ge`      |     $\ge$      |
-|     `\le`      |     $\le$      |
-|     `X_y`      |     $X_y$      |
-|    `X^{y}`     |    $x^{y}$     |
-| `\hat{\delta}` | $\hat{\delta}$ |
+| 表达式                         | 示例                           |
+| :----------------------------- | :----------------------------- |
+| `\{\}`                         | $\{\}$                         |
+| `\ge`                          | $\ge$                          |
+| `\le`                          | $\le$                          |
+| `X_y`                          | $X_y$                          |
+| `X^{y}`                        | $x^{y}$                        |
+| `\hat{\delta}`                 | $\hat{\delta}$                 |
+| `\theta`                       | $\theta$                       |
+| `\varepsilon`                  | $\varepsilon$                  |
+| `\Sigma`                       | $\Sigma$                       |
+| `\omega`                       | $\omega$                       |
+| `\lbrace \rbrace`              | $\lbrace \rbrace$              |
+| `\vert`                        | $\vert$                        |
+| `\emptyset`                    | $\emptyset$                    |
+| `\varrho`                      | $\varrho$                      |
+| `\varrho`                      | $\vartheta$                    |
+| `\delta`                       | $\delta$                       |
+| `\in`                          | $\in$                          |
+| `\notin`                       | $\notin$                       |
+| `\cap`                         | $\cap$                         |
+| `\cup`                         | $\cup$                         |
+| `\displaystyle\bigcup_{i=1}^k` | $\displaystyle\bigcup_{i=1}^k$ |
+| `\subset`                      | $\subset$                      |
+| `\subseteq`                    | $\subseteq$                    |
+| `\supset`                      | $\supset$                      |
+| `\supseteq`                    | $\supseteq$                    |
 
 块状使用`$$`包含
 

@@ -126,6 +126,16 @@ Object.keys(obj);
 Object.values(obj);
 ```
 
+实现 obj 的 clone
+
+```javascript
+//浅clone
+Object.assign({}, obj);
+
+//深clone
+JSON.parse(JSON.stringify(obj));
+```
+
 ## 递归 dom
 
 ```javascript
