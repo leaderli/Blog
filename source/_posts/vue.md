@@ -60,7 +60,7 @@ Vue 在观察到数据变化时并不是直接更新 DOM，而是开启一个队
     methods: {
       getText: function () {
         this.showDiv = true;
-        //在执行this.showDiv = true时，div仍然没有被创建出来，直到下一个Vue事件循环时，才开始创建。$nextTick就是用来直到什么时候DOM更新完成的
+        //在执行this.showDiv = true时，div仍然没有被创建出来，直到下一个Vue事件循环时，才开始创建。$nextTick就是用来知道什么时候DOM更新完成的
         this.$nextTick(function () {
           var text = document.getElementById("div").innerHTML;
           console.log(text);
@@ -99,7 +99,7 @@ var app = new Vue({
 
 ## 手动挂载实例
 
-Vue 提供了 Vue.extend 和$mount两个方法将 vue 实例挂载到一个 dom 上，即如果 Vue 实例在实例化时它没有收到 el 选项，它就处于“未挂载”状态，没有关联的 DOM 元素。可以使用\$mount()手动挂载一个未挂载的实例。这个方法返回实例自身，因而可以链式调用其他实例方法。
+Vue 提供了 Vue.extend 和$mount 两个方法将 vue 实例挂载到一个 dom 上，即如果 Vue 实例在实例化时它没有收到 el 选项，它就处于“未挂载”状态，没有关联的 DOM 元素。可以使用\$mount()手动挂载一个未挂载的实例。这个方法返回实例自身，因而可以链式调用其他实例方法。
 
 ```html
 <div id="app">

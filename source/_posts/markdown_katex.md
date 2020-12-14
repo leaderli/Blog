@@ -107,6 +107,8 @@ tags:
 | `\{\}`                         | $\{\}$                         |
 | `\ge`                          | $\ge$                          |
 | `\le`                          | $\le$                          |
+| `\ne`                          | $\ne$                          |
+| `\cdots`                       | $\cdots$                       |
 | `X_y`                          | $X_y$                          |
 | `X^{y}`                        | $x^{y}$                        |
 | `\hat{\delta}`                 | $\hat{\delta}$                 |
@@ -129,6 +131,7 @@ tags:
 | `\subseteq`                    | $\subseteq$                    |
 | `\supset`                      | $\supset$                      |
 | `\supseteq`                    | $\supseteq$                    |
+| `\varepsilon\text{-}NFA`       | $\varepsilon\text{-}NFA$       |
 
 块状使用`$$`包含
 

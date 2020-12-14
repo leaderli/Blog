@@ -347,3 +347,9 @@ else
 echo no
 fi
 ```
+
+## 查看 dns 解析过程
+
+```shell
+dig www.example.com
+```

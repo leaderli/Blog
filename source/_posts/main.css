@@ -60,3 +60,7 @@ trs {
   border-radius: 3px;
   font-size: 14px;
 }
+empty {
+  height: 14px;
+  display: block;
+}

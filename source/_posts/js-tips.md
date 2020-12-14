@@ -243,6 +243,9 @@ elem.dispatchEvent(event);
 ```javascript
 //从0角标最多截取5位
 arr.slice(0, 5);
+//截取到最后一位前
+arr.splice(0, -1);
+
 //截取到角标5
 arr.slice(5);
 
