@@ -53,6 +53,7 @@ String json = gson.toJson(obj);
 2. 默认情况下被`transient`修饰的属性会被忽略
 3. 序列化时为值`null`的属性将会被忽略
 4. 反序列化时，值`null`的属性将会被赋值为`零值`
+5. 序列化与反序列化默认不会调用 set、get 方法
 
 ## 数组
 
@@ -281,7 +282,7 @@ System.out.println(gson.toJson(person))
 
 ```json
 {
-  "name": "hello",
-  "age": 1
+	"name": "hello",
+	"age": 1
 }
 ```

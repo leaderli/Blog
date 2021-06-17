@@ -3,14 +3,14 @@ title: Spring上传文件
 date: 2019-08-21 19:39:37
 categories: spring
 tags:
-- 上传文件
-- resttemplate
-- EnableConfigurationProperties
+  - 上传文件
+  - resttemplate
+  - EnableConfigurationProperties
 ---
 
 ## MultipartResolver
 
-`DispatcherServlet`用于处理所有请求，`doDispatch`方法中会判断请求参数中是否包含文件。
+`DispatcherServlet`用于处理所有请求 ，`doDispatch`方法中会判断请求参数中是否包含文件。
 
 ```java
 protected void doDispatch(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -157,8 +157,8 @@ private final MultipartProperties multipartProperties;
 
 ```
 
-可以看出若没有指定`MultipartResolver`时，会默认加载`StandardServletMultipartResolver`。我们查看其`isMultipart`放过可知
-当请求`ContentType`类型以`multipart/`则会认为是文件上传操作。
+可以看出若没有指定`MultipartResolver`时，会默认加载`StandardServletMultipartResolver`。我们查看其`isMultipart`方法可知
+当请求`ContentType`类型是以`multipart/`开头则会认为是文件上传操作。
 
 ```java
 @Override

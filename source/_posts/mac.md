@@ -41,6 +41,10 @@ spotlight 搜索
 `ag`  
 文本搜索工具
 
+`jenv`
+多java版本管理
+
+
 ## 合并 PDF
 
 ```shell

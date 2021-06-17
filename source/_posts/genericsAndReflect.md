@@ -15,6 +15,16 @@ private <T> void set(T t) {
 }
 ```
 
+## 获取类声明的泛型
+
+```java
+ParameterizedType  paramterizedType =(ParameterizedType) this.getClass().getGenericSuperclass();
+paramterizedType.getActualTypeArguments()
+// 对于 public class EditRelateJavaAction extends SelectionContextMenuAction<FlowNode> 来说，其值就为FlowNode
+
+
+```
+
 ## `java`运行时无法捕获`ClassCastException`的解决办法
 
 ```java
@@ -106,12 +116,62 @@ public class TestStatic {
 //不管是extends或是super，只能使用在变量声明上，实际赋值的时候，一定是指定具体实现类的。
 
 //那么对于<? extends T>来说，具体的实现类的泛型A只是变量声明的泛型T的子类，如果以T进行插入时，是无法保证插入的class类型，一定是A，所以extends禁用插入动作
+//这个时候，从fruits取出的，其实是Apple泛型的元素，因此一定是Fruit类，但如果像fruits插入一个Banana泛型的元素，则与实际的泛型类Apple冲突，所以禁止使用fruits这个变量去进行插入动作
 List<Apple> apples = new ArrayList<Apple>();
 List<? extends Fruit> fruits = apples;
-// 对于<? super T>来说，具体的实现类的泛型A一定是变量声明的泛型T的父类，如果以T类型进入取值操作，无法保证取出的值一定是T类型，因为A一定是T的父类，所以插入的所有实例一定也是A的多态
 
+// 对于<? super T>来说，具体的实现类的泛型A一定是变量声明的泛型T的父类，如果以T类型进入取值操作，无法保证取出的值一定是T类型，因为A一定是T的父类，所以插入的所有实例一定也是A的多态
+//这个时候，若apples中插入一个Apple泛型的元素，因为Apple是继承自Fruit泛型的子类，所以是可以插入到fruits中的，但是如果从apples取一个元素，因为fruits中可能有Banana泛型的元素，其余apples的实际泛型是冲突的，所以禁止使用取值操作。
 List<Fruit> fruits = new ArrayList<Fruit>();
-List<? super Apple> = fruits;
+List<? super Apple> apples = fruits;
+```
+
+作为方法参数时，对于一个典型的示例来说，一般 mapper 函数是这样声明的
+
+```java
+ <R> Stream<R> map(Function<? super T, ? extends R> mapper);
+
+ //上述形参的泛型表示实际mapper方法调用时是使用如下泛型的
+R apply(T t);
+```
+
+其含义是，当我们调用这个 mapper 的 apply 时，我们的请求参数为 T 类型，其返回值为 R 类型。
+所以在当我们在 apply 方法内部，当我调用 T 类型的父类方法是可以接受的，我实际传递 mapper 时，可以直接使用泛型为 T 的父类的形参。而 apply 方法的返回值，我返回 R 类型的子类也是可以接受的，所以传递 mapper 时也可以直接使用泛型为 R 的子类的返回类型
+
+## 泛型的应用
+
+```java
+class Node<T extends Node<? extends Node<?>>> {
+
+ T parent;
+}
+class RootNode extends Node<Node<?>>{
+
+}
+
+class Node1 extends Node<RootNode>{
+
+}
+class Node2 extends Node<RootNode>{
+
+}
+
+//在指定T类型时，其实R类型已经固定了
+class B<T extends Node<R>, R extends Node<?>> {
+
+ T node;
+ R parent;
+
+}
+
+//C1 会直接提示错误
+class C1 extends B<Node1,Node2>{
+
+}
+class C2 extends B<Node1,RootNode>{
+
+}
+
 ```
 
 ## 如何修改 final 修饰符的值

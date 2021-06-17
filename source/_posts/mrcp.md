@@ -507,3 +507,7 @@ MRCP/2.0 109 START-OF-INPUT 10000 IN-PROGRESS
 Channel-Identifier: 43b9ae17@speechrecog
 Input-Type: dtmf
 ```
+
+## tcpdump
+
+使用wireshark分析抓取的报文时，一般是在sip消息下面一些的tcp报文中就有mrcp报文信息

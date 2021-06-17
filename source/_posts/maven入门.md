@@ -915,3 +915,51 @@ profile 支持激活的方式
     <exists/>
 </file>
 ```
+
+## 测试
+
+打包项目时跑的 junit，中文乱码
+
+```xml
+ <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>2.10</version>
+        <configuration>
+          <argLine>-Dfile.encoding=UTF-8</argLine>
+        </configuration>
+</plugin>
+```
+
+打包时跳过测试
+
+```xml
+ <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>2.10</version>
+        <configuration>
+          <argLine>-Dfile.encoding=UTF-8</argLine>
+          <skipTests>true</skipTests>
+        </configuration>
+</plugin>
+```
+
+打包时跳过某些测试，includes 仅测试某些案例，excludes 不测试某些案例
+
+```xml
+ <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>2.10</version>
+        <configuration>
+          <argLine>-Dfile.encoding=UTF-8</argLine>
+          <includes>
+            <include>**/AppTest.java</include>
+          </includes>
+          <excludes>
+            <exclude>**/AppTest2.java</exclude>
+          </excludes>
+        </configuration>
+</plugin>
+```

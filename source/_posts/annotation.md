@@ -31,6 +31,24 @@ tags:
 
 ### `Inherited` 元注解是一个标记注解，`@Inherited`阐述了某个被标注的类型是被继承的。如果一个使用了`@Inherited`修饰的`annotation`类型被用于一个`class`，则这个`annotation`将被用于该`class`的子类
 
+### `Repeatable` 用于标记该注解是否可重复使用，它需要制定另一个注解用以存放多个重复注解的值
+
+```java
+@Documented
+@Retention(RetentionPolicy.RUNTIME)
+@Target({ElementType.PARAMETER, ElementType.TYPE})
+@Repeatable(NotNull.NotNulls.class)
+public @interface NotNull {
+
+  String value();
+  @Retention(RetentionPolicy.RUNTIME)
+  @Target({ElementType.PARAMETER, ElementType.TYPE}
+  @interface NotNulls {
+    NotNull[] value();
+  }
+}
+```
+
 ## 自定义注解
 
 自定义注解类编写的一些规则:

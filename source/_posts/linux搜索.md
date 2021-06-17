@@ -71,8 +71,8 @@ tags:
      查找指定扩展名的文件
 
      ```shell
-     find -type f -regex '.*\.(jpg|png)'
-     find -type f|egrep  '.*\.(jpg|png)'
+     find . -type f -regex '.*\.(jpg|png)'
+     find . -type f|egrep  '.*\.(jpg|png)'
      ```
 
 ## grep

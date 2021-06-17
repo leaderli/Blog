@@ -353,3 +353,10 @@ fi
 ```shell
 dig www.example.com
 ```
+
+## 睡眠
+
+```shell
+sleep 3 #暂停3秒
+echo 'ok'
+```

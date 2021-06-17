@@ -56,3 +56,15 @@ origin='/1/2'
 re.sub('^/','',origin)
 # 1/2
 ```
+
+## 调用shell
+
+```python
+import subprocess
+
+try:
+  subprocess.call(['/bin/bash','xxx.sh','arg1','arg2'])
+except:
+  #可以忽略所有错误，比如ctrl c，终止sh运行的错误
+  pass
+```

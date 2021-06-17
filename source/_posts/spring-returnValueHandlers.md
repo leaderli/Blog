@@ -8,14 +8,6 @@ tags:
   - ReturnValueHandlers
 ---
 
-## 版本说明
-
-`jdk`:1.8.0_131  
-`springboot`:2.1.6.RELEAS  
-`maven`:3.6.1  
-`database`:mysql-5.7.14  
-`lombok插件`
-
 ## 源码分析
 
 省略构建项目，junit 测试等步骤，只分析代码与实现。

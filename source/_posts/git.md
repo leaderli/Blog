@@ -232,6 +232,9 @@ git commit --amend
 
 ```shell
 git checkout -b dev`
+
+# 切换到一个新的空的分支，该分支没有任何提交记录，
+git checkout --orphan  branch_name
 ```
 
 ### 查看当前分支
@@ -477,6 +480,10 @@ git reset --hard <remote>/<branch>
 git push #推送前会校验是否在最新状态
 git push -f #强制推送
 ```
+
+### 一些错误
+
+当在 linux 上，因切换 git 用户而无法拉取远程仓库代码的时候，需要将旧的生成的 ssh 秘钥给删掉，重新生成才可以。
 
 ## `Git`原理
 

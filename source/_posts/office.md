@@ -14,3 +14,12 @@ word 的层级结构可以通过增加或减少缩进量来控制层级
 
 1. `项目符号`--> `更改列表级别`
 2. `编号`-->`更改列表级别`
+
+## visio
+
+图元指向另一页
+![office_office.png](./images/office_office.png)
+
+![office_2.png](./images/office_2.png)
+
+这样双击该流程时就会自动跳转到你所想看到的页了。

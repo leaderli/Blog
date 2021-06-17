@@ -502,6 +502,54 @@ MyPlugin.install = function (Vue, options) {
 }
 ```
 
+例如
+
+```javascript
+//util/logger.js
+
+const logger ={
+  DEBUG:0,
+  INFO:1
+}
+logger.install = function(Vue,Option={}){
+  if(Option.level===undefined){
+    Option.level = logger.INFO
+  }
+
+  Vue.prototype.logger = {
+    debug(... msg){
+      if(Option.level <= logger.DEBUG){
+        console.log('%c ' + msg.join(' '),'color:blue')
+      }
+    }
+    info(... msg){
+      if(Option.level <= logger.INFO){
+        console.log('%c ' + msg.join(' '),'color:green')
+      }
+    }
+  }
+}
+
+export default logger
+
+//main.js
+
+import logger from './util/logger'
+
+Vue.use(logger,{level:logger.DEBUG})
+
+//test.vue
+
+export default {
+  data(){},
+  methods:{
+    some(){
+      this.logger.info('hello','logger')
+    }
+  }
+}
+```
+
 ## 绑定 class 的几种方式
 
 v-bind 中的表达式最终会被解析为字符串，Vue 对 v-bind 增强了一些功能，提供了多重语法
@@ -971,6 +1019,8 @@ watch: {
 },
 </script>
 ```
+
+watch时，监听的对象需存在，在声明watch后，再赋值该对象是无法watch的。
 
 ## 表单
 

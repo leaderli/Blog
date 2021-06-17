@@ -278,6 +278,14 @@ void rollOver() throws IOException {
 比如说简单的重写`DailyRollingFileAppender`,在`rollOver`代码处稍作修改
 
 ```java
+this.closeFile();
+
+//此处必须得停止一会，确保所有线程都没有连接到日志文件
+try{
+  Thread.sleep(3000);
+}catch(Exception e){
+
+}
 File target = new File(scheduledFilename);
 //当目标文件已经存在时，就说明已经被切割过了，则简单重定向即可
 if (!target.exists()) {

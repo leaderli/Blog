@@ -101,6 +101,51 @@ $ tr a-z A-Z <<END_TEXT
 command1|command2
 ```
 
+当command2命令结束或被打断时，从command1接收的`/dev/stdout`的管道则会销毁，但是并不会马上打断command1的执行。我们可以使用进程替代
+
+```shell
+#< <直接有空格
+awk '/STOP/{exit}1' < <(tail -f logfile)
+```
+
+### 进程替换
+
+- `<(command_list)` 该表达式表示command_list命令的执行的output将指向一个`/dev/fd/<n>`下的文件
+- `>(command_list)` 该表达式表示command_list命令前的output指向一个`/dev/fd/<n>`下的文件,command_list的input则为这个文件的内容
+
+可以使用重定向符去操作`/dev/fd/<n>`
+
+例如
+
+```shell
+diff <(ls dirA) <(ls dirB)
+```
+
+```shell
+$ cat <(ls)
+1.txt
+2.txt
+
+$ echo  <(ls)
+/dev/fd/63
+
+#重定向
+$ while read lines ; do echo $lines ;done < <(ls)
+
+1.txt
+2.txt
+
+$ cat
+```
+
+替换进程命令需要在脚本上声明
+
+```shell
+!#/bin/bash
+```
+
+或者使用`bash xxx.sh`去执行
+
 ## 组合命令
 
 可通过`&&`,让多个命令顺序执行，也可以通过`;`,不同的地方为`&&`，当前一个命令的返回码为 0 时，才会执行后一个命令
@@ -128,22 +173,31 @@ cd ~/Downloads/ && rm -rf temp`
 
 ```shell
 $ name="here and there"
-$ [ -n $name ] && echo not empty
+$ [ -n $name ] 
+>  then
+>  echo not empty
+>  fi
 bash: [: too many arguments
 
 #正确的用法
-$ [ -n "$name" ] && echo not empty
+$ [ -n "$name" ] 
+>  then
+>  echo not empty
+>  fi
 not empty
 
 # test
 
-$ test -n "$name" && echo not empty
+$ test -n "$name" 
+>  then
+>  echo not empty
+>  fi
 not empty
 ```
 
 `[`的常用语法有
 
-1. 判断文件属性
+1. 判断
 
    | 操作符 | 含义                                        |
    | -----: | :------------------------------------------ |
@@ -174,6 +228,20 @@ not empty
    ```shell
    if [  -e "$myPath"]; then
      echo 'ok'
+   fi
+
+   if [ ! -f /tmp/foo.txt ]; then
+       echo "File not found!"
+   fi
+
+   if test -n "$name"  
+   then
+   echo name not empty
+   fi
+
+   if test -z "$name"  
+   then
+   echo name is empty
    fi
    ```
 
@@ -471,6 +539,21 @@ echo ${TEST:0:3} #123
 echo ${TEST:3:3} #abc"
 ```
 
+包含
+
+```shell
+
+origin='12345677899'
+sub=`567`
+
+if [[ "$origin" == *"$sub"*]] #顺序不能反
+then
+   echo ok
+fi
+
+
+```
+
 ### 引号
 
 1. 单引号`''`,被称作弱引用，在`'`内的字符串会被直接使用，不会被替换。
@@ -536,6 +619,40 @@ anaconda-ks.cfg  install.log  install.log.syslog
 ```shell
 [root@vm_102 ~]# echo *
 anaconda-ks.cfg install.log install.log.syslog
+```
+
+## 输入
+
+```shell
+echo 'please input your name'
+read name
+echo 'you name is '$name
+```
+
+对于有多行输出的脚本，可以使用`while read`来读取每一行，每一个字端
+
+```shell
+git status -s |while read mode file;
+do
+   echo $mode
+   echo $file
+done
+
+
+```
+
+从管道中读取输入
+
+```shell
+name=`git branch|while read branch
+do
+   if test "dev" == "$branch"
+   then
+      echo "dev"
+      break
+   fi
+done
+`
 ```
 
 ## 捕获信号

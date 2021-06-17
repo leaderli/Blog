@@ -392,3 +392,17 @@ results = Array.from(results); // let's turn it into array
 alert(results[0]); // <h1>,h1 (1st tag)
 alert(results[1]); // <h2>,h2 (2nd tag)
 ```
+
+## 数组移除首元素
+
+```javascript
+a = [1,2]
+b= a.shift()
+// b = 1  a=[1]
+b= a.shift()
+// b = 2  a=[]
+
+b= a.shift()
+// b = undefiend  a=[]
+
+```

@@ -22,6 +22,20 @@ public interface ClassConstants{
 clasz.isPrimitive();
 ```
 
+### 基本类型转换包装类型
+
+```java
+Object a = 1;
+//此时a自动转换为Integer类型
+
+public <T> void fun(T t){
+  System.out.println(t.getClass());
+}
+
+//fun方法会自动将1转换为Integer包装类
+fun(1);
+```
+
 ### 查看类是否为基本类型或包装类型
 
 ```java
@@ -158,4 +172,87 @@ int x = 0B11;// 二进制
 int x = 0x11;// 十六进制
 int x = 0X11;// 十六进制
 int x = 011; //  八进制
+```
+
+### 读取文件
+
+```java
+String javaSource = new String(Files.readAllBytes(Paths.get("src/Hello.java")));
+
+```
+
+### 返回空的集合
+
+```java
+return Collections.emptyList();
+```
+
+### classpath
+
+```java
+package foo;
+
+public class Test
+{
+    public static void main(String[] args)
+    {
+        ClassLoader loader = Test.class.getClassLoader();
+        System.out.println(loader.getResource("foo/Test.class"));
+    }
+}
+//This printed out:
+//file:/C:/Users/Jon/Test/foo/Test.class
+```
+
+### 异常
+
+对于一个 Throwable 的异常，通常可根据
+
+```java
+Throwable e;
+
+// 获取其异常栈
+e.getStackTrace();
+//栈顶通常是发生异常的地方
+e.getStackTrace()[0];
+
+//当cause不为空时，直接发生异常的地方会在cause中
+if( e.getCause() !=null){
+  e = e.getCause();
+  e.getStackTrace()[0];
+}
+
+
+```
+
+### 文件锁
+
+可以使用文件锁来确保只有一个进程访问该文件，确保其他进程（包括其他虚拟机或者其他操作文件的系统)
+
+```java
+RandomAccessFile raFile = new RandomAccessFile(new File(filename), "rw")
+FileLock lock = raFile.getChannel().lock();
+```
+
+使用 RandomAccessFile 拷贝文件
+
+```java
+ public static void appendFile(RandomAccessFile main, RandomAccessFile extra) throws IOException {
+
+        // this method uses NIO direct transfer. It delegates the task
+        // to the operating system. Only works under 1.4+
+        // Unfortunately, can't use this because it crashes with an out of memory error on big files
+        //extra.getChannel().transferTo(0, Long.MAX_VALUE, mainFile.getChannel());
+
+        byte[] buf = new byte[1024 * 1024]; // 1 mb
+        main.seek(main.length());
+        extra.seek(0);
+
+        while (true) {
+            int count = extra.read(buf);
+            if (count == -1)
+                break;
+            main.write(buf, 0, count);
+        }
+    }
 ```

@@ -323,7 +323,7 @@ CSS 为控制继承提供了四个特殊的通用属性值。每个 css 属性�
      width: 100px;
      height: 100px;
      background-color: rebeccapurple;
-     transform: rotate(0.8turn);
+     transform: calc(-30px);
    }
    ```
 

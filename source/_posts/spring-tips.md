@@ -134,3 +134,62 @@ x-y  代表从x到y
 ### @Primary
 
 `@Primary`：自动装配时当出现多个 Bean 候选者时，被注解为@Primary 的 Bean 将作为首选者，否则将抛出异常
+
+### event
+
+定义一个事件
+
+```java
+public class CustomSpringEvent extends ApplicationEvent {
+    private String message;
+
+    public CustomSpringEvent(Object source, String message) {
+        super(source);
+        this.message = message;
+    }
+    public String getMessage() {
+        return message;
+    }
+}
+```
+
+定义一个发布事件的类
+
+```java
+@Component
+public class CustomSpringEventPublisher {
+    @Autowired
+    private ApplicationEventPublisher applicationEventPublisher;
+
+    public void publishCustomEvent(final String message) {
+        System.out.println("Publishing custom event. ");
+        CustomSpringEvent customSpringEvent = new CustomSpringEvent(this, message);
+        applicationEventPublisher.publishEvent(customSpringEvent);
+    }
+}
+```
+
+当发布事件后，所有注册相关事件的listener都会被执行
+
+```java
+@Component
+public class CustomSpringEventListener implements ApplicationListener<CustomSpringEvent> {
+    @Override
+    public void onApplicationEvent(CustomSpringEvent event) {
+        System.out.println("Received spring custom event - " + event.getMessage());
+    }
+}
+```
+
+spring中一些内置的事件
+
+```java
+//spring启动过程调用refresh方法后会发布一个ContextRefreshedEvent事件
+public class ContextRefreshedListener 
+  implements ApplicationListener<ContextRefreshedEvent> {
+    @Override
+    public void onApplicationEvent(ContextRefreshedEvent cse) {
+        System.out.println("Handling context re-freshed event. ");
+    }
+}
+```

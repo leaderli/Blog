@@ -186,3 +186,7 @@ sudo tcpdump -i any 'ip[40:4] = 0x47455420' -A -nn -f
 ```
 
 来抓取数据报文中中请求方法为<code>GET&emsp;</code>的请求
+
+
+## 示例
+

@@ -151,6 +151,13 @@ $1 $2 #直接执行
 cat /dev/null > access.log
 ```
 
+### 更改文件组
+
+```shell
+chown user:group file
+
+```
+
 ### 快速清空大文件内容
 
 ```shell
@@ -185,10 +192,90 @@ ls *.jar|xargs -I {} echo {}
 
 ### awk
 
-`awk`可以用来快速切割文本，默认使用空格分隔符。`'{}'`中对每行都进行操作
-`$0`表示当前行，`$1`表示切割的数组的第一个元素，`'{print $1}'`表示打印第一个元素
+awk的基本语法为
+> pattern { action }
 
-`-F ’-‘` 增加切割符
+pattern用来确定是否执行action，awk命令是行驱动的，即针对每行文本，判断是否满足pattern，若满足则执行action。BEGIN和END，则是在第一行之前和最后一行之后执行的特殊的pattern
+
+```awk
+BEGIN { print "START" }
+      { print         }
+END   { print "STOP"  }
+```
+
+awk可使用变量
+
+```awk
+BEGIN {x=5}
+{print x,$x}
+END {print "done"}
+```
+
+执行
+
+```shell
+$ echo abc |awk -f 1.awk
+5 
+done
+```
+
+1. 基于位置的形参，类似shell脚本的命令行参数,使用IFS分割字符串作为函数参数，`$0`表示当前行，`$1`表示切割的数组的第一个元素，`'{print $1}'`表示打印第一个元素，可使用 `-F` 指定其他切割符
+
+2. 支持常用的算术运算，字符串操作等。例如使用`<space>`连接字符串，例如`7 3`输出`73`
+
+3. 内置函数
+
+   - system 调用其他shell脚本
+
+   ```shell
+   echo abc |awk  '{print $1;system("echo "$1" >> 2.txt")}'
+   #system中的脚本的变量是独立的，因此不可直接使用$1
+   ```
+
+   - exit 提前退出脚本
+
+   ```shell
+   #当行有abc时退出脚本
+   echo abc |awk  '/abc/{exit}'
+   ```
+
+4. 使用正则表达式
+
+   ```shell
+   echo abc |awk  '/a/{print}' #正则匹配
+   echo abc |awk  '!/a/{print}'#正则不匹配
+   ```
+
+5. 注意事项
+
+   - awk脚本中不可以使用`'`
+
+   - 一般情况下awk与grep无法配合使用，当grep使用参数`--line-buffered`时，则可以
+
+   示例：
+
+   根据搜索条件追踪相关日志
+
+   ```shell
+   #!/bin/bash
+   log="$1"
+   filter="$2"
+   #06/04/2021 16:55:55:221 INFO - 010000012345678 0012345
+   ucid=`awk '/'"$filter"'/{exit};END{print $5}' < <(tail -n0 -f "$log")`
+   #06/04/2021 16:55:55:221 INFO - 010000012345678 End
+   awk '{print};/'"$ucid"' End/{exit}' < <(tail -n0 -f "$log"|grep --line-buffered "$ucid")
+   ```
+
+### tail
+
+- -n 输出最后几行 `-n0`即一个也不输出
+
+```shell
+awk '{print};/222/{exit}' < <(tail -f -n0 1.txt|grep --line-buffered 1)
+#当向文件1.txt分别输入000,001,222,1222时，会
+001
+1222 #命令结束执行
+```
 
 ### 查看内存信息
 
@@ -240,7 +327,7 @@ rpm2cpio git-1.7.9.6-1.e16.rfx.x86_64.rpm|cpio -idmv
 rpm -ivu *.rpm --nodeps --force
 ```
 
-然后在`~/.bash_profile`中配置一个`alias`即可，或者在`PATH`更新`git`的`/usr/bin`路径
+然后在`~/.bash_profile`中配置一个`alias`即可，或者在`PATH`更新`git`的`/usr/bin`路径，例如`export PATH="$PATH:/usr/bin"`
 
 ### 定时任务
 
@@ -554,6 +641,16 @@ $ cat 1.txt
 ```
 
 - -a 追加
+
+### file
+
+猜测文件的编码
+
+```shell
+file -i *
+1.txt:                           text/plain; charset=us-ascii
+2.txt:                           text/plain; charset=utf-8
+```
 
 ### iconv
 

@@ -82,6 +82,32 @@ List<String> list = new ArrayList<>();
 list.removeIf(Predicate<? super E> filter)
 ```
 
+Map 根据value的值快速删除
+
+```java
+Map<Integer,Integer> map = new HashMap();
+```
+
 ### `Collectors.toMap()`问题
 
 `Collectors.toMap()`要求生成的 map 的 value 不能为 null，否则会报 nullPoint 异常。且 key 不能重复，否则会报 duplicate key 异常
+
+### toArray
+
+```java
+List<String> list = new ArrayList<>();
+list.add("l1");
+list.add("l2");
+String[] arr = list.stream().toArray(new IntFunction<String[]>() {
+    @Override
+    public String[] apply(int len) {
+    //这里的len指的是list的长度
+    return new String[len];
+    }
+});
+
+//可以使用lambda来写
+//String[] arr = list.stream().toArray(len -> new String[len]);
+
+System.out.println(Arrays.toString(arr));
+```

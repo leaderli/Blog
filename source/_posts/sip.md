@@ -385,7 +385,7 @@ a = orient:portrait
    Content-Length: 0
    ```
 
-5. 省略通话中的 RTP 媒体信息，通话过程中一般不再有 SIP 消息交互，所有的语音数据都是在 RTF 中传送。
+5. 省略通话中的 RTP 媒体信息，通话过程中一般不再有 SIP 消息交互，所有的语音数据都是在 RTP 中传送。
 
 6. F5 BYE Bob -> Alice
 
