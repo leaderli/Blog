@@ -21,14 +21,14 @@ var a = 100;
 var b = 100;
 
 function test() {
-  var obj = {};
+	var obj = {};
 
-  for (var i = 0; i < arguments.length; i++) {
-    var name = arguments[i];
-    obj[name] = eval(name);
-  }
+	for (var i = 0; i < arguments.length; i++) {
+		var name = arguments[i];
+		obj[name] = eval(name);
+	}
 
-  return obj;
+	return obj;
 }
 console.log(test("a", "b"));
 ```
@@ -40,13 +40,13 @@ var a = 100;
 var b = 100;
 
 function test() {
-  var obj = {};
+	var obj = {};
 
-  for (let value of arguments) {
-    console.log(value);
-  }
+	for (let value of arguments) {
+		console.log(value);
+	}
 
-  return obj;
+	return obj;
 }
 test("a", "b");
 ```
@@ -55,10 +55,10 @@ es6 标准还提供了`...`表示可变参数，该参数只能为最后一个�
 
 ```javascript
 function test(name, ...args) {
-  console.log(name);
-  for (let arg of args) {
-    console.log(arg);
-  }
+	console.log(name);
+	for (let arg of args) {
+		console.log(arg);
+	}
 }
 
 test("li", 100, 200, 300);
@@ -88,13 +88,13 @@ js 对象的属性值延迟加载
 ```javascript
 app = {};
 Object.defineProperty(app, "config", {
-  get: (function () {
-    var inner = {};
-    inner.get = function () {
-      return inner.config || (inner.config = 1234);
-    };
-    return inner.get;
-  })(),
+	get: (function () {
+		var inner = {};
+		inner.get = function () {
+			return inner.config || (inner.config = 1234);
+		};
+		return inner.get;
+	})(),
 });
 ```
 
@@ -102,14 +102,14 @@ Object.defineProperty(app, "config", {
 
 ```javascript
 var obj = [
-  {
-    name: 1,
-    age: 1,
-  },
-  {
-    name: 2,
-    age: 2,
-  },
+	{
+		name: 1,
+		age: 1,
+	},
+	{
+		name: 2,
+		age: 2,
+	},
 ];
 
 console.table(obj);
@@ -156,20 +156,20 @@ Array.prototype.forEach.call(els, function(el) {
 
 ```javascript
 var object = {
-  innerObject: {
-    deepObject: {
-      value: "Here am I",
-    },
-  },
+	innerObject: {
+		deepObject: {
+			value: "Here am I",
+		},
+	},
 };
 
 if (
-  object &&
-  object.innerObject &&
-  object.innerObject.deepObject &&
-  object.innerObject.deepObject.value
+	object &&
+	object.innerObject &&
+	object.innerObject.deepObject &&
+	object.innerObject.deepObject.value
 ) {
-  console.log("We found it!");
+	console.log("We found it!");
 }
 
 //根据这个特性，我们可以写出如下的用法
@@ -194,8 +194,8 @@ str.split(search).join(replacement);
 
    ```javascript
    $("#div1").mousedown(function (e) {
-     var e = event || window.event;
-     event.stopPropagation();
+   	var e = event || window.event;
+   	event.stopPropagation();
    });
    ```
 
@@ -203,8 +203,8 @@ str.split(search).join(replacement);
 
    ```javascript
    $("#div1").mousedown(function (event) {
-     var e = e || window.event;
-     return false;
+   	var e = e || window.event;
+   	return false;
    });
    ```
 
@@ -212,9 +212,9 @@ str.split(search).join(replacement);
 
    ```javascript
    $("#div1").mousedown(function (event) {
-     if (event.target == event.currentTarget) {
-       console.log(event);
-     }
+   	if (event.target == event.currentTarget) {
+   		console.log(event);
+   	}
    });
    ```
 
@@ -225,11 +225,11 @@ const event = new Event("build");
 
 // Listen for the event.
 elem.addEventListener(
-  "build",
-  function (e) {
-    /* ... */
-  },
-  false
+	"build",
+	function (e) {
+		/* ... */
+	},
+	false
 );
 
 // Dispatch the event.
@@ -271,12 +271,12 @@ console.log(c);
 
 ```html
 <div id="parent">
-  <div id="children"></div>
+	<div id="children"></div>
 </div>
 <script>
-  var A = document.getElementById("parent");
-  var B = document.getElementById("children");
-  console.log(A.contains(B)); //true
+	var A = document.getElementById("parent");
+	var B = document.getElementById("children");
+	console.log(A.contains(B)); //true
 </script>
 ```
 
@@ -284,7 +284,7 @@ console.log(c);
 
 ```javascript
 function func(n = 100) {
-  console.log(n);
+	console.log(n);
 }
 
 func(); //100
@@ -298,9 +298,9 @@ func(5); //5
 ```javascript
 console.log("%c Oh my heavens! ", "background: #222; color: #bada55");
 console.log(
-  "%c Oh my %c heavens!  ",
-  "background: #222; color: #bada55",
-  "color: #bada55"
+	"%c Oh my %c heavens!  ",
+	"background: #222; color: #bada55",
+	"color: #bada55"
 );
 ```
 
@@ -396,13 +396,25 @@ alert(results[1]); // <h2>,h2 (2nd tag)
 ## 数组移除首元素
 
 ```javascript
-a = [1,2]
-b= a.shift()
-// b = 1  a=[1]
-b= a.shift()
+a = [1, 2];
+b = a.shift();
+// b = 1  a=[2]
+b = a.shift();
 // b = 2  a=[]
 
-b= a.shift()
+b = a.shift();
 // b = undefiend  a=[]
+```
 
+## 数组移除尾元素
+
+```javascript
+a = [1, 2];
+b = a.pop();
+// b = 2  a=[1]
+b = a.shift();
+// b = 1  a=[]
+
+b = a.shift();
+// b = undefiend  a=[]
 ```

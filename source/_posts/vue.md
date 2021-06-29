@@ -12,29 +12,29 @@ tags:
 ```html
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <title>Vue 测试实例 - 菜鸟教程(runoob.com)</title>
-    <script src="https://unpkg.com/vue/dist/vue.min.js"></script>
-  </head>
+	<head>
+		<meta charset="utf-8" />
+		<title>Vue 测试实例 - 菜鸟教程(runoob.com)</title>
+		<script src="https://unpkg.com/vue/dist/vue.min.js"></script>
+	</head>
 
-  <body>
-    <div id="app">
-      <p>{{ message }}</p>
-    </div>
+	<body>
+		<div id="app">
+			<p>{{ message }}</p>
+		</div>
 
-    <script>
-      var app = new Vue({
-        el: "#app",
-        data: {
-          message: "Hello Vue.js!",
-        },
-      });
+		<script>
+			var app = new Vue({
+				el: "#app",
+				data: {
+					message: "Hello Vue.js!",
+				},
+			});
 
-      console.log(app);
-      console.log(app.message);
-    </script>
-  </body>
+			console.log(app);
+			console.log(app.message);
+		</script>
+	</body>
 </html>
 ```
 
@@ -48,26 +48,26 @@ Vue 在观察到数据变化时并不是直接更新 DOM，而是开启一个队
 
 ```html
 <div id="app">
-  <div id="div" v-if="showDiv">这是一段文本</div>
-  <button @click="getText">获取div内容</button>
+	<div id="div" v-if="showDiv">这是一段文本</div>
+	<button @click="getText">获取div内容</button>
 </div>
 <script>
-  var app = new Vue({
-    el: "#app",
-    data: {
-      showDiv: false,
-    },
-    methods: {
-      getText: function () {
-        this.showDiv = true;
-        //在执行this.showDiv = true时，div仍然没有被创建出来，直到下一个Vue事件循环时，才开始创建。$nextTick就是用来知道什么时候DOM更新完成的
-        this.$nextTick(function () {
-          var text = document.getElementById("div").innerHTML;
-          console.log(text);
-        });
-      },
-    },
-  });
+	var app = new Vue({
+		el: "#app",
+		data: {
+			showDiv: false,
+		},
+		methods: {
+			getText: function () {
+				this.showDiv = true;
+				//在执行this.showDiv = true时，div仍然没有被创建出来，直到下一个Vue事件循环时，才开始创建。$nextTick就是用来知道什么时候DOM更新完成的
+				this.$nextTick(function () {
+					var text = document.getElementById("div").innerHTML;
+					console.log(text);
+				});
+			},
+		},
+	});
 </script>
 ```
 
@@ -83,17 +83,17 @@ Vue 在观察到数据变化时并不是直接更新 DOM，而是开启一个队
 
 ```javascript
 var app = new Vue({
-  el: "#app",
-  data: {
-    message: "Hello Vue.js!",
-  },
-  created: function () {
-    console.log(this.message);
-    console.log(this.$el); //undefined
-  },
-  mounted: function () {
-    console.log(this.$el);
-  },
+	el: "#app",
+	data: {
+		message: "Hello Vue.js!",
+	},
+	created: function () {
+		console.log(this.message);
+		console.log(this.$el); //undefined
+	},
+	mounted: function () {
+		console.log(this.$el);
+	},
 });
 ```
 
@@ -103,34 +103,34 @@ Vue 提供了 Vue.extend 和$mount 两个方法将 vue 实例挂载到一个 dom
 
 ```html
 <div id="app">
-  <my-component></my-component>
+	<my-component></my-component>
 </div>
 <div id="app2">
-  <my-component></my-component>
+	<my-component></my-component>
 </div>
 <div id="app3">
-  <my-component></my-component>
+	<my-component></my-component>
 </div>
 <script type="text/x-template" id="my-component">
-  <div>
-  <h1>h1</h1>
-  <h1>h2</h1>
-  </div>
+	<div>
+	<h1>h1</h1>
+	<h1>h2</h1>
+	</div>
 </script>
 
 <script>
-  var app = Vue.extend({
-    components: {
-      "my-component": {
-        template: "#my-component",
-      },
-    },
-  });
-  new app().$mount("#app");
-  new app().$mount("#app2");
-  new app({
-    el: "#app3",
-  });
+	var app = Vue.extend({
+		components: {
+			"my-component": {
+				template: "#my-component",
+			},
+		},
+	});
+	new app().$mount("#app");
+	new app().$mount("#app2");
+	new app({
+		el: "#app3",
+	});
 </script>
 ```
 
@@ -224,11 +224,11 @@ Vue 提供了 Vue.extend 和$mount 两个方法将 vue 实例挂载到一个 dom
    <!--语法糖-->
    <a :href="url"> 链接</a>
    <script>
-     new Vue({
-       data: {
-         url: "http://example.com",
-       },
-     });
+   	new Vue({
+   		data: {
+   			url: "http://example.com",
+   		},
+   	});
    </script>
    ```
 
@@ -238,15 +238,15 @@ Vue 提供了 Vue.extend 和$mount 两个方法将 vue 实例挂载到一个 dom
 
    ```html
    <ul>
-     <li v-for="book in books">{{ book.name}}</li>
-     <li v-for="(book,index) in books">{{ index}} - {{book.name}}</li>
+   	<li v-for="book in books">{{ book.name}}</li>
+   	<li v-for="(book,index) in books">{{ index}} - {{book.name}}</li>
    </ul>
    <script>
-     new Vue({
-       data: {
-         books: [{ name: "v1" }, { name: "v2" }],
-       },
-     });
+   	new Vue({
+   		data: {
+   			books: [{ name: "v1" }, { name: "v2" }],
+   		},
+   	});
    </script>
    ```
 
@@ -254,18 +254,18 @@ Vue 提供了 Vue.extend 和$mount 两个方法将 vue 实例挂载到一个 dom
 
    ```html
    <ul>
-     <li v-for="(value,key,index) in user">{{ index}} - {{key}}:{{value}}</li>
+   	<li v-for="(value,key,index) in user">{{ index}} - {{key}}:{{value}}</li>
    </ul>
    <script>
-     new Vue({
-       data: {
-         user: {
-           name: "hello",
-           gender: "man",
-           age: 23,
-         },
-       },
-     });
+   	new Vue({
+   		data: {
+   			user: {
+   				name: "hello",
+   				gender: "man",
+   				age: 23,
+   			},
+   		},
+   	});
    </script>
    ```
 
@@ -294,12 +294,12 @@ Vue 提供了 Vue.extend 和$mount 两个方法将 vue 实例挂载到一个 dom
    ```html
    <span v-html="link">}</span>
    <script>
-     new Vue({
-       el: "#app",
-       data: {
-         link: '<a href="#">一个链接</a>',
-       },
-     });
+   	new Vue({
+   		el: "#app",
+   		data: {
+   			link: '<a href="#">一个链接</a>',
+   		},
+   	});
    </script>
    ```
 
@@ -322,12 +322,12 @@ Vue 提供了 Vue.extend 和$mount 两个方法将 vue 实例挂载到一个 dom
    <!-- 使用@input可以在输入中文时实时刷新-->
    <input @input="inputHandle" />
    <script>
-     //...
-     methods:{
-         inputHandle:function(e){
-             this.input = e.target.value
-         }
-     }
+   	//...
+   	methods:{
+   	    inputHandle:function(e){
+   	        this.input = e.target.value
+   	    }
+   	}
    </script>
    ```
 
@@ -352,13 +352,13 @@ Vue 提供了 Vue.extend 和$mount 两个方法将 vue 实例挂载到一个 dom
    <!--语法糖-->
    <a @click="log"> 链接</a>
    <script>
-     new Vue({
-       methods: {
-         log: function (event) {
-           console.log(event); //event为触发的事件
-         },
-       },
-     });
+   	new Vue({
+   		methods: {
+   			log: function (event) {
+   				console.log(event); //event为触发的事件
+   			},
+   		},
+   	});
    </script>
    ```
 
@@ -379,16 +379,16 @@ Vue 提供了 Vue.extend 和$mount 两个方法将 vue 实例挂载到一个 dom
 ```javascript
 //全局注册
 Vue.directive("focus", {
-  //指令选项
+	//指令选项
 });
 //局部注册
 var app = new Vue({
-  el: "#app",
-  directives: {
-    focus: {
-      //指令选项
-    },
-  },
+	el: "#app",
+	directives: {
+		focus: {
+			//指令选项
+		},
+	},
 });
 ```
 
@@ -418,35 +418,35 @@ var app = new Vue({
 
 ```html
 <div id="app">
-  <input v-focus:arg.foo.bar="1+1" />
+	<input v-focus:arg.foo.bar="1+1" />
 </div>
 
 <script>
-  Vue.directive("focus", {
-    //指令选项
-    inserted: function (el, binding, vnode) {
-      el.focus();
-      console.log(el);
-      //<input>
-      console.log(JSON.stringify(binding));
-      /**
-        {
-          "name": "focus",
-          "rawName": "v-focus:arg.foo.bar",
-          "value": 2,
-          "expression": "1+1",
-          "arg": "arg",
-          "modifiers": { "foo": true, "bar": true },
-          "def": {}
-        }
-      */
-       }
+	Vue.directive("focus", {
+	  //指令选项
+	  inserted: function (el, binding, vnode) {
+	    el.focus();
+	    console.log(el);
+	    //<input>
+	    console.log(JSON.stringify(binding));
+	    /**
+	      {
+	        "name": "focus",
+	        "rawName": "v-focus:arg.foo.bar",
+	        "value": 2,
+	        "expression": "1+1",
+	        "arg": "arg",
+	        "modifiers": { "foo": true, "bar": true },
+	        "def": {}
+	      }
+	    */
+	     }
 
-    },
-  });
-  var app = new Vue({
-    el: "#app",
-  });
+	  },
+	});
+	var app = new Vue({
+	  el: "#app",
+	});
 </script>
 ```
 
@@ -465,7 +465,7 @@ var app = new Vue({
 Vue.use(MyPlugin);
 
 new Vue({
-  //... options
+	//... options
 });
 
 插件也可以带上自定义参数;
@@ -559,12 +559,12 @@ v-bind 中的表达式最终会被解析为字符串，Vue 对 v-bind 增强了�
    ```html
    <div :class="{'class1':isActive1,'class2':isActive2}"></div>
    <script>
-     new Vue({
-       data: {
-         isActive1: true,
-         isActive2: false,
-       },
-     });
+   	new Vue({
+   		data: {
+   			isActive1: true,
+   			isActive2: false,
+   		},
+   	});
    </script>
    ```
 
@@ -575,16 +575,16 @@ v-bind 中的表达式最终会被解析为字符串，Vue 对 v-bind 增强了�
    ```html
    <div :class="classes"></div>
    <script>
-     new Vue({
-       computed: {
-         classes: function () {
-           return {
-             class1: this.isActive1,
-             class2: this.isActive2,
-           };
-         },
-       },
-     });
+   	new Vue({
+   		computed: {
+   			classes: function () {
+   				return {
+   					class1: this.isActive1,
+   					class2: this.isActive2,
+   				};
+   			},
+   		},
+   	});
    </script>
    ```
 
@@ -595,12 +595,12 @@ v-bind 中的表达式最终会被解析为字符串，Vue 对 v-bind 增强了�
    ```html
    <div :class="[c1,c2]"></div>
    <script>
-     new Vue({
-         data: {
-             c1: 'class1'
-             c2: 'class2'
-         }
-     });
+   	new Vue({
+   	    data: {
+   	        c1: 'class1'
+   	        c2: 'class2'
+   	    }
+   	});
    </script>
    ```
 
@@ -663,49 +663,49 @@ keyCode
 
 ```html
 <div id="app">
-  <p>总数：{{total}}</p>
-  <li-div @increase="handleGetTotal" @reduce="handleGetTotal"></li-div>
+	<p>总数：{{total}}</p>
+	<li-div @increase="handleGetTotal" @reduce="handleGetTotal"></li-div>
 </div>
 
 <script>
-  var app = new Vue({
-    el: "#app",
-    data: {
-      total: 0,
-    },
-    methods: {
-      handleGetTotal: function (total) {
-        this.total = total;
-      },
-    },
+	var app = new Vue({
+	  el: "#app",
+	  data: {
+	    total: 0,
+	  },
+	  methods: {
+	    handleGetTotal: function (total) {
+	      this.total = total;
+	    },
+	  },
 
-    components: {
-      "li-div": {
-        template: '<div>\
-                    <button @click="handleIncrease"> +1</button>\
-                    <button @click="handleReduce">   -1</button>\
-                  </div>',
-        data: function () {
-          return {
-            counter: 0,
-          };
-        },
-        methods: {
-          handleIncrease: function () {
-            this.counter++;
-            this.$emit("increase", this.counter);
-          },
-          handleReduce: function () {
-            this.counter--;
-            if (this.counter <script 0) {
-              this.counter = 0;
-            }
-            this.$emit("reduce", this.counter);
-          },
-        },
-      },
-    },
-  });
+	  components: {
+	    "li-div": {
+	      template: '<div>\
+	                  <button @click="handleIncrease"> +1</button>\
+	                  <button @click="handleReduce">   -1</button>\
+	                </div>',
+	      data: function () {
+	        return {
+	          counter: 0,
+	        };
+	      },
+	      methods: {
+	        handleIncrease: function () {
+	          this.counter++;
+	          this.$emit("increase", this.counter);
+	        },
+	        handleReduce: function () {
+	          this.counter--;
+	          if (this.counter <script 0) {
+	            this.counter = 0;
+	          }
+	          this.$emit("reduce", this.counter);
+	        },
+	      },
+	    },
+	  },
+	});
 </script>
 ```
 
@@ -716,49 +716,49 @@ keyCode
 
 ```html
 <div id="app">
-  <p>总数：{{total}}</p>
-  <li-div v-model="total"></li-div>
+	<p>总数：{{total}}</p>
+	<li-div v-model="total"></li-div>
 </div>
 
 <script>
-  var app = new Vue({
-    el: "#app",
-    data: {
-      total: 0,
-    },
-    methods: {
-      handleGetTotal: function (total) {
-        this.total = total;
-      },
-    },
+	var app = new Vue({
+	  el: "#app",
+	  data: {
+	    total: 0,
+	  },
+	  methods: {
+	    handleGetTotal: function (total) {
+	      this.total = total;
+	    },
+	  },
 
-    components: {
-      "li-div": {
-        template: '<div>\
-                    <button @click="handleIncrease"> +1</button>\
-                    <button @click="handleReduce">   -1</button>\
-                  </div>',
-        data: function () {
-          return {
-            counter: 0,
-          };
-        },
-        methods: {
-          handleIncrease: function () {
-            this.counter++;
-            this.$emit("input", this.counter);
-          },
-          handleReduce: function () {
-            this.counter--;
-            if (this.counter <script 0) {
-              this.counter = 0;
-            }
-            this.$emit("input", this.counter);
-          },
-        },
-      },
-    },
-  });
+	  components: {
+	    "li-div": {
+	      template: '<div>\
+	                  <button @click="handleIncrease"> +1</button>\
+	                  <button @click="handleReduce">   -1</button>\
+	                </div>',
+	      data: function () {
+	        return {
+	          counter: 0,
+	        };
+	      },
+	      methods: {
+	        handleIncrease: function () {
+	          this.counter++;
+	          this.$emit("input", this.counter);
+	        },
+	        handleReduce: function () {
+	          this.counter--;
+	          if (this.counter <script 0) {
+	            this.counter = 0;
+	          }
+	          this.$emit("input", this.counter);
+	        },
+	      },
+	    },
+	  },
+	});
 </script>
 ```
 
@@ -768,42 +768,42 @@ keyCode
 
 ```html
 <div id="app">
-  <button @click="click">click</button>
-  <l1></l1>
-  <l2></l2>
+	<button @click="click">click</button>
+	<l1></l1>
+	<l2></l2>
 </div>
 
 <script>
-  var bus = new Vue();
-  var template = function (name) {
-    return {
-      template: "<div>" + name + ":{{message}}</div>",
-      data: function () {
-        return {
-          message: "",
-        };
-      },
-      mounted: function () {
-        var _this = this;
-        bus.$on("on-message", function (msg) {
-          _this.message = msg;
-        });
-      },
-    };
-  };
-  var l1 = template("l1");
-  var l2 = template("l2");
-  var app = new Vue({
-    el: "#app",
-    methods: {
-      click: function () {
-        bus.$emit("on-message", "来自app的消息");
-        // 可以直接使用this.$children查看当前子组件的实例，子组件也可以使用this.$parent访问到父组件
-        //当给子标签定义ref时可以使用this.$refs.ref去访问子标签的Vue实例
-      },
-    },
-    components: { l1, l2 },
-  });
+	var bus = new Vue();
+	var template = function (name) {
+		return {
+			template: "<div>" + name + ":{{message}}</div>",
+			data: function () {
+				return {
+					message: "",
+				};
+			},
+			mounted: function () {
+				var _this = this;
+				bus.$on("on-message", function (msg) {
+					_this.message = msg;
+				});
+			},
+		};
+	};
+	var l1 = template("l1");
+	var l2 = template("l2");
+	var app = new Vue({
+		el: "#app",
+		methods: {
+			click: function () {
+				bus.$emit("on-message", "来自app的消息");
+				// 可以直接使用this.$children查看当前子组件的实例，子组件也可以使用this.$parent访问到父组件
+				//当给子标签定义ref时可以使用this.$refs.ref去访问子标签的Vue实例
+			},
+		},
+		components: { l1, l2 },
+	});
 </script>
 ```
 
@@ -813,21 +813,22 @@ keyCode
 
 ```html
 <div id="app">
-  <li_slot>
-    <div style="color:red">默认slot-1</div>
-    <div slot="s1" style="color:green">名为s1的slot</div>
-    <div slot="s2" style="color:pink">名为s2的slot</div>
-    <div slot="s2" style="color:pink">另一个名为s2的slot</div>
-    <div style="color:red">默认slot-2</div>
-  </li_slot>
+	<li_slot>
+		<div style="color:red">默认slot-1</div>
+		<div slot="s1" style="color:green">名为s1的slot</div>
+		<div slot="s2" style="color:pink">名为s2的slot</div>
+		<div slot="s2" style="color:pink">另一个名为s2的slot</div>
+		<div style="color:red">默认slot-2</div>
+	</li_slot>
 </div>
 
 <script>
-  var app = new Vue({
-    el: "#app",
-    components: {
-      li_slot: {
-        template: '<div>\
+	var app = new Vue({
+		el: "#app",
+		components: {
+			li_slot: {
+				template:
+					'<div>\
                         <slot></slot>\
                         <slot name="s1"></slot>\
                         <slot name="s2"></slot>\
@@ -835,9 +836,9 @@ keyCode
                         <slot name="s3">若没有s3的slot，则显示这段文本</slot>\
                         <slot></slot>\
                      </div>',
-      },
-    },
-  });
+			},
+		},
+	});
 </script>
 ```
 
@@ -847,25 +848,26 @@ keyCode
 
 ```html
 <div id="app">
-  <li-slot>
-    <template scope="scope_name">
-      <p>来自父组件的内容</p>
-      <p>{{scope_name.msg}}</p>
-    </template>
-  </li-slot>
+	<li-slot>
+		<template scope="scope_name">
+			<p>来自父组件的内容</p>
+			<p>{{scope_name.msg}}</p>
+		</template>
+	</li-slot>
 </div>
 
 <script>
-  var app = new Vue({
-    el: "#app",
-    components: {
-      "li-slot": {
-        template: '<div>\
+	var app = new Vue({
+		el: "#app",
+		components: {
+			"li-slot": {
+				template:
+					'<div>\
                       <slot msg="来自子组件的内容"></slot>\
                   </div>',
-      },
-    },
-  });
+			},
+		},
+	});
 </script>
 ```
 
@@ -873,39 +875,40 @@ keyCode
 
 ```html
 <div id="app">
-  <list-slot :books="books">
-    <template slot="book" scope="scope_name">
-      <li>{{scope_name.bookName}}</li>
-    </template>
-  </list-slot>
+	<list-slot :books="books">
+		<template slot="book" scope="scope_name">
+			<li>{{scope_name.bookName}}</li>
+		</template>
+	</list-slot>
 </div>
 
 <script>
-  var app = new Vue({
-    el: "#app",
-    data: {
-      books: [
-        { name: "Vue.js实战" },
-        { name: "java实战" },
-        { name: "python实战" },
-      ],
-    },
-    components: {
-      "list-slot": {
-        props: {
-          books: {
-            type: Array,
-            default: function () {
-              return [];
-            },
-          },
-        },
-        template: '<ul>\
+	var app = new Vue({
+		el: "#app",
+		data: {
+			books: [
+				{ name: "Vue.js实战" },
+				{ name: "java实战" },
+				{ name: "python实战" },
+			],
+		},
+		components: {
+			"list-slot": {
+				props: {
+					books: {
+						type: Array,
+						default: function () {
+							return [];
+						},
+					},
+				},
+				template:
+					'<ul>\
                       <slot name="book" v-for="book in books" :book-name="book.name"></slot>\
                   </ul>',
-      },
-    },
-  });
+			},
+		},
+	});
 </script>
 ```
 
@@ -913,33 +916,34 @@ keyCode
 
 ```html
 <div id="app">
-  <li_slot>
-    <template scope="scope1">
-      <div style="color:red" scope="scope_name">默认slot</div>
-    </template>
-    <div slot="s1" style="color:green">名为s1的slot</div>
-    <div slot="s2" style="color:pink">名为s2的slot</div>
-  </li_slot>
+	<li_slot>
+		<template scope="scope1">
+			<div style="color:red" scope="scope_name">默认slot</div>
+		</template>
+		<div slot="s1" style="color:green">名为s1的slot</div>
+		<div slot="s2" style="color:pink">名为s2的slot</div>
+	</li_slot>
 </div>
 
 <script>
-  var app = new Vue({
-    el: "#app",
-    components: {
-      li_slot: {
-        template: '<div>\
+	var app = new Vue({
+		el: "#app",
+		components: {
+			li_slot: {
+				template:
+					'<div>\
                         <slot></slot>\
                         <slot name="s1"></slot>\
                         <slot name="s2">若没有s2的slot，则显示这段文本</slot>\
                         <slot name="s3">若没有s3的slot，则显示这段文本</slot>\
                      </div>',
-        mounted: function () {
-          console.log(this.$slots);
-          console.log(this.$scopedSlots);
-        },
-      },
-    },
-  });
+				mounted: function () {
+					console.log(this.$slots);
+					console.log(this.$scopedSlots);
+				},
+			},
+		},
+	});
 </script>
 ```
 
@@ -951,43 +955,43 @@ keyCode
 
 ```html
 <div id="app">
-  <input-number v-model="value"></input-number>
+	<input-number v-model="value"></input-number>
 </div>
 
 <script type="text/x-template" id="input-number">
-  <div class="input-number">
-  </div>
+	<div class="input-number">
+	</div>
 </script>
 <script>
-  Vue.component("input-number", {
-    template: "#input-number",
-    props: {
-      value: {
-        type: Number,
-        default: 0,
-      },
-    },
-    watch: {
-      value: function (newVal, oldVal) {
-        console.log("component newVal", newVal);
-        console.log("component oldVal", oldVal);
-      },
-    },
-  });
+	Vue.component("input-number", {
+		template: "#input-number",
+		props: {
+			value: {
+				type: Number,
+				default: 0,
+			},
+		},
+		watch: {
+			value: function (newVal, oldVal) {
+				console.log("component newVal", newVal);
+				console.log("component oldVal", oldVal);
+			},
+		},
+	});
 </script>
 <script>
-  var app = new Vue({
-    el: "#app",
-    data: {
-      value: 5,
-    },
-    watch: {
-      value: function (newVal, oldVal) {
-        console.log("newVal", newVal);
-        console.log("oldVal", oldVal);
-      },
-    },
-  });
+	var app = new Vue({
+		el: "#app",
+		data: {
+			value: 5,
+		},
+		watch: {
+			value: function (newVal, oldVal) {
+				console.log("newVal", newVal);
+				console.log("oldVal", oldVal);
+			},
+		},
+	});
 </script>
 ```
 
@@ -1020,7 +1024,7 @@ watch: {
 </script>
 ```
 
-watch时，监听的对象需存在，在声明watch后，再赋值该对象是无法watch的。
+watch 时，监听的对象需存在，在声明 watch 后，再赋值该对象是无法 watch 的。
 
 ## 表单
 
@@ -1030,22 +1034,22 @@ watch时，监听的对象需存在，在声明watch后，再赋值该对象是�
 
 ```html
 <div id="app">
-  <input type="radio" v-model="picked" :value="v1" />
-  <input type="radio" v-model="picked" :value="v2" />
-  <label>单选</label>
-  <p>{{picked}}</p>
-  <p>{{value}}</p>
+	<input type="radio" v-model="picked" :value="v1" />
+	<input type="radio" v-model="picked" :value="v2" />
+	<label>单选</label>
+	<p>{{picked}}</p>
+	<p>{{value}}</p>
 </div>
 
 <script>
-  var app = new Vue({
-    el: "#app",
-    data: {
-      picked: false,
-      v1: "123",
-      v2: "456",
-    },
-  });
+	var app = new Vue({
+		el: "#app",
+		data: {
+			picked: false,
+			v1: "123",
+			v2: "456",
+		},
+	});
 </script>
 ```
 
@@ -1057,35 +1061,35 @@ watch时，监听的对象需存在，在声明watch后，再赋值该对象是�
 
 ```html
 <div id="app">
-  <my-component></my-component>
-  <my-component></my-component>
-  <my-component></my-component>
+	<my-component></my-component>
+	<my-component></my-component>
+	<my-component></my-component>
 </div>
 <script>
-  //全局组件
-  Vue.component("my-component", {
-    template: '<div @click="obj.counter++">{{counter}}</div>',
-    data: function () {
-      return {
-        counter: 0,
-      };
-    },
-  });
-  //示例组件
-  var app = new Vue({
-    el: "#app",
-    components: {
-      "my-component": {
-        template: '<div @click="obj.counter++">{{counter}}</div>',
-        //es6 语法 等同于 data:function(){}
-        data() {
-          return {
-            counter: 0,
-          };
-        },
-      },
-    },
-  });
+	//全局组件
+	Vue.component("my-component", {
+		template: '<div @click="obj.counter++">{{counter}}</div>',
+		data: function () {
+			return {
+				counter: 0,
+			};
+		},
+	});
+	//示例组件
+	var app = new Vue({
+		el: "#app",
+		components: {
+			"my-component": {
+				template: '<div @click="obj.counter++">{{counter}}</div>',
+				//es6 语法 等同于 data:function(){}
+				data() {
+					return {
+						counter: 0,
+					};
+				},
+			},
+		},
+	});
 </script>
 ```
 
@@ -1095,25 +1099,25 @@ Vue 允许将组件定义为一个工厂函数，动态解析组件。工厂函�
 
 ```html
 <div id="app">
-  <lazy-component></lazy-component>
+	<lazy-component></lazy-component>
 </div>
 <script>
-  var app = new Vue({
-    el: "#app",
-    components: {
-      "lazy-component": function (resolve, reject) {
-        setTimeout(
-          //模拟延迟
-          function () {
-            resolve({
-              template: "<div >异步组件</div>",
-            });
-          },
-          3000
-        );
-      },
-    },
-  });
+	var app = new Vue({
+		el: "#app",
+		components: {
+			"lazy-component": function (resolve, reject) {
+				setTimeout(
+					//模拟延迟
+					function () {
+						resolve({
+							template: "<div >异步组件</div>",
+						});
+					},
+					3000
+				);
+			},
+		},
+	});
 </script>
 ```
 
@@ -1123,18 +1127,19 @@ Vue 允许将组件定义为一个工厂函数，动态解析组件。工厂函�
 
 ```html
 <div id="app">
-  <child :count="1"></child>
+	<child :count="1"></child>
 </div>
 
 <script>
-  Vue.component("child", {
-    props: {
-      count: {
-        type: Number,
-        default: 1,
-      },
-    },
-    template: '<div>\
+	Vue.component("child", {
+		props: {
+			count: {
+				type: Number,
+				default: 1,
+			},
+		},
+		template:
+			'<div>\
               <div>\
                count:{{count}}\
               </div>\
@@ -1142,10 +1147,10 @@ Vue 允许将组件定义为一个工厂函数，动态解析组件。工厂函�
                <child :count="count+1" v-if= "count < 3" ></child>\
               </div>\
           </div > ',
-  });
-  var app = new Vue({
-    el: "#app",
-  });
+	});
+	var app = new Vue({
+		el: "#app",
+	});
 </script>
 ```
 
@@ -1155,42 +1160,42 @@ Vue 提供了一个特殊的元素`<component>`用来挂载不同的组件，使
 
 ```html
 <div id="app">
-  <component :is="currentView"></component>
-  <button @click="handleChangeView('A')">切换到A</button>
-  <button @click="handleChangeView('B')">切换到B</button>
-  <button @click="handleChangeView('C')">切换到C</button>
-  <button @click="handleChangeView('D')">切换到D</button>
+	<component :is="currentView"></component>
+	<button @click="handleChangeView('A')">切换到A</button>
+	<button @click="handleChangeView('B')">切换到B</button>
+	<button @click="handleChangeView('C')">切换到C</button>
+	<button @click="handleChangeView('D')">切换到D</button>
 </div>
 
 <script>
-  var app = new Vue({
-    el: "#app",
-    data: {
-      currentView: "comA",
-    },
-    methods: {
-      handleChangeView: function (component) {
-        this.currentView = "com" + component;
-        if (!this.$options.components[this.currentView]) {
-          // 直接绑定一个组件对象
-          this.currentView = {
-            template: "<div>备用组件<div>",
-          };
-        }
-      },
-    },
-    components: {
-      comA: {
-        template: "<div>组件A<div>",
-      },
-      comB: {
-        template: "<div>组件B<div>",
-      },
-      comC: {
-        template: "<div>组件C<div>",
-      },
-    },
-  });
+	var app = new Vue({
+		el: "#app",
+		data: {
+			currentView: "comA",
+		},
+		methods: {
+			handleChangeView: function (component) {
+				this.currentView = "com" + component;
+				if (!this.$options.components[this.currentView]) {
+					// 直接绑定一个组件对象
+					this.currentView = {
+						template: "<div>备用组件<div>",
+					};
+				}
+			},
+		},
+		components: {
+			comA: {
+				template: "<div>组件A<div>",
+			},
+			comB: {
+				template: "<div>组件B<div>",
+			},
+			comC: {
+				template: "<div>组件C<div>",
+			},
+		},
+	});
 </script>
 ```
 
@@ -1201,24 +1206,24 @@ Vue 提供了一个特殊的元素`<component>`用来挂载不同的组件，使
 ```html
 <script src="vue.min.js"></script>
 <div id="app">
-  <my-component></my-component>
+	<my-component></my-component>
 </div>
 <script type="text/x-template" id="my-component">
-  <div>
-  <h1>h1</h1>
-  <h1>h2</h1>
-  </div>
+	<div>
+	<h1>h1</h1>
+	<h1>h2</h1>
+	</div>
 </script>
 
 <script>
-  var app = new Vue({
-    el: "#app",
-    components: {
-      "my-component": {
-        template: "#my-component",
-      },
-    },
-  });
+	var app = new Vue({
+		el: "#app",
+		components: {
+			"my-component": {
+				template: "#my-component",
+			},
+		},
+	});
 </script>
 ```
 
@@ -1228,23 +1233,23 @@ Vue 提供了一个特殊的元素`<component>`用来挂载不同的组件，使
 
 ```html
 <div id="app">
-  <li-div msg="来自父组件的数据"></li-div>
-  <li-div :bind-msg="msg"></li-div>
+	<li-div msg="来自父组件的数据"></li-div>
+	<li-div :bind-msg="msg"></li-div>
 </div>
 
 <script>
-  var app = new Vue({
-    el: "#app",
-    data:{
-        msg:'来自组件的动态数据'
-    }
-    components: {
-      "li-div": {
-        template: "<div >{{msg}} {{bindMsg}}</div>",
-        props: ["msg","bindMsg"],
-      },
-    },
-  });
+	var app = new Vue({
+	  el: "#app",
+	  data:{
+	      msg:'来自组件的动态数据'
+	  }
+	  components: {
+	    "li-div": {
+	      template: "<div >{{msg}} {{bindMsg}}</div>",
+	      props: ["msg","bindMsg"],
+	    },
+	  },
+	});
 </script>
 ```
 
@@ -1253,9 +1258,9 @@ HTML 特性不区分大小写，当使用 DOM 模板时，驼峰命名的 props 
 ```html
 <li-div msg-text="来自父组件的数据"></li-div>
 <script>
-  // ...
-  props: ["msgText"];
-  template: "<div> {{msgText}}</div>";
+	// ...
+	props: ["msgText"];
+	template: "<div> {{msgText}}</div>";
 </script>
 ```
 
@@ -1265,23 +1270,23 @@ HTML 特性不区分大小写，当使用 DOM 模板时，驼峰命名的 props 
 
 ```html
 <div id="app">
-  <p style="color: green;">{{msg}}</p>
-  <li-div :msg="msg"></li-div>
+	<p style="color: green;">{{msg}}</p>
+	<li-div :msg="msg"></li-div>
 </div>
 
 <script>
-  var app = new Vue({
-    el: "#app",
-    data: {
-      msg: "fater",
-    },
-    components: {
-      "li-div": {
-        template: '<div><input :value="msg" v-model="msg"><p>{{msg}}</p><div>',
-        props: ["msg"],
-      },
-    },
-  });
+	var app = new Vue({
+		el: "#app",
+		data: {
+			msg: "fater",
+		},
+		components: {
+			"li-div": {
+				template: '<div><input :value="msg" v-model="msg"><p>{{msg}}</p><div>',
+				props: ["msg"],
+			},
+		},
+	});
 </script>
 ```
 
@@ -1291,22 +1296,22 @@ HTML 特性不区分大小写，当使用 DOM 模板时，驼峰命名的 props 
 
 ```html
 <div id="app">
-  <p style="color: green;">{{obj.msg}}</p>
-  <li-div :obj="obj"></li-div>
+	<p style="color: green;">{{obj.msg}}</p>
+	<li-div :obj="obj"></li-div>
 </div>
 
 <script>
-  var app = new Vue({
-    el: "#app",
-    data: { obj: { msg: "fater" } },
-    components: {
-      "li-div": {
-        template:
-          '<div><input :value="obj.msg" v-model="obj.msg" /><p>{{obj.msg}}</p><div>',
-        props: ["obj"],
-      },
-    },
-  });
+	var app = new Vue({
+		el: "#app",
+		data: { obj: { msg: "fater" } },
+		components: {
+			"li-div": {
+				template:
+					'<div><input :value="obj.msg" v-model="obj.msg" /><p>{{obj.msg}}</p><div>',
+				props: ["obj"],
+			},
+		},
+	});
 </script>
 ```
 
@@ -1316,40 +1321,40 @@ HTML 特性不区分大小写，当使用 DOM 模板时，驼峰命名的 props 
 
 ```javascript
 new Vue({
-  el: "#app",
-  components: {
-    "li-div": {
-      props: {
-        //必须是数字类型
-        propA: Number,
-        //必须是数字类型或字符串
-        propB: [Number, String],
-        //布尔类型，如果没有定义，默认值是true
-        propC: {
-          type: Boolean,
-          default: true,
-        },
-        //数字 ，必传
-        propD: {
-          type: Number,
-          required: true,
-        },
-        // 如果是数组或对象，默认值必须由函数返回
-        propE: {
-          type: Array,
-          default: function () {
-            return [];
-          },
-        },
-        //自定义一个验证函数
-        propF: {
-          validator: function (data) {
-            return value > 10;
-          },
-        },
-      },
-    },
-  },
+	el: "#app",
+	components: {
+		"li-div": {
+			props: {
+				//必须是数字类型
+				propA: Number,
+				//必须是数字类型或字符串
+				propB: [Number, String],
+				//布尔类型，如果没有定义，默认值是true
+				propC: {
+					type: Boolean,
+					default: true,
+				},
+				//数字 ，必传
+				propD: {
+					type: Number,
+					required: true,
+				},
+				// 如果是数组或对象，默认值必须由函数返回
+				propE: {
+					type: Array,
+					default: function () {
+						return [];
+					},
+				},
+				//自定义一个验证函数
+				propF: {
+					validator: function (data) {
+						return value > 10;
+					},
+				},
+			},
+		},
+	},
 });
 ```
 
@@ -1366,25 +1371,25 @@ new Vue({
 
 ```html
 <div id="app">
-  <!-- <li-div counter="100"></li-div> -->
-  <li-div v-bind:counter="100"></li-div>
+	<!-- <li-div counter="100"></li-div> -->
+	<li-div v-bind:counter="100"></li-div>
 </div>
 
 <script>
-  var app = new Vue({
-    el: "#app",
-    data: { obj: { msg: "fater" } },
-    components: {
-      "li-div": {
-        template: "<div>{{counter}}<div>",
-        props: {
-          counter: {
-            type: Number,
-          },
-        },
-      },
-    },
-  });
+	var app = new Vue({
+		el: "#app",
+		data: { obj: { msg: "fater" } },
+		components: {
+			"li-div": {
+				template: "<div>{{counter}}<div>",
+				props: {
+					counter: {
+						type: Number,
+					},
+				},
+			},
+		},
+	});
 </script>
 ```
 
@@ -1399,6 +1404,36 @@ mixins： 是一种分发 Vue 组件中可复用功能的非常灵活的方式�
 2. 对于值为对象的选项如 methods,components 等，选项会被合并，键冲突的组件会覆盖混入对象的。
 3. 值为函数的选项，如 created,mounted 等，就会被合并调用，混合对象里的钩子函数在组件里的钩子函数之前调用
 
+### 其他
+
+加载整个目录下的组件
+
+```js
+const requireComponent = require.context(
+  // The relative path of the components folder
+  './components',
+  // Whether or not to look in subfolders
+  false,
+  // The regular expression used to match base component filenames
+  /Base[A-Z]\w+\.(vue|js)$/
+)
+
+requireComponent.keys().forEach(fileName => {
+  // Get component config
+  const componentConfig = requireComponent(fileName)
+
+  // Get PascalCase name of component
+  const componentName = upperFirst(
+    camelCase(
+      // Gets the file name regardless of folder depth
+      fileName
+        .split('/')
+        .pop()
+        .replace(/\.\w+$/, '')
+    )
+
+```
+
 ## webpack 过程
 
 使用`.vue`单文件组件的构建模式，需要 webpack 并使用 vue-loader 对.vue 格式的文件进行处理。一个.vue 文件一般包括 3 部分，即`<template>`,`<script>`,`<style>`
@@ -1407,22 +1442,22 @@ mixins： 是一种分发 Vue 组件中可复用功能的非常灵活的方式�
 
 ```html
 <template>
-  <div>你好：{{name}}</div>
+	<div>你好：{{name}}</div>
 </template>
 <script>
-  export default {
-    props: {
-      name: {
-        type: String,
-        default: "",
-      },
-    },
-  };
+	export default {
+		props: {
+			name: {
+				type: String,
+				default: "",
+			},
+		},
+	};
 </script>
 <style scoped>
-  div {
-    color: #f60;
-  }
+	div {
+		color: #f60;
+	}
 </style>
 ```
 
@@ -1445,73 +1480,73 @@ vue init webpack vue-demo
 
 ```json
 {
-  "name": "vue-demo",
-  "version": "1.0.0",
-  "description": "A Vue.js project",
-  "private": true,
-  "scripts": {
-    "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
-    "start": "npm run dev",
-    "test": "npm run unit",
-    "lint": "eslint --ext .js,.vue src test/unit",
-    "build": "node build/build.js"
-  },
-  "dependencies": {
-    "vue": "^2.5.2",
-    "vue-router": "^3.0.1"
-  },
-  "devDependencies": {
-    "autoprefixer": "^7.1.2",
-    "babel-core": "^6.22.1",
-    "babel-eslint": "^8.2.1",
-    "babel-helper-vue-jsx-merge-props": "^2.0.3",
-    "babel-loader": "^7.1.1",
-    "babel-plugin-syntax-jsx": "^6.18.0",
-    "babel-plugin-transform-runtime": "^6.22.0",
-    "babel-plugin-transform-vue-jsx": "^3.5.0",
-    "babel-preset-env": "^1.3.2",
-    "babel-preset-stage-2": "^6.22.0",
-    "chalk": "^2.0.1",
-    "copy-webpack-plugin": "^4.0.1",
-    "css-loader": "^0.28.0",
-    "eslint": "^4.15.0",
-    "eslint-config-standard": "^10.2.1",
-    "eslint-friendly-formatter": "^3.0.0",
-    "eslint-loader": "^1.7.1",
-    "eslint-plugin-import": "^2.7.0",
-    "eslint-plugin-node": "^5.2.0",
-    "eslint-plugin-promise": "^3.4.0",
-    "eslint-plugin-standard": "^3.0.1",
-    "eslint-plugin-vue": "^4.0.0",
-    "extract-text-webpack-plugin": "^3.0.0",
-    "file-loader": "^1.1.4",
-    "friendly-errors-webpack-plugin": "^1.6.1",
-    "html-webpack-plugin": "^2.30.1",
-    "node-notifier": "^5.1.2",
-    "optimize-css-assets-webpack-plugin": "^3.2.0",
-    "ora": "^1.2.0",
-    "portfinder": "^1.0.13",
-    "postcss-import": "^11.0.0",
-    "postcss-loader": "^2.0.8",
-    "postcss-url": "^7.2.1",
-    "rimraf": "^2.6.0",
-    "semver": "^5.3.0",
-    "shelljs": "^0.7.6",
-    "uglifyjs-webpack-plugin": "^1.1.1",
-    "url-loader": "^0.5.8",
-    "vue-loader": "^13.3.0",
-    "vue-style-loader": "^3.0.1",
-    "vue-template-compiler": "^2.5.2",
-    "webpack": "^3.6.0",
-    "webpack-bundle-analyzer": "^2.9.0",
-    "webpack-dev-server": "^2.9.1",
-    "webpack-merge": "^4.1.0"
-  },
-  "engines": {
-    "node": ">= 6.0.0",
-    "npm": ">= 3.0.0"
-  },
-  "browserslist": ["> 1%", "last 2 versions", "not ie <= 8"]
+	"name": "vue-demo",
+	"version": "1.0.0",
+	"description": "A Vue.js project",
+	"private": true,
+	"scripts": {
+		"dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
+		"start": "npm run dev",
+		"test": "npm run unit",
+		"lint": "eslint --ext .js,.vue src test/unit",
+		"build": "node build/build.js"
+	},
+	"dependencies": {
+		"vue": "^2.5.2",
+		"vue-router": "^3.0.1"
+	},
+	"devDependencies": {
+		"autoprefixer": "^7.1.2",
+		"babel-core": "^6.22.1",
+		"babel-eslint": "^8.2.1",
+		"babel-helper-vue-jsx-merge-props": "^2.0.3",
+		"babel-loader": "^7.1.1",
+		"babel-plugin-syntax-jsx": "^6.18.0",
+		"babel-plugin-transform-runtime": "^6.22.0",
+		"babel-plugin-transform-vue-jsx": "^3.5.0",
+		"babel-preset-env": "^1.3.2",
+		"babel-preset-stage-2": "^6.22.0",
+		"chalk": "^2.0.1",
+		"copy-webpack-plugin": "^4.0.1",
+		"css-loader": "^0.28.0",
+		"eslint": "^4.15.0",
+		"eslint-config-standard": "^10.2.1",
+		"eslint-friendly-formatter": "^3.0.0",
+		"eslint-loader": "^1.7.1",
+		"eslint-plugin-import": "^2.7.0",
+		"eslint-plugin-node": "^5.2.0",
+		"eslint-plugin-promise": "^3.4.0",
+		"eslint-plugin-standard": "^3.0.1",
+		"eslint-plugin-vue": "^4.0.0",
+		"extract-text-webpack-plugin": "^3.0.0",
+		"file-loader": "^1.1.4",
+		"friendly-errors-webpack-plugin": "^1.6.1",
+		"html-webpack-plugin": "^2.30.1",
+		"node-notifier": "^5.1.2",
+		"optimize-css-assets-webpack-plugin": "^3.2.0",
+		"ora": "^1.2.0",
+		"portfinder": "^1.0.13",
+		"postcss-import": "^11.0.0",
+		"postcss-loader": "^2.0.8",
+		"postcss-url": "^7.2.1",
+		"rimraf": "^2.6.0",
+		"semver": "^5.3.0",
+		"shelljs": "^0.7.6",
+		"uglifyjs-webpack-plugin": "^1.1.1",
+		"url-loader": "^0.5.8",
+		"vue-loader": "^13.3.0",
+		"vue-style-loader": "^3.0.1",
+		"vue-template-compiler": "^2.5.2",
+		"webpack": "^3.6.0",
+		"webpack-bundle-analyzer": "^2.9.0",
+		"webpack-dev-server": "^2.9.1",
+		"webpack-merge": "^4.1.0"
+	},
+	"engines": {
+		"node": ">= 6.0.0",
+		"npm": ">= 3.0.0"
+	},
+	"browserslist": ["> 1%", "last 2 versions", "not ie <= 8"]
 }
 ```
 
@@ -1539,10 +1574,10 @@ import router from "./router";
 Vue.config.productionTip = false;
 
 new Vue({
-  el: "#app",
-  router,
-  components: { App },
-  template: "<App/>",
+	el: "#app",
+	router,
+	components: { App },
+	template: "<App/>",
 });
 ```
 
@@ -1550,10 +1585,10 @@ new Vue({
 
 ```html
 <html>
-  <head> </head>
-  <body>
-    <app></app>
-  </body>
+	<head> </head>
+	<body>
+		<app></app>
+	</body>
 </html>
 ```
 
@@ -1562,13 +1597,13 @@ new Vue({
 
 ```html
 <html>
-  <head> </head>
-  <body>
-    <div id="app">
-      <img src="./assets/logo.png" />
-      <router-view />
-    </div>
-  </body>
+	<head> </head>
+	<body>
+		<div id="app">
+			<img src="./assets/logo.png" />
+			<router-view />
+		</div>
+	</body>
 </html>
 ```
 
@@ -1584,13 +1619,13 @@ import HelloWorld from "@/components/HelloWorld";
 Vue.use(Router);
 
 export default new Router({
-  routes: [
-    {
-      path: "/",
-      name: "HelloWorld",
-      component: HelloWorld,
-    },
-  ],
+	routes: [
+		{
+			path: "/",
+			name: "HelloWorld",
+			component: HelloWorld,
+		},
+	],
 });
 ```
 
@@ -1598,57 +1633,57 @@ export default new Router({
 
 ```html
 <html>
-  <head> </head>
-  <body>
-    <div id="app">
-      <img src="./assets/logo.png" />
-      <div class="hello">
-        <h1>{{ msg }}</h1>
-        <h2>Essential Links</h2>
-        <ul>
-          <li>
-            <a href="https://vuejs.org" target="_blank"> Core Docs </a>
-          </li>
-          <li>
-            <a href="https://forum.vuejs.org" target="_blank"> Forum </a>
-          </li>
-          <li>
-            <a href="https://chat.vuejs.org" target="_blank">
-              Community Chat
-            </a>
-          </li>
-          <li>
-            <a href="https://twitter.com/vuejs" target="_blank"> Twitter </a>
-          </li>
-          <br />
-          <li>
-            <a href="http://vuejs-templates.github.io/webpack/" target="_blank">
-              Docs for This Template
-            </a>
-          </li>
-        </ul>
-        <h2>Ecosystem</h2>
-        <ul>
-          <li>
-            <a href="http://router.vuejs.org/" target="_blank"> vue-router </a>
-          </li>
-          <li>
-            <a href="http://vuex.vuejs.org/" target="_blank"> vuex </a>
-          </li>
-          <li>
-            <a href="http://vue-loader.vuejs.org/" target="_blank">
-              vue-loader
-            </a>
-          </li>
-          <li>
-            <a href="https://github.com/vuejs/awesome-vue" target="_blank">
-              awesome-vue
-            </a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </body>
+	<head> </head>
+	<body>
+		<div id="app">
+			<img src="./assets/logo.png" />
+			<div class="hello">
+				<h1>{{ msg }}</h1>
+				<h2>Essential Links</h2>
+				<ul>
+					<li>
+						<a href="https://vuejs.org" target="_blank"> Core Docs </a>
+					</li>
+					<li>
+						<a href="https://forum.vuejs.org" target="_blank"> Forum </a>
+					</li>
+					<li>
+						<a href="https://chat.vuejs.org" target="_blank">
+							Community Chat
+						</a>
+					</li>
+					<li>
+						<a href="https://twitter.com/vuejs" target="_blank"> Twitter </a>
+					</li>
+					<br />
+					<li>
+						<a href="http://vuejs-templates.github.io/webpack/" target="_blank">
+							Docs for This Template
+						</a>
+					</li>
+				</ul>
+				<h2>Ecosystem</h2>
+				<ul>
+					<li>
+						<a href="http://router.vuejs.org/" target="_blank"> vue-router </a>
+					</li>
+					<li>
+						<a href="http://vuex.vuejs.org/" target="_blank"> vuex </a>
+					</li>
+					<li>
+						<a href="http://vue-loader.vuejs.org/" target="_blank">
+							vue-loader
+						</a>
+					</li>
+					<li>
+						<a href="https://github.com/vuejs/awesome-vue" target="_blank">
+							awesome-vue
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</body>
 </html>
 ```
 
@@ -1662,31 +1697,31 @@ export default new Router({
 
 ```html
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
-  </div>
+	<div class="hello">
+		<h1>{{ msg }}</h1>
+	</div>
 </template>
 
 <script>
-  export default {
-    name: "link",
-    data() {
-      return {
-        msg: "测试一下路由链接",
-      };
-    },
-  };
+	export default {
+		name: "link",
+		data() {
+			return {
+				msg: "测试一下路由链接",
+			};
+		},
+	};
 </script>
 
 <style scoped>
-  h1 {
-    font-weight: normal;
-    color: palevioletred;
-  }
+	h1 {
+		font-weight: normal;
+		color: palevioletred;
+	}
 
-  a {
-    color: red;
-  }
+	a {
+		color: red;
+	}
 </style>
 ```
 
@@ -1893,17 +1928,17 @@ router 提供了导航钩子 beforeEach 和 afterEach，它们会在路由即将
 
 ```html
 <template>
-  <div id="app">
-    <router-view />
-    <router-view name="input1" />
-    <router-view name="input2" />
-  </div>
+	<div id="app">
+		<router-view />
+		<router-view name="input1" />
+		<router-view name="input2" />
+	</div>
 </template>
 
 <script>
-  export default {
-    name: "App",
-  };
+	export default {
+		name: "App",
+	};
 </script>
 ```
 
@@ -1918,17 +1953,17 @@ import input2 from "@/components/input2";
 Vue.use(Router);
 
 export default new Router({
-  routes: [
-    {
-      path: "/",
-      name: "HelloWorld",
-      components: {
-        default: input1,
-        input1,
-        input2,
-      },
-    },
-  ],
+	routes: [
+		{
+			path: "/",
+			name: "HelloWorld",
+			components: {
+				default: input1,
+				input1,
+				input2,
+			},
+		},
+	],
 });
 ```
 
@@ -1936,21 +1971,21 @@ export default new Router({
 
 ```html
 <template>
-  <div class="hello">
-    input1
-    <input v-model="value" />
-    <h1>{{ value}}</h1>
-  </div>
+	<div class="hello">
+		input1
+		<input v-model="value" />
+		<h1>{{ value}}</h1>
+	</div>
 </template>
 
 <script>
-  export default {
-    data() {
-      return {
-        value: "",
-      };
-    },
-  };
+	export default {
+		data() {
+			return {
+				value: "",
+			};
+		},
+	};
 </script>
 ```
 
@@ -1962,11 +1997,11 @@ App.vue
 
 ```html
 <html>
-  <body>
-    <div id="app">
-      <router-view />
-    </div>
-  </body>
+	<body>
+		<div id="app">
+			<router-view />
+		</div>
+	</body>
 </html>
 ```
 
@@ -1992,19 +2027,19 @@ import Home from "@/components/Home";
 import Child from "@/components/Child";
 
 export default new Router({
-  routes: [
-    {
-      path: "/",
-      name: "Home",
-      component: Home,
-      children: [
-        {
-          path: "child",
-          component: Child,
-        },
-      ],
-    },
-  ],
+	routes: [
+		{
+			path: "/",
+			name: "Home",
+			component: Home,
+			children: [
+				{
+					path: "child",
+					component: Child,
+				},
+			],
+		},
+	],
 });
 ```
 
@@ -2016,19 +2051,19 @@ app.vue
 
 ```html
 <template>
-  <!-- 上下布局  -->
-  <div id="home">
-    <router-view class="view header" name="header"></router-view>
-    <!-- 左右布局 -->
-    <div class="flex_left_right">
-      <router-view class="view menu" name="menu"></router-view>
-      <router-view class="view content" name="content"></router-view>
-    </div>
-  </div>
+	<!-- 上下布局  -->
+	<div id="home">
+		<router-view class="view header" name="header"></router-view>
+		<!-- 左右布局 -->
+		<div class="flex_left_right">
+			<router-view class="view menu" name="menu"></router-view>
+			<router-view class="view content" name="content"></router-view>
+		</div>
+	</div>
 </template>
 
 <script>
-  export default {};
+	export default {};
 </script>
 ```
 
@@ -2047,44 +2082,44 @@ import detail from "@/components/detail";
 Vue.use(Router);
 
 export default new Router({
-  routes: [
-    {
-      path: "/",
-      redirect: "/home/menu",
-    },
-    {
-      path: "/home",
-      name: "home",
-      component: home,
-      children: [
-        {
-          path: "menu",
-          components: {
-            header: header,
-            menu: menu,
-            content: content,
-          },
-          children: [
-            {
-              path: "list/:index",
-              name: "list",
-              component: list,
-            },
-            {
-              path: "list/:index/detail/:detailIndex",
-              name: "detail",
-              component: detail,
-            },
-          ],
-        },
-      ],
-    },
-    {
-      path: "/detailNoMenu",
-      name: "detailNoMenu",
-      component: detail,
-    },
-  ],
+	routes: [
+		{
+			path: "/",
+			redirect: "/home/menu",
+		},
+		{
+			path: "/home",
+			name: "home",
+			component: home,
+			children: [
+				{
+					path: "menu",
+					components: {
+						header: header,
+						menu: menu,
+						content: content,
+					},
+					children: [
+						{
+							path: "list/:index",
+							name: "list",
+							component: list,
+						},
+						{
+							path: "list/:index/detail/:detailIndex",
+							name: "detail",
+							component: detail,
+						},
+					],
+				},
+			],
+		},
+		{
+			path: "/detailNoMenu",
+			name: "detailNoMenu",
+			component: detail,
+		},
+	],
 });
 ```
 
@@ -2094,12 +2129,12 @@ export default new Router({
 
 ```javascript
 export default {
-  computed: {
-    func() {
-      console.log(this.$router); //在main.js注册进入Vue的router
-      console.log(this.$router.options); //在route/index.js中export的实例
-    },
-  },
+	computed: {
+		func() {
+			console.log(this.$router); //在main.js注册进入Vue的router
+			console.log(this.$router.options); //在route/index.js中export的实例
+		},
+	},
 };
 ```
 
@@ -2112,19 +2147,19 @@ import Home from "@/components/Home";
 import Child from "@/components/Child";
 
 export default new Router({
-  routes: [
-    {
-      path: "/",
-      name: "Home",
-      component: Home,
-      children: [
-        {
-          path: "child",
-          component: Child,
-        },
-      ],
-    },
-  ],
+	routes: [
+		{
+			path: "/",
+			name: "Home",
+			component: Home,
+			children: [
+				{
+					path: "child",
+					component: Child,
+				},
+			],
+		},
+	],
 });
 
 //App.vue params为路由url参数
@@ -2146,16 +2181,16 @@ import Vuex from "vuex";
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-  //组件数据，只能读取，不能手动改变
-  state: {
-    count: 0,
-  },
-  //改变store中数据的唯一途径就是显式提交mutations，mutations可以接受两个参数，第二个参数可以是数字、字符串或对象等类型
-  mutations: {
-    increment(state, n = 1) {
-      state.count += n;
-    },
-  },
+	//组件数据，只能读取，不能手动改变
+	state: {
+		count: 0,
+	},
+	//改变store中数据的唯一途径就是显式提交mutations，mutations可以接受两个参数，第二个参数可以是数字、字符串或对象等类型
+	mutations: {
+		increment(state, n = 1) {
+			state.count += n;
+		},
+	},
 });
 
 //调用mutations

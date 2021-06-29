@@ -101,7 +101,7 @@ $ tr a-z A-Z <<END_TEXT
 command1|command2
 ```
 
-当command2命令结束或被打断时，从command1接收的`/dev/stdout`的管道则会销毁，但是并不会马上打断command1的执行。我们可以使用进程替代
+当 command2 命令结束或被打断时，从 command1 接收的`/dev/stdout`的管道则会销毁，但是并不会马上打断 command1 的执行。我们可以使用进程替代
 
 ```shell
 #< <直接有空格
@@ -110,8 +110,8 @@ awk '/STOP/{exit}1' < <(tail -f logfile)
 
 ### 进程替换
 
-- `<(command_list)` 该表达式表示command_list命令的执行的output将指向一个`/dev/fd/<n>`下的文件
-- `>(command_list)` 该表达式表示command_list命令前的output指向一个`/dev/fd/<n>`下的文件,command_list的input则为这个文件的内容
+- `<(command_list)` 该表达式表示 command_list 命令的执行的 output 将指向一个`/dev/fd/<n>`下的文件
+- `>(command_list)` 该表达式表示 command_list 命令前的 output 指向一个`/dev/fd/<n>`下的文件,command_list 的 input 则为这个文件的内容
 
 可以使用重定向符去操作`/dev/fd/<n>`
 
@@ -173,14 +173,14 @@ cd ~/Downloads/ && rm -rf temp`
 
 ```shell
 $ name="here and there"
-$ [ -n $name ] 
+$ [ -n $name ]
 >  then
 >  echo not empty
 >  fi
 bash: [: too many arguments
 
 #正确的用法
-$ [ -n "$name" ] 
+$ [ -n "$name" ]
 >  then
 >  echo not empty
 >  fi
@@ -188,7 +188,7 @@ not empty
 
 # test
 
-$ test -n "$name" 
+$ test -n "$name"
 >  then
 >  echo not empty
 >  fi
@@ -234,12 +234,12 @@ not empty
        echo "File not found!"
    fi
 
-   if test -n "$name"  
+   if test -n "$name"
    then
    echo name not empty
    fi
 
-   if test -z "$name"  
+   if test -z "$name"
    then
    echo name is empty
    fi
@@ -672,6 +672,24 @@ trap - EXIT
 $ trap -l
 # 向某个进程发出指定信号
 $ kill -s <signal> <pid>
+```
+
+例如
+
+```shell
+# 杀掉某进程
+kill -9  12345
+
+# 一个简单的守护进程
+
+while kill -0 "$pid" >/dev/null 2>&1
+do
+   echo 'progress is running'
+   sleep 1
+done
+
+echo 'progress terminated'
+
 ```
 
 当使用 ctl-c 中断时，会执行 trap 里的命令

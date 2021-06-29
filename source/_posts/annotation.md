@@ -86,3 +86,42 @@ System.out.println("annotationType = " + annotationType);
 所有 class 的 class，即 `Class` 类中，有关于 annotation 的属性`annotationData`,`annotationType`,因所有 class 都是`Class`的实例，所以所有 class 都会包含这些有关 annotaion 的属性。这就是为什么所有的 class 都可以使用`getAnnotations()`等方法
 
 ![annotation_Class.png](./images/annotation_Class.png)
+
+## 反射获取重复注解
+
+```java
+@Retention(RetentionPolicy.RUNTIME)
+@Target( ElementType.TYPE)
+@Repeatable()
+public @interface Func{
+
+  String value()
+
+  @Retention(RetentionPolicy.RUNTIME)
+  @Target( ElementType.TYPE)
+  @interface Funcs{
+    Func[] value();
+  }
+}
+
+
+@Func("001")
+@Func("002")
+public class Bean{
+
+}
+
+
+//获取重复注解的方式
+
+Bean.class.getAnnotation(Func.Funcs.class);
+Bean.class.getAnnotationByType(Func.class);
+
+
+//当不知道重复注解的类时，可使用如下方法
+
+for(Annotation annotation:Bean.class.getAnnotations()){
+  Method method = annotation.getClass().getMethod("value");
+  Annotation[] finds = (Annotation[])method.invoke(annotation);
+}
+```

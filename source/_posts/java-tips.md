@@ -22,6 +22,14 @@ public interface ClassConstants{
 clasz.isPrimitive();
 ```
 
+### 获取数组 class 的申明类型
+
+```java
+Person[] ps = new Person[0];
+
+ps.getClass().getComponentType();
+```
+
 ### 基本类型转换包装类型
 
 ```java
